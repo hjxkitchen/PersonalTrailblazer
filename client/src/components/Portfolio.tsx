@@ -17,10 +17,10 @@ export default function Portfolio() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-bold text-white">
-                From Tanzania to San Francisco
+                Builder. Doer. Problem Solver.
               </h1>
               <p className="text-slate-300 mt-1">
-                An unconventional journey through technology, business, and innovation
+                Ready to drive results through technology, business innovation, and relentless execution
               </p>
             </div>
             <button
