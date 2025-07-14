@@ -27,7 +27,7 @@ export default function Portfolio() {
               onClick={toggleView}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
             >
-              {showTraditionalPortfolio ? "Show Journey" : "Show Portfolio"}
+              {showTraditionalPortfolio ? "Show Journey Timeline" : "Show Portfolio"}
             </button>
           </div>
         </div>

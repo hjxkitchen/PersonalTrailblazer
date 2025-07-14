@@ -29,7 +29,7 @@ export default function TimelineJourney() {
   const allMilestones = [...journeyMilestones, ...futurePaths];
 
   return (
-    <div className="py-12">
+    <div className="py-12 px-8">
       {/* Timeline Container */}
       <div className="relative">
         <div 
@@ -40,7 +40,7 @@ export default function TimelineJourney() {
             scrollbarColor: '#4b5563 #1e293b'
           }}
         >
-          <div className="flex items-center min-w-max px-16" style={{ width: 'max-content' }}>
+          <div className="flex items-start min-w-max px-16" style={{ width: 'max-content' }}>
             {allMilestones.map((milestone, index) => {
               const isCompleted = index < journeyMilestones.length;
               const isFuture = index >= journeyMilestones.length;
@@ -49,59 +49,61 @@ export default function TimelineJourney() {
               return (
                 <div key={milestone.id} className="flex items-center">
                   {/* Milestone Card */}
-                  <div className="relative flex flex-col items-center">
+                  <div className="relative flex flex-col items-center" style={{ minHeight: '300px' }}>
                     {/* Milestone Marker */}
-                    <button
-                      onClick={() => handleMilestoneClick(milestone, index)}
-                      className={`relative w-20 h-20 rounded-full border-4 transition-all duration-300 transform hover:scale-110 ${
-                        isCompleted
-                          ? isActive
-                            ? 'bg-green-500 border-green-400 shadow-lg shadow-green-500/50'
-                            : 'bg-green-600 border-green-500 hover:bg-green-500'
-                          : isFuture
-                          ? isActive
-                            ? 'bg-amber-500 border-amber-400 shadow-lg shadow-amber-500/50'
-                            : 'bg-amber-600 border-amber-500 hover:bg-amber-500'
-                          : 'bg-blue-600 border-blue-500 hover:bg-blue-500'
-                      }`}
-                    >
+                    <div className="flex flex-col items-center" style={{ marginTop: '100px' }}>
+                      <button
+                        onClick={() => handleMilestoneClick(milestone, index)}
+                        className={`relative w-20 h-20 rounded-full border-4 transition-all duration-300 transform hover:scale-110 ${
+                          isCompleted
+                            ? isActive
+                              ? 'bg-green-500 border-green-400 shadow-lg shadow-green-500/50'
+                              : 'bg-green-600 border-green-500 hover:bg-green-500'
+                            : isFuture
+                            ? isActive
+                              ? 'bg-amber-500 border-amber-400 shadow-lg shadow-amber-500/50'
+                              : 'bg-amber-600 border-amber-500 hover:bg-amber-500'
+                            : 'bg-blue-600 border-blue-500 hover:bg-blue-500'
+                        }`}
+                      >
                       <div className="absolute inset-2 rounded-full bg-white/20 flex items-center justify-center">
                         <span className="text-white font-bold text-sm">
                           {index + 1}
                         </span>
                       </div>
                       
-                      {/* Pulse Animation for Active */}
-                      {isActive && (
-                        <div className={`absolute inset-0 rounded-full animate-ping ${
-                          isCompleted ? 'bg-green-500' : isFuture ? 'bg-amber-500' : 'bg-blue-500'
-                        } opacity-75`} />
-                      )}
-                    </button>
+                        {/* Pulse Animation for Active */}
+                        {isActive && (
+                          <div className={`absolute inset-0 rounded-full animate-ping ${
+                            isCompleted ? 'bg-green-500' : isFuture ? 'bg-amber-500' : 'bg-blue-500'
+                          } opacity-75`} />
+                        )}
+                      </button>
 
-                    {/* Milestone Info */}
-                    <div className="mt-4 text-center w-48">
-                      <h3 className="text-white font-semibold text-sm mb-1">
-                        {milestone.title}
-                      </h3>
-                      <p className="text-slate-400 text-xs mb-1">
-                        {milestone.location}
-                      </p>
-                      <p className="text-slate-500 text-xs">
-                        {milestone.year}
-                      </p>
-                      
-                      {/* Status Badge */}
-                      <div className="mt-2">
-                        <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-                          isCompleted
-                            ? 'bg-green-100 text-green-800'
-                            : isFuture
-                            ? 'bg-amber-100 text-amber-800'
-                            : 'bg-blue-100 text-blue-800'
-                        }`}>
-                          {isCompleted ? 'Completed' : isFuture ? 'Future Path' : 'Current'}
-                        </span>
+                      {/* Milestone Info */}
+                      <div className="mt-4 text-center w-48">
+                        <h3 className="text-white font-semibold text-sm mb-1">
+                          {milestone.title}
+                        </h3>
+                        <p className="text-slate-400 text-xs mb-1">
+                          {milestone.location}
+                        </p>
+                        <p className="text-slate-500 text-xs">
+                          {milestone.year}
+                        </p>
+                        
+                        {/* Status Badge */}
+                        <div className="mt-2">
+                          <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                            isCompleted
+                              ? 'bg-green-100 text-green-800'
+                              : isFuture
+                              ? 'bg-amber-100 text-amber-800'
+                              : 'bg-blue-100 text-blue-800'
+                          }`}>
+                            {isCompleted ? 'Completed' : isFuture ? 'Future Path' : 'Current'}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>

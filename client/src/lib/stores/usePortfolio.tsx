@@ -12,7 +12,7 @@ interface PortfolioState {
 
 export const usePortfolio = create<PortfolioState>((set) => ({
   currentMilestone: null,
-  showTraditionalPortfolio: false,
+  showTraditionalPortfolio: true,
   
   setCurrentMilestone: (milestone) => set({ currentMilestone: milestone }),
   toggleView: () => set((state) => ({ 
