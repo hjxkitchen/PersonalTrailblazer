@@ -5,20 +5,19 @@ import { usePortfolio } from "../lib/stores/usePortfolio";
 export default function TimelineJourney() {
   const { setCurrentMilestone } = usePortfolio();
   const timelineRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(journeyMilestones.length - 1); // Start with the current milestone (SF)
 
-  // Auto-scroll timeline on mount
+  // Auto-scroll timeline to the rightmost (newest) milestone on mount
   useEffect(() => {
     if (timelineRef.current) {
       const timeline = timelineRef.current;
-      const scrollToCenter = () => {
-        const containerWidth = timeline.offsetWidth;
-        const scrollWidth = timeline.scrollWidth;
-        timeline.scrollLeft = (scrollWidth - containerWidth) / 2;
+      const scrollToNewest = () => {
+        // Scroll to the rightmost position to show the newest milestone
+        timeline.scrollLeft = timeline.scrollWidth - timeline.offsetWidth;
       };
       
       // Delay to ensure DOM is fully rendered
-      setTimeout(scrollToCenter, 100);
+      setTimeout(scrollToNewest, 100);
     }
   }, []);
 
@@ -36,7 +35,10 @@ export default function TimelineJourney() {
         <div 
           ref={timelineRef}
           className="overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800"
-          style={{ scrollbarWidth: 'thin' }}
+          style={{ 
+            scrollbarWidth: 'thin',
+            scrollbarColor: '#4b5563 #1e293b'
+          }}
         >
           <div className="flex items-center min-w-max px-8" style={{ width: 'max-content' }}>
             {allMilestones.map((milestone, index) => {
