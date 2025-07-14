@@ -69,19 +69,17 @@ export const journeyMilestones: Milestone[] = [
     location: "Tanzania",
     year: "Business Growth Phase",
     position: [5, 5.5, 15],
-    description: "Joined family's small retail business specializing in solar sales and installation. Oversaw and directed significant expansion into energy, security, off-grid solutions, and agro-processing machinery. Led business growth in a challenging non-technical market, educating customers and implementing solutions with excellence despite tough conditions and an inexperienced workforce.",
+    description: "Joined family's solar business and directed expansion into energy, security, off-grid solutions, and agro-processing machinery. Led growth in challenging market conditions while building and training workforce.",
     challenges: [
-      "Operating in difficult non-technical market conditions",
-      "Training inexperienced workforce while maintaining quality",
-      "Educating customers on complex technical solutions",
-      "Implementing excellence standards in challenging environment"
+      "Non-technical market education",
+      "Training inexperienced workforce",
+      "Maintaining quality in tough conditions"
     ],
     achievements: [
-      "Directed expansion from solar into energy, security, and off-grid solutions",
-      "Led growth into agro-processing machinery and tech orchestration",
-      "Successfully educated market on technical solutions",
-      "Built and trained effective workforce from scratch",
-      "Self-taught programming and developed business applications"
+      "Expanded from solar into multiple sectors",
+      "Built skilled workforce from scratch",
+      "Self-taught coding and developed applications",
+      "Led tech orchestration and operations"
     ],
     skills: ["Business Operations", "Team Leadership", "Technical Sales", "Market Education", "Solar Energy Systems", "Self-Taught Coding", "Workforce Development", "Solution Implementation"]
   },
