@@ -12,12 +12,12 @@ export default function SkillsSection() {
     },
     {
       title: "Business & Operations",
-      skills: ["Product Management", "Business Operations", "Market Analysis", "Strategic Planning"],
+      skills: ["Business Operations", "Market Education", "Workforce Development", "Strategic Planning", "Technical Sales"],
       color: "purple"
     },
     {
-      title: "Engineering & Hardware",
-      skills: ["Mechatronics", "Industrial Automation", "Solar Energy Systems", "Manufacturing"],
+      title: "Energy & Engineering Systems",
+      skills: ["Solar Energy Systems", "Off-Grid Solutions", "Energy Storage", "Agro-Processing Machinery", "Security Systems"],
       color: "orange"
     },
     {

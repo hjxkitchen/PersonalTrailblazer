@@ -40,7 +40,7 @@ export default function TimelineJourney() {
             scrollbarColor: '#4b5563 #1e293b'
           }}
         >
-          <div className="flex items-center min-w-max px-8" style={{ width: 'max-content' }}>
+          <div className="flex items-center min-w-max px-16" style={{ width: 'max-content' }}>
             {allMilestones.map((milestone, index) => {
               const isCompleted = index < journeyMilestones.length;
               const isFuture = index >= journeyMilestones.length;

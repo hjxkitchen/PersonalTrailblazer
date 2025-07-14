@@ -8,11 +8,11 @@ export default function ProjectsSection() {
       impact: "Developing next-generation AI products for market deployment"
     },
     {
-      title: "Tanzania Business Operations Platform",
-      description: "Built comprehensive business management platform while learning operations, technology, and self-taught coding in Tanzania.",
-      technologies: ["Full-Stack Development", "Business Operations", "System Architecture"],
+      title: "Solar Business Expansion & Operations",
+      description: "Directed family business growth from small solar retail to comprehensive energy, security, off-grid, and agro-processing solutions. Led market education and workforce development in challenging conditions.",
+      technologies: ["Solar Energy Systems", "Business Operations", "Team Leadership", "Market Development"],
       status: "Completed",
-      impact: "Streamlined business operations and gained entrepreneurial experience"
+      impact: "Expanded business into multiple sectors while building skilled workforce and educating non-technical market"
     },
     {
       title: "Mechatronics & Automation Systems",

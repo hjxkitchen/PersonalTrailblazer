@@ -65,18 +65,25 @@ export const journeyMilestones: Milestone[] = [
   },
   {
     id: "tanzania-business",
-    title: "Building Business in Tanzania",
+    title: "Solar Business Growth in Tanzania",
     location: "Tanzania",
-    year: "Entrepreneurial Phase",
+    year: "Business Growth Phase",
     position: [5, 5.5, 15],
-    description: "Returned to Tanzania to build my own company, learning business operations, technology implementation, and self-teaching coding while developing real-world applications.",
-    achievements: [
-      "Built and operated own company",
-      "Self-taught programming and development",
-      "Developed business applications",
-      "Gained comprehensive business operations experience"
+    description: "Joined family's small retail business specializing in solar sales and installation. Oversaw and directed significant expansion into energy, security, off-grid solutions, and agro-processing machinery. Led business growth in a challenging non-technical market, educating customers and implementing solutions with excellence despite tough conditions and an inexperienced workforce.",
+    challenges: [
+      "Operating in difficult non-technical market conditions",
+      "Training inexperienced workforce while maintaining quality",
+      "Educating customers on complex technical solutions",
+      "Implementing excellence standards in challenging environment"
     ],
-    skills: ["Entrepreneurship", "Self-Taught Coding", "Business Operations", "Product Development", "Technology Implementation"]
+    achievements: [
+      "Directed expansion from solar into energy, security, and off-grid solutions",
+      "Led growth into agro-processing machinery and tech orchestration",
+      "Successfully educated market on technical solutions",
+      "Built and trained effective workforce from scratch",
+      "Self-taught programming and developed business applications"
+    ],
+    skills: ["Business Operations", "Team Leadership", "Technical Sales", "Market Education", "Solar Energy Systems", "Self-Taught Coding", "Workforce Development", "Solution Implementation"]
   },
   {
     id: "san-francisco-ai",
