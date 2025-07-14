@@ -25,7 +25,7 @@ export default function Portfolio() {
               </div>
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold text-white">
-                  Your Name
+                  John Xen
                 </h1>
                 <h2 className="text-lg md:text-xl text-blue-400 font-semibold mb-1">
                   Builder. Doer. Problem Solver.
