@@ -6,7 +6,7 @@ export default function StoryPanel() {
   if (!currentMilestone) return null;
 
   return (
-    <div className="absolute bottom-4 left-4 right-4 md:left-4 md:right-auto md:max-w-md bg-black/90 backdrop-blur-sm text-white p-6 rounded-lg border border-slate-600 z-20">
+    <div className="fixed inset-x-4 bottom-4 md:left-1/2 md:right-auto md:w-96 md:-ml-48 bg-slate-800/95 backdrop-blur-sm text-white p-6 rounded-lg border border-slate-600 shadow-2xl z-50">
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="text-xl font-bold text-white">{currentMilestone.title}</h3>
