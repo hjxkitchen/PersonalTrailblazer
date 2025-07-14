@@ -10,22 +10,22 @@ export default function Portfolio() {
   const { currentMilestone, showTraditionalPortfolio, toggleView } = usePortfolio();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-x-hidden">
       {/* Header */}
-      <header className="bg-slate-900/95 backdrop-blur-sm border-b border-slate-700">
+      <header className="bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-30">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
+          <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white">
+              <h1 className="text-3xl font-bold text-white">
                 Builder. Doer. Problem Solver.
               </h1>
-              <p className="text-slate-300 mt-1 text-sm md:text-base">
+              <p className="text-slate-300 mt-1">
                 Ready to drive results through technology, business innovation, and relentless execution
               </p>
             </div>
             <button
               onClick={toggleView}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg transition-colors text-sm md:text-base self-start"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
             >
               {showTraditionalPortfolio ? "Show Journey Timeline" : "Show Portfolio"}
             </button>
@@ -34,7 +34,7 @@ export default function Portfolio() {
       </header>
 
       {/* Main Content */}
-      <div>
+      <div className="overflow-y-auto" style={{ height: 'calc(100vh - 140px)' }}>
         {!showTraditionalPortfolio ? (
           <div className="relative">
             <TimelineJourney />
