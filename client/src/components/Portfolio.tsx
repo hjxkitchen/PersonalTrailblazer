@@ -4,6 +4,7 @@ import StoryPanel from "./StoryPanel";
 import SkillsSection from "./SkillsSection";
 import ProjectsSection from "./ProjectsSection";
 import ContactSection from "./ContactSection";
+import MissionSection from "./MissionSection";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 
 export default function Portfolio() {
@@ -39,7 +40,7 @@ export default function Portfolio() {
               onClick={toggleView}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg transition-colors text-sm md:text-base self-start md:self-auto"
             >
-              {showTraditionalPortfolio ? "Show Journey Timeline" : "Show Portfolio"}
+              {showTraditionalPortfolio ? "Show Mission" : "Show Portfolio"}
             </button>
           </div>
         </div>
@@ -48,10 +49,7 @@ export default function Portfolio() {
       {/* Main Content */}
       <div className="min-h-screen">
         {!showTraditionalPortfolio ? (
-          <div className="relative">
-            <TimelineJourney />
-            {currentMilestone && <StoryPanel />}
-          </div>
+          <MissionSection />
         ) : (
           <div className="container mx-auto px-4 py-8">
             <ProjectsSection />
