@@ -18,20 +18,20 @@ export default function ProjectsSection() {
       link: "crowdsquare.ai"
     },
     {
-      title: "FundGuard",
-      description: "Protect startups from predatory fundraising terms with AI-powered term sheet analysis. Set your strategy once, then get instant risk scoring and actionable recommendations against Y Combinator and trustworthy investor standards.",
-      technologies: ["AI/ML", "FinTech", "Legal Tech", "Risk Analysis"],
-      status: "Completed", 
-      impact: "Empowering startups to make informed fundraising decisions",
-      link: "fundguard.crowdsquare.ai"
-    },
-    {
       title: "Tourism & Venture Development",
       description: "Exploring tourism industry applications and venture opportunities, combining technology with business development.",
       technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
       status: "Current",
       impact: "Identifying new market opportunities and business models",
       link: "africanepic.com"
+    },
+    {
+      title: "FundGuard",
+      description: "Protect startups from predatory fundraising terms with AI-powered term sheet analysis. Set your strategy once, then get instant risk scoring and actionable recommendations against Y Combinator and trustworthy investor standards.",
+      technologies: ["AI/ML", "FinTech", "Legal Tech", "Risk Analysis"],
+      status: "Completed", 
+      impact: "Empowering startups to make informed fundraising decisions",
+      link: "fundguard.crowdsquare.ai"
     },
     {
       title: "TechSpec Pro",
