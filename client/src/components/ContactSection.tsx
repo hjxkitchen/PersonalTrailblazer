@@ -13,13 +13,17 @@ export default function ContactSection() {
         <div className="space-y-4">
           <div className="flex justify-center space-x-6">
             <a
-              href="mailto:contact@example.com"
+              href="https://www.linkedin.com/in/john-xen-75a150209/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
             >
               Get in Touch
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/john-xen-75a150209/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-lg transition-colors"
             >
               LinkedIn

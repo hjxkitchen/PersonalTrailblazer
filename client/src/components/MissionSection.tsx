@@ -91,9 +91,14 @@ export default function MissionSection() {
             Let's connect and explore how we can leverage AI and network technologies 
             to create meaningful impact in your business or project.
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors">
+          <a 
+            href="https://www.linkedin.com/in/john-xen-75a150209/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors"
+          >
             Get In Touch
-          </button>
+          </a>
         </div>
       </div>
     </div>
