@@ -30,14 +30,16 @@ export default function ProjectsSection() {
       description: "Building full AI applications and products in San Francisco, focusing on practical business solutions and venture development.",
       technologies: ["AI/ML", "Product Development", "Business Strategy"],
       status: "Current",
-      impact: "Developing next-generation AI products for market deployment"
+      impact: "Developing next-generation AI products for market deployment",
+      link: "crowdsquare.ai"
     },
     {
       title: "Solar Business Expansion & Operations",
       description: "Directed family business growth from small solar retail to comprehensive energy, security, off-grid, and agro-processing solutions. Led market education and workforce development in challenging conditions.",
       technologies: ["Solar Energy Systems", "Business Operations", "Team Leadership", "Market Development"],
       status: "Completed",
-      impact: "Expanded business into multiple sectors while building skilled workforce and educating non-technical market"
+      impact: "Expanded business into multiple sectors while building skilled workforce and educating non-technical market",
+      link: "zahabenergy.com"
     },
     {
       title: "Mechatronics & Automation Systems",
@@ -51,7 +53,8 @@ export default function ProjectsSection() {
       description: "Exploring tourism industry applications and venture opportunities, combining technology with business development.",
       technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
       status: "In Development",
-      impact: "Identifying new market opportunities and business models"
+      impact: "Identifying new market opportunities and business models",
+      link: "africanepic.com"
     }
   ];
 
