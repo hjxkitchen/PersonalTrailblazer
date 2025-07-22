@@ -15,7 +15,7 @@ export default function ProjectsSection() {
       technologies: ["AI/ML", "Product Development", "Business Strategy"],
       status: "In Development",
       impact: "Developing next-generation AI products for market deployment",
-      link: "crowdsquare.ai"
+      link: "example.com"
     },
     {
       title: "Tourism & Venture Development",
@@ -23,7 +23,7 @@ export default function ProjectsSection() {
       technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
       status: "Current",
       impact: "Identifying new market opportunities and business models",
-      link: "africanepic.com"
+      link: "example.com"
     },
     {
       title: "FundGuard",
@@ -31,7 +31,7 @@ export default function ProjectsSection() {
       technologies: ["AI/ML", "FinTech", "Legal Tech", "Risk Analysis"],
       status: "Completed", 
       impact: "Empowering startups to make informed fundraising decisions",
-      link: "fundguard.crowdsquare.ai"
+      link: "example.com"
     },
     {
       title: "TechSpec Pro",
@@ -39,7 +39,7 @@ export default function ProjectsSection() {
       technologies: ["AI/ML", "Procurement Tech", "NLP", "Document Generation"],
       status: "Completed",
       impact: "Streamlining technical procurement and improving supply chain quality",
-      link: "techspecpro.crowdsquare.ai"
+      link: "example.com"
     },
     {
       title: "Solar Business Expansion & Operations",
@@ -47,7 +47,7 @@ export default function ProjectsSection() {
       technologies: ["Solar Energy Systems", "Business Operations", "Team Leadership", "Market Development"],
       status: "Completed",
       impact: "Expanded business into multiple sectors while building skilled workforce and educating non-technical market",
-      link: "zahabenergy.com"
+      link: "example.com"
     },
     {
       title: "Mechatronics & Automation Systems",
