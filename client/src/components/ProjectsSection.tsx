@@ -13,7 +13,7 @@ export default function ProjectsSection() {
       title: "AI-Powered Business Applications",
       description: "Building full AI applications and products in San Francisco, focusing on practical business solutions and venture development.",
       technologies: ["AI/ML", "Product Development", "Business Strategy"],
-      status: "Current",
+      status: "In Development",
       impact: "Developing next-generation AI products for market deployment",
       link: "crowdsquare.ai"
     },
@@ -21,7 +21,7 @@ export default function ProjectsSection() {
       title: "FundGuard",
       description: "Protect startups from predatory fundraising terms with AI-powered term sheet analysis. Set your strategy once, then get instant risk scoring and actionable recommendations against Y Combinator and trustworthy investor standards.",
       technologies: ["AI/ML", "FinTech", "Legal Tech", "Risk Analysis"],
-      status: "Current", 
+      status: "Completed", 
       impact: "Empowering startups to make informed fundraising decisions",
       link: "fundguard.crowdsquare.ai"
     },
@@ -29,7 +29,7 @@ export default function ProjectsSection() {
       title: "Tourism & Venture Development",
       description: "Exploring tourism industry applications and venture opportunities, combining technology with business development.",
       technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
-      status: "In Development",
+      status: "Current",
       impact: "Identifying new market opportunities and business models",
       link: "africanepic.com"
     },
@@ -37,7 +37,7 @@ export default function ProjectsSection() {
       title: "TechSpec Pro",
       description: "AI-powered platform that transforms vague requirements into precise technical specifications for quality procurement. Features automatic specification generation, built-in quality checklists, translation bridge for supplier communication, and multi-format export capabilities.",
       technologies: ["AI/ML", "Procurement Tech", "NLP", "Document Generation"],
-      status: "Current",
+      status: "Completed",
       impact: "Streamlining technical procurement and improving supply chain quality",
       link: "techspecpro.crowdsquare.ai"
     },
