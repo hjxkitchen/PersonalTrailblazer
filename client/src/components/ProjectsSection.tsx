@@ -42,6 +42,14 @@ export default function ProjectsSection() {
       link: "zahabenergy.com"
     },
     {
+      title: "3D Ball Game",
+      description: "A simple yet engaging 3D game where players navigate a ball through 3D space to hit target boxes within time limits. Features physics-based movement, timer mechanics, and progressive difficulty. Perfect timepass entertainment with intuitive controls.",
+      technologies: ["3D Graphics", "Game Development", "Physics Engine", "Web Technologies"],
+      status: "Completed",
+      impact: "Demonstrating interactive 3D development skills and user engagement design",
+      link: "game.zahabenergy.com"
+    },
+    {
       title: "Mechatronics & Automation Systems",
       description: "Developed industrial automation solutions during community college studies and internship experiences.",
       technologies: ["Mechatronics", "Industrial Automation", "Engineering"],
