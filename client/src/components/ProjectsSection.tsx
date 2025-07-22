@@ -10,12 +10,12 @@ interface Project {
 export default function ProjectsSection() {
   const projects = [
     {
-      title: "TechSpec Pro",
-      description: "AI-powered platform that transforms vague requirements into precise technical specifications for quality procurement. Features automatic specification generation, built-in quality checklists, translation bridge for supplier communication, and multi-format export capabilities.",
-      technologies: ["AI/ML", "Procurement Tech", "NLP", "Document Generation"],
+      title: "AI-Powered Business Applications",
+      description: "Building full AI applications and products in San Francisco, focusing on practical business solutions and venture development.",
+      technologies: ["AI/ML", "Product Development", "Business Strategy"],
       status: "Current",
-      impact: "Streamlining technical procurement and improving supply chain quality",
-      link: "techspecpro.crowdsquare.ai"
+      impact: "Developing next-generation AI products for market deployment",
+      link: "crowdsquare.ai"
     },
     {
       title: "FundGuard",
@@ -26,12 +26,20 @@ export default function ProjectsSection() {
       link: "fundguard.crowdsquare.ai"
     },
     {
-      title: "AI-Powered Business Applications",
-      description: "Building full AI applications and products in San Francisco, focusing on practical business solutions and venture development.",
-      technologies: ["AI/ML", "Product Development", "Business Strategy"],
+      title: "Tourism & Venture Development",
+      description: "Exploring tourism industry applications and venture opportunities, combining technology with business development.",
+      technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
+      status: "In Development",
+      impact: "Identifying new market opportunities and business models",
+      link: "africanepic.com"
+    },
+    {
+      title: "TechSpec Pro",
+      description: "AI-powered platform that transforms vague requirements into precise technical specifications for quality procurement. Features automatic specification generation, built-in quality checklists, translation bridge for supplier communication, and multi-format export capabilities.",
+      technologies: ["AI/ML", "Procurement Tech", "NLP", "Document Generation"],
       status: "Current",
-      impact: "Developing next-generation AI products for market deployment",
-      link: "crowdsquare.ai"
+      impact: "Streamlining technical procurement and improving supply chain quality",
+      link: "techspecpro.crowdsquare.ai"
     },
     {
       title: "Solar Business Expansion & Operations",
@@ -47,14 +55,6 @@ export default function ProjectsSection() {
       technologies: ["Mechatronics", "Industrial Automation", "Engineering"],
       status: "Completed",
       impact: "Gained hands-on engineering experience and technical foundation"
-    },
-    {
-      title: "Tourism & Venture Development",
-      description: "Exploring tourism industry applications and venture opportunities, combining technology with business development.",
-      technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
-      status: "In Development",
-      impact: "Identifying new market opportunities and business models",
-      link: "africanepic.com"
     }
   ];
 
