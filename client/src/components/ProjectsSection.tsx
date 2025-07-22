@@ -1,5 +1,30 @@
+interface Project {
+  title: string;
+  description: string;
+  technologies: string[];
+  status: string;
+  impact: string;
+  link?: string;
+}
+
 export default function ProjectsSection() {
   const projects = [
+    {
+      title: "TechSpec Pro",
+      description: "AI-powered platform that transforms vague requirements into precise technical specifications for quality procurement. Features automatic specification generation, built-in quality checklists, translation bridge for supplier communication, and multi-format export capabilities.",
+      technologies: ["AI/ML", "Procurement Tech", "NLP", "Document Generation"],
+      status: "Current",
+      impact: "Streamlining technical procurement and improving supply chain quality",
+      link: "techspecpro.crowdsquare.ai"
+    },
+    {
+      title: "FundGuard",
+      description: "Protect startups from predatory fundraising terms with AI-powered term sheet analysis. Set your strategy once, then get instant risk scoring and actionable recommendations against Y Combinator and trustworthy investor standards.",
+      technologies: ["AI/ML", "FinTech", "Legal Tech", "Risk Analysis"],
+      status: "Current", 
+      impact: "Empowering startups to make informed fundraising decisions",
+      link: "fundguard.crowdsquare.ai"
+    },
     {
       title: "AI-Powered Business Applications",
       description: "Building full AI applications and products in San Francisco, focusing on practical business solutions and venture development.",
@@ -78,6 +103,20 @@ export default function ProjectsSection() {
               <h4 className="text-sm font-semibold text-slate-400 mb-1">Impact:</h4>
               <p className="text-sm text-slate-300">{project.impact}</p>
             </div>
+            
+            {project.link && (
+              <div className="border-t border-slate-600 pt-3 mt-3">
+                <a 
+                  href={`https://${project.link}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                >
+                  <span>🔗</span>
+                  {project.link}
+                </a>
+              </div>
+            )}
           </div>
         ))}
       </div>
