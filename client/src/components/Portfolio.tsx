@@ -17,9 +17,9 @@ export default function Portfolio() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
             <div className="flex items-center gap-4 md:gap-6">
-              <div className="w-40 h-40 md:w-64 md:h-64 rounded-full overflow-hidden border-2 border-blue-400 flex-shrink-0">
+              <div className="w-32 h-32 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-blue-400 flex-shrink-0">
                 <img 
-                  src="/img.jpg" 
+                  src="/imgg.jpg" 
                   alt="Your Name" 
                   className="w-full h-full object-cover"
                 />

@@ -23,7 +23,7 @@ export default function ProjectsSection() {
       technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
       status: "Current",
       impact: "Identifying new market opportunities and business models",
-      link: "africanepic.com"
+      link: "wildearthsafaris.com"
     },
     {
       title: "FundGuard",
