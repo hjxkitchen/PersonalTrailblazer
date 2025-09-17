@@ -6,6 +6,7 @@ import ProjectsSection from "./ProjectsSection";
 import ContactSection from "./ContactSection";
 import MissionSection from "./MissionSection";
 import { usePortfolio } from "../lib/stores/usePortfolio";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Portfolio() {
   const { currentMilestone, showTraditionalPortfolio, toggleView } = usePortfolio();
@@ -34,6 +35,43 @@ export default function Portfolio() {
                 <p className="text-sm md:text-base text-slate-300">
                   Ready to drive results through technology, business innovation, and relentless execution
                 </p>
+
+                {/* Social Media Icons */}
+                <div className="flex justify-center md:justify-start gap-6 mt-4">
+                  <a
+                    href="https://www.youtube.com/@johnxen6385"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-red-500 text-xl transition-colors"
+                  >
+                    <i className="fab fa-youtube"></i>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/hjxen25"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-pink-500 text-xl transition-colors"
+                  >
+                    <i className="fab fa-instagram"></i>
+                  </a>
+                  <a
+                    href="https://x.com/hk6547"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-blue-400 text-xl transition-colors"
+                  >
+                    <i className="fab fa-x"></i>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/john-xen-75a150209"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-blue-500 text-xl transition-colors"
+                  >
+                    <i className="fab fa-linkedin"></i>
+                  </a>
+                </div>
+
               </div>
             </div>
             <button
