@@ -15,7 +15,7 @@ interface ProjectGroups {
 
 export default function ProjectsSection() {
   const projectGroups: ProjectGroups = {
-    "Decentralized Social Commerce": [
+    "Social Commerce": [
       {
         title: "Socos",
         description: "A decentralized social-commerce platform enabling local discovery, vendor tools, and AI-powered recommendations.",
@@ -33,7 +33,7 @@ export default function ProjectsSection() {
  
     ],
 
-    "Decentralized Social Communities & Governance": [
+    "Social Communities & Governance": [
       {
         title: "Social Global Conversation & Humanitarian",
         description: "A global dialogue layer enabling communities worldwide to connect across borders, languages, and humanitarian causes.",
