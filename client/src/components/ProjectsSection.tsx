@@ -18,12 +18,140 @@ export default function ProjectsSection() {
       // link: "example.com"
     },
     {
+      title: "Socos",
+      description: "A decentralized social-commerce platform enabling local discovery, vendor tools, and AI-powered recommendations.",
+      technologies: ["AI/ML", "Marketplace", "ERP", "Blockchain"],
+      status: "In Development",
+      impact: "Empowering small businesses and communities through intelligent, fair, and scalable commerce."
+    },
+    {
+      title: "Social Global Conversation & Humanitarian",
+      description: "A global dialogue layer enabling communities worldwide to connect across borders, languages, and humanitarian causes.",
+      technologies: ["AI Translation", "Social Platforms", "Global Networking"],
+      status: "Concept / MVP",
+      impact: "Creating truly global conversations and coordinated humanitarian responses."
+    },
+    {
+      title: "Governance",
+      description: "Local-to-global governance dialogues with layered community conversations (neighborhood, city, state, national, global).",
+      technologies: ["Blockchain", "AI Moderation", "Civic Tech"],
+      status: "In Development",
+      impact: "Enabling transparent, participatory, and multi-layered digital governance systems."
+    },
+    {
+      title: "People Matching",
+      description: "AI-driven matching system for authentic, meaningful local and global human connections.",
+      technologies: ["AI/ML", "Recommendation Systems", "Social Graphs"],
+      status: "Prototype",
+      impact: "Helping people find true connections based on values, interests, and proximity."
+    },
+    {
+      title: "3D Co-Experiencing World (Three.js)",
+      description: "Immersive 3D environments for social interaction, co-watching, and community-based events.",
+      technologies: ["Three.js", "WebGL", "Socket.IO", "Spatial Audio"],
+      status: "In Development",
+      impact: "Delivering immersive social and experiential layers for global communities."
+    },
+ 
+    {
+      title: "Creatives Network",
+      description: "A platform for musicians, artists, designers, and creative professionals to connect, collaborate, and build opportunities.",
+      technologies: ["AI Discovery", "Networking Tools", "Marketplace"],
+      status: "In Development",
+      impact: "Unlocking collaboration and opportunity in the global creative economy."
+    },
+  
+    {
       title: "Tourism & Venture Development",
       description: "Exploring tourism industry applications and venture opportunities, combining technology with business development.",
       technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
       status: "Current",
       impact: "Identifying new market opportunities and business models",
       link: "wildearthsafaris.com"
+    },
+    {
+      title: "CRM with Pipelines & Campaigns",
+      description: "A modern CRM with intuitive UI for managing pipelines, stages, campaigns, and customer interactions.",
+      technologies: ["CRM", "React", "Automations", "APIs"],
+      status: "In Development",
+      impact: "Helping businesses manage relationships and sales with clarity and ease."
+    },
+    {
+      title: "Inventory & POS System",
+      description: "Product management with barcode scanning, images, multi-warehouse tracking, sectioned storage, and POS integration for easy invoicing and CRM syncing. Includes multi-user logins, business dashboards, and warehouse apps.",
+      technologies: ["POS", "Inventory Management", "Barcode", "Cloud"],
+      status: "In Development",
+      impact: "Simplifying operations for businesses through integrated inventory and sales systems."
+    },
+    {
+      title: "Sales Management",
+      description: "Manage customer and product details with sales tracking, statuses, logs, document uploads, and integration with project management tools. Supports automations and team management for overseeing installations.",
+      technologies: ["CRM", "Project Management", "Workflow Automation"],
+      status: "Prototype",
+      impact: "Providing a single hub to oversee sales, customers, and project execution end-to-end."
+    },
+    {
+      title: "Smart SMS Marketing System",
+      description: "Bulk SMS campaigns integrated with POS and CRM. Includes campaign design, audience targeting, and performance tracking.",
+      technologies: ["SMS APIs", "Marketing Automation", "AI Targeting"],
+      status: "In Development",
+      impact: "Enabling businesses to reach and retain customers effectively through smart campaigns."
+    },
+    {
+      title: "AI Chat Assistant",
+      description: "An AI assistant that responds to customer inquiries on behalf of businesses across chat, SMS, and web channels.",
+      technologies: ["AI/ML", "Chatbots", "NLP", "CRM Integration"],
+      status: "Prototype",
+      impact: "Reducing response time and improving customer satisfaction with AI-driven support."
+    },
+    {
+      title: "Automated Business Website Generator",
+      description: "Instant websites created from business profiles, products, categories, and styling choices. Fully responsive with e-commerce capabilities.",
+      technologies: ["AI Website Builder", "No-Code Tools", "Web Design"],
+      status: "In Development",
+      impact: "Giving businesses a professional digital presence instantly, without technical barriers."
+    },
+    {
+      title: "Unified Business Profile",
+      description: "A consolidated profile for businesses that powers marketing, discovery, and cross-platform consistency.",
+      technologies: ["CRM", "Social Discovery", "Search Indexing"],
+      status: "Concept",
+      impact: "Creating a single source of truth for business identity and outreach."
+    },
+    {
+      title: "Central AI Business Assistant",
+      description: "An AI hub providing insights into business data, with integrations into CRM, POS, PM tools, and more. Supports agentic workflows for actions and decision-making.",
+      technologies: ["AI/ML", "Data Analytics", "Agentic Workflows", "Integrations"],
+      status: "In Development",
+      impact: "Empowering businesses with actionable intelligence and automated workflows."
+    },
+    {
+      title: "Logistics",
+      description: "Smart logistics and fulfillment layer connecting suppliers, warehouses, and delivery operations.",
+      technologies: ["IoT", "Logistics Optimization", "AI Routing"],
+      status: "Concept",
+      impact: "Streamlining movement of goods with intelligent and efficient logistics solutions."
+    },
+    {
+      title: "Tourism & Safari Experiences",
+      description: "Curated tourism experiences with local guides, safaris, and cultural activities. Integrated with discovery, booking, and storytelling layers.",
+      technologies: ["Travel Tech", "AI Recommendations", "Marketplace"],
+      status: "Active Projects",
+      impact: "Promoting East African tourism with authentic, locally-driven experiences."
+    },
+    {
+      title: "Artist Visibility Platform",
+      description: "A creative network platform for musicians, artists, and cultural creators to gain visibility and connect with global opportunities.",
+      technologies: ["AI Discovery", "Streaming Integration", "Community Tools"],
+      status: "In Development",
+      impact: "Amplifying creative voices and connecting artists with fans, brands, and collaborators."
+    },
+    {
+      title: "Zahab Solar & Engineering",
+      description: "Renewable energy, off-grid solutions, agro-tech machinery, and integrated infrastructure/industrial solutions.",
+      technologies: ["Solar Energy", "Electrical Engineering", "Automation", "IoT"],
+      status: "Operational / Expanding",
+      impact: "Delivering clean energy and scalable engineering solutions to communities and industries."
     },
     {
       title: "FundGuard",
@@ -74,16 +202,19 @@ export default function ProjectsSection() {
   return (
     <section className="mb-16">
       <h2 className="text-3xl font-bold text-white mb-8 text-center">Key Projects & Experiences</h2>
+      
       <div className="grid md:grid-cols-2 gap-6">
         {projects.map((project, index) => (
           <div key={index} className="bg-slate-800/50 p-6 rounded-lg border border-slate-600">
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-              <span className={`px-2 py-1 rounded text-xs border ${getStatusColor(project.status)}`}>
+              <span
+                className={`px-2 py-1 rounded text-xs border ${getStatusColor(project.status)}`}
+              >
                 {project.status}
               </span>
             </div>
-            
+
             <p className="text-slate-300 mb-4 leading-relaxed">
               {project.description}
             </p>
@@ -106,10 +237,10 @@ export default function ProjectsSection() {
               <h4 className="text-sm font-semibold text-slate-400 mb-1">Impact:</h4>
               <p className="text-sm text-slate-300">{project.impact}</p>
             </div>
-            
+
             {project.link && (
               <div className="border-t border-slate-600 pt-3 mt-3">
-                <a 
+                <a
                   href={`https://${project.link}`}
                   target="_blank"
                   rel="noopener noreferrer"
