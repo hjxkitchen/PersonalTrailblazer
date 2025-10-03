@@ -15,10 +15,10 @@ interface ProjectGroups {
 
 export default function ProjectsSection() {
   const projectGroups: ProjectGroups = {
-    "Social Commerce": [
+    "Social Commerce (Global, HyperLocal)": [
       {
         title: "Socos",
-        description: "A decentralized social-commerce platform enabling local discovery, vendor tools, and AI-powered recommendations.",
+        description: "A global, hyperlocal, social e-commerce platform enabling local discovery, vendor tools, and AI-powered recommendations.",
         technologies: ["AI/ML", "Marketplace", "ERP", "Blockchain"],
         status: "In Development",
         impact: "Empowering small businesses and communities through intelligent, fair, and scalable commerce."
@@ -33,7 +33,7 @@ export default function ProjectsSection() {
  
     ],
 
-    "Social Communities & Governance": [
+    "Social Communities & Governance (Global, HyperLocal)": [
       {
         title: "Social Global Conversation & Humanitarian",
         description: "A global dialogue layer enabling communities worldwide to connect across borders, languages, and humanitarian causes.",
@@ -45,7 +45,7 @@ export default function ProjectsSection() {
         title: "Governance",
         description: "Local-to-global governance dialogues with layered community conversations (neighborhood, city, state, national, global).",
         technologies: ["Blockchain", "AI Moderation", "Civic Tech"],
-        status: "In Development",
+        status: "Concept / MVP",
         impact: "Enabling transparent, participatory, and multi-layered digital governance systems."
       },
       // {
@@ -66,8 +66,52 @@ export default function ProjectsSection() {
         title: "3D Co-Experiencing World (Three.js)",
         description: "Immersive 3D environments for social interaction, co-watching, and community-based events.",
         technologies: ["Three.js", "WebGL", "Socket.IO", "Spatial Audio"],
-        status: "In Development",
+        status: "Concept / MVP",
         impact: "Delivering immersive social and experiential layers for global communities."
+      }
+    ],
+
+    
+    // "Industrial / Complex Subcontracting x Resource Flows Orchestration": [
+    //   {
+    //     title: "Industrial Orchestration & Resource Flows",
+    //     description: "A platform for orchestrating complex subcontracting, supplier coordination, and resource flows across industries. Combines IoT nodes, human input, and AI optimization to manage logistics, manufacturing, and industrial service chains. Features integration of suppliers, subcontractors, and logistics providers into dynamic process flows with smart contract verification and predictive insights.",
+    //     technologies: ["IoT", "AI/ML", "Blockchain", "ERP", "Workflow Automation", "Logistics Optimization"],
+    //     status: "Concept / In Development",
+    //     impact: "Enabling businesses and industries to coordinate large-scale subcontracting and resource flows with transparency, efficiency, and resilience."
+    //   }
+    // ],
+    
+    "Businesses & Ventures": [
+
+      {
+        title: "Tourism & Safari Experiences",
+        description: "Curated tourism experiences with local guides, safaris, and cultural activities. Integrated with discovery, booking, and storytelling layers.",
+        technologies: ["Travel Tech", "AI Recommendations", "Marketplace"],
+        status: "Active Projects",
+        impact: "Promoting East African tourism with authentic, locally-driven experiences."
+      },
+      // {
+      //   title: "Zahab Solar & Engineering",
+      //   description: "Renewable energy, off-grid solutions, agro-tech machinery, and integrated infrastructure/industrial solutions.",
+      //   technologies: ["Solar Energy", "Electrical Engineering", "Automation", "IoT"],
+      //   status: "Operational / Expanding",
+      //   impact: "Delivering clean energy and scalable engineering solutions to communities and industries."
+      // },
+      {
+        title: "Solar Business Expansion & Operations",
+        description: "Directed family business growth from small solar retail to comprehensive energy, security, off-grid, and agro-processing solutions. Led market education and workforce development in challenging conditions.",
+        technologies: ["Solar Energy Systems", "Business Operations", "Team Leadership", "Market Development"],
+        status: "Active Projects",
+        impact: "Expanded business into multiple sectors while building skilled workforce and educating non-technical market",
+        link: "zahabenergy.com"
+      },
+      {
+        title: "Mechatronics & Automation Systems",
+        description: "Developed industrial automation solutions during community college studies and internship experiences.",
+        technologies: ["Mechatronics", "Industrial Automation", "Engineering"],
+        status: "Completed",
+        impact: "Gained hands-on engineering experience and technical foundation"
       }
     ],
 
@@ -76,7 +120,7 @@ export default function ProjectsSection() {
           title: "Inventory & Sales Management",
           description: "A unified suite covering inventory, warehousing, sales, and CRM integration. Includes product management with barcodes, warehouses, POS with invoicing, customer tracking, pipeline management, and sales project oversight.",
           technologies: ["POS", "CRM", "Inventory Management", "Barcode", "Cloud", "Project Management", "Workflow Automation"],
-          status: "In Development / Prototype",
+          status: "Completed",
           impact: "Simplifying operations and giving businesses a single hub to manage inventory, sales, and customer relationships.",
           subProjects: [
             "Inventory & POS System",
@@ -88,7 +132,7 @@ export default function ProjectsSection() {
           title: "Marketing & Business Profile Tools",
           description: "Integrated marketing and discovery stack for businesses. Features bulk SMS campaigns tied to CRM and POS, automated website generation from business data, and unified business profiles to ensure cross-platform consistency.",
           technologies: ["SMS APIs", "Marketing Automation", "AI Targeting", "Website Builder", "No-Code Tools", "Social Discovery"],
-          status: "In Development / Concept",
+          status: "Completed",
           impact: "Helping businesses stay discoverable, communicate with customers, and establish a professional online presence instantly.",
           subProjects: [
             "Smart SMS Marketing System",
@@ -100,7 +144,7 @@ export default function ProjectsSection() {
           title: "AI Assistants & Insights",
           description: "AI-driven assistants and insights engines for business operations. Includes conversational chatbots for customer support, as well as a central AI hub for analytics, integrations, and agentic workflow automation.",
           technologies: ["AI/ML", "Chatbots", "NLP", "Data Analytics", "Integrations", "Agentic Workflows"],
-          status: "Prototype / In Development",
+          status: "Completed",
           impact: "Reducing response times, improving customer satisfaction, and empowering decision-making through actionable intelligence.",
           subProjects: [
             "AI Chat Assistant",
@@ -124,38 +168,7 @@ export default function ProjectsSection() {
         }
       ],
 
-    "Other Businesses & Ventures": [
-     
-      {
-        title: "Tourism & Safari Experiences",
-        description: "Curated tourism experiences with local guides, safaris, and cultural activities. Integrated with discovery, booking, and storytelling layers.",
-        technologies: ["Travel Tech", "AI Recommendations", "Marketplace"],
-        status: "Active Projects",
-        impact: "Promoting East African tourism with authentic, locally-driven experiences."
-      },
-      // {
-      //   title: "Zahab Solar & Engineering",
-      //   description: "Renewable energy, off-grid solutions, agro-tech machinery, and integrated infrastructure/industrial solutions.",
-      //   technologies: ["Solar Energy", "Electrical Engineering", "Automation", "IoT"],
-      //   status: "Operational / Expanding",
-      //   impact: "Delivering clean energy and scalable engineering solutions to communities and industries."
-      // },
-      {
-        title: "Solar Business Expansion & Operations",
-        description: "Directed family business growth from small solar retail to comprehensive energy, security, off-grid, and agro-processing solutions. Led market education and workforce development in challenging conditions.",
-        technologies: ["Solar Energy Systems", "Business Operations", "Team Leadership", "Market Development"],
-        status: "Completed",
-        impact: "Expanded business into multiple sectors while building skilled workforce and educating non-technical market",
-        link: "zahabenergy.com"
-      },
-      {
-        title: "Mechatronics & Automation Systems",
-        description: "Developed industrial automation solutions during community college studies and internship experiences.",
-        technologies: ["Mechatronics", "Industrial Automation", "Engineering"],
-        status: "Completed",
-        impact: "Gained hands-on engineering experience and technical foundation"
-      }
-    ]
+   
   };
 
   const getStatusColor = (status: string) => {
