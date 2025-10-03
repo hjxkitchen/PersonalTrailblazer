@@ -198,6 +198,19 @@ export default function ProjectsSection() {
                     {project.description}
                   </p>
 
+                  {project.subProjects && (
+                    <div className="mb-4 bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+                      <h4 className="text-sm font-bold text-blue-300 mb-2">Includes:</h4>
+                      <ul className="list-disc list-inside space-y-1">
+                        {project.subProjects.map((subProject, subIndex) => (
+                          <li key={subIndex} className="text-sm text-slate-300">
+                            {subProject}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   <div className="mb-4">
                     <h4 className="text-sm font-semibold text-slate-400 mb-2">Technologies:</h4>
                     <div className="flex flex-wrap gap-2">
@@ -217,17 +230,35 @@ export default function ProjectsSection() {
                     <p className="text-sm text-slate-300">{project.impact}</p>
                   </div>
 
-                  {project.link && (
+                  {(project.link || project.links) && (
                     <div className="border-t border-slate-600 pt-3 mt-3">
-                      <a
-                        href={`https://${project.link}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
-                      >
-                        <span>🔗</span>
-                        {project.link}
-                      </a>
+                      {project.link && (
+                        <a
+                          href={`https://${project.link}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                        >
+                          <span>🔗</span>
+                          {project.link}
+                        </a>
+                      )}
+                      {project.links && (
+                        <div className="space-y-1">
+                          {Object.entries(project.links).map(([name, url]) => (
+                            <a
+                              key={name}
+                              href={`https://${url}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium mr-4"
+                            >
+                              <span>🔗</span>
+                              {name}: {url}
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
