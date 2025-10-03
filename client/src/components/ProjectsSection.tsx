@@ -5,6 +5,8 @@ interface Project {
   status: string;
   impact: string;
   link?: string;
+  subProjects?: string[];
+  links?: { [key: string]: string };
 }
 
 interface ProjectGroups {
@@ -13,14 +15,7 @@ interface ProjectGroups {
 
 export default function ProjectsSection() {
   const projectGroups: ProjectGroups = {
-    "AI & Social Innovation": [
-      {
-        title: "AI-Powered Business Applications",
-        description: "Building full AI applications and products in San Francisco, focusing on practical business solutions and venture development.",
-        technologies: ["AI/ML", "Product Development", "Business Strategy"],
-        status: "In Development",
-        impact: "Developing next-generation AI products for market deployment",
-      },
+    "Decentralized Social Commerce": [
       {
         title: "Socos",
         description: "A decentralized social-commerce platform enabling local discovery, vendor tools, and AI-powered recommendations.",
@@ -28,6 +23,17 @@ export default function ProjectsSection() {
         status: "In Development",
         impact: "Empowering small businesses and communities through intelligent, fair, and scalable commerce."
       },
+      {
+        title: "AI-Powered Business Applications",
+        description: "Building full AI applications and products in San Francisco, focusing on practical business solutions and venture development.",
+        technologies: ["AI/ML", "Product Development", "Business Strategy"],
+        status: "In Development",
+        impact: "Developing next-generation AI products for market deployment"
+      },
+ 
+    ],
+
+    "Decentralized Social Communities & Governance": [
       {
         title: "Social Global Conversation & Humanitarian",
         description: "A global dialogue layer enabling communities worldwide to connect across borders, languages, and humanitarian causes.",
@@ -42,109 +48,84 @@ export default function ProjectsSection() {
         status: "In Development",
         impact: "Enabling transparent, participatory, and multi-layered digital governance systems."
       },
-      {
-        title: "People Matching",
-        description: "AI-driven matching system for authentic, meaningful local and global human connections.",
-        technologies: ["AI/ML", "Recommendation Systems", "Social Graphs"],
-        status: "Prototype",
-        impact: "Helping people find true connections based on values, interests, and proximity."
-      },
+      // {
+      //   title: "People Matching",
+      //   description: "AI-driven matching system for authentic, meaningful local and global human connections.",
+      //   technologies: ["AI/ML", "Recommendation Systems", "Social Graphs"],
+      //   status: "Prototype",
+      //   impact: "Helping people find true connections based on values, interests, and proximity."
+      // },
+      // {
+      //   title: "Creatives Network",
+      //   description: "A platform for musicians, artists, designers, and creative professionals to connect, collaborate, and build opportunities.",
+      //   technologies: ["AI Discovery", "Networking Tools", "Marketplace"],
+      //   status: "In Development",
+      //   impact: "Unlocking collaboration and opportunity in the global creative economy."
+      // },
       {
         title: "3D Co-Experiencing World (Three.js)",
         description: "Immersive 3D environments for social interaction, co-watching, and community-based events.",
         technologies: ["Three.js", "WebGL", "Socket.IO", "Spatial Audio"],
         status: "In Development",
         impact: "Delivering immersive social and experiential layers for global communities."
-      },
-      {
-        title: "Creatives Network",
-        description: "A platform for musicians, artists, designers, and creative professionals to connect, collaborate, and build opportunities.",
-        technologies: ["AI Discovery", "Networking Tools", "Marketplace"],
-        status: "In Development",
-        impact: "Unlocking collaboration and opportunity in the global creative economy."
-      },
-      {
-        title: "Artist Visibility Platform",
-        description: "A creative network platform for musicians, artists, and cultural creators to gain visibility and connect with global opportunities.",
-        technologies: ["AI Discovery", "Streaming Integration", "Community Tools"],
-        status: "In Development",
-        impact: "Amplifying creative voices and connecting artists with fans, brands, and collaborators."
-      },
+      }
     ],
-    "Business Management & Tools": [
-      {
-        title: "CRM with Pipelines & Campaigns",
-        description: "A modern CRM with intuitive UI for managing pipelines, stages, campaigns, and customer interactions.",
-        technologies: ["CRM", "React", "Automations", "APIs"],
-        status: "In Development",
-        impact: "Helping businesses manage relationships and sales with clarity and ease."
-      },
-      {
-        title: "Inventory & POS System",
-        description: "Product management with barcode scanning, images, multi-warehouse tracking, sectioned storage, and POS integration for easy invoicing and CRM syncing. Includes multi-user logins, business dashboards, and warehouse apps.",
-        technologies: ["POS", "Inventory Management", "Barcode", "Cloud"],
-        status: "In Development",
-        impact: "Simplifying operations for businesses through integrated inventory and sales systems."
-      },
-      {
-        title: "Sales Management",
-        description: "Manage customer and product details with sales tracking, statuses, logs, document uploads, and integration with project management tools. Supports automations and team management for overseeing installations.",
-        technologies: ["CRM", "Project Management", "Workflow Automation"],
-        status: "Prototype",
-        impact: "Providing a single hub to oversee sales, customers, and project execution end-to-end."
-      },
-      {
-        title: "Smart SMS Marketing System",
-        description: "Bulk SMS campaigns integrated with POS and CRM. Includes campaign design, audience targeting, and performance tracking.",
-        technologies: ["SMS APIs", "Marketing Automation", "AI Targeting"],
-        status: "In Development",
-        impact: "Enabling businesses to reach and retain customers effectively through smart campaigns."
-      },
-      {
-        title: "AI Chat Assistant",
-        description: "An AI assistant that responds to customer inquiries on behalf of businesses across chat, SMS, and web channels.",
-        technologies: ["AI/ML", "Chatbots", "NLP", "CRM Integration"],
-        status: "Prototype",
-        impact: "Reducing response time and improving customer satisfaction with AI-driven support."
-      },
-      {
-        title: "Automated Business Website Generator",
-        description: "Instant websites created from business profiles, products, categories, and styling choices. Fully responsive with e-commerce capabilities.",
-        technologies: ["AI Website Builder", "No-Code Tools", "Web Design"],
-        status: "In Development",
-        impact: "Giving businesses a professional digital presence instantly, without technical barriers."
-      },
-      {
-        title: "Unified Business Profile",
-        description: "A consolidated profile for businesses that powers marketing, discovery, and cross-platform consistency.",
-        technologies: ["CRM", "Social Discovery", "Search Indexing"],
-        status: "Concept",
-        impact: "Creating a single source of truth for business identity and outreach."
-      },
-      {
-        title: "Central AI Business Assistant",
-        description: "An AI hub providing insights into business data, with integrations into CRM, POS, PM tools, and more. Supports agentic workflows for actions and decision-making.",
-        technologies: ["AI/ML", "Data Analytics", "Agentic Workflows", "Integrations"],
-        status: "In Development",
-        impact: "Empowering businesses with actionable intelligence and automated workflows."
-      },
-      {
-        title: "Logistics",
-        description: "Smart logistics and fulfillment layer connecting suppliers, warehouses, and delivery operations.",
-        technologies: ["IoT", "Logistics Optimization", "AI Routing"],
-        status: "Concept",
-        impact: "Streamlining movement of goods with intelligent and efficient logistics solutions."
-      },
-    ],
-    "Tourism & Travel": [
-      {
-        title: "Tourism & Venture Development",
-        description: "Exploring tourism industry applications and venture opportunities, combining technology with business development.",
-        technologies: ["Tourism Tech", "Venture Development", "Market Analysis"],
-        status: "Current",
-        impact: "Identifying new market opportunities and business models",
-        link: "wildearthsafaris.com"
-      },
+
+    "Business Tools": [
+        {
+          title: "Inventory & Sales Management",
+          description: "A unified suite covering inventory, warehousing, sales, and CRM integration. Includes product management with barcodes, warehouses, POS with invoicing, customer tracking, pipeline management, and sales project oversight.",
+          technologies: ["POS", "CRM", "Inventory Management", "Barcode", "Cloud", "Project Management", "Workflow Automation"],
+          status: "In Development / Prototype",
+          impact: "Simplifying operations and giving businesses a single hub to manage inventory, sales, and customer relationships.",
+          subProjects: [
+            "Inventory & POS System",
+            "Sales Management",
+            "CRM with Pipelines & Campaigns"
+          ]
+        },
+        {
+          title: "Marketing & Business Profile Tools",
+          description: "Integrated marketing and discovery stack for businesses. Features bulk SMS campaigns tied to CRM and POS, automated website generation from business data, and unified business profiles to ensure cross-platform consistency.",
+          technologies: ["SMS APIs", "Marketing Automation", "AI Targeting", "Website Builder", "No-Code Tools", "Social Discovery"],
+          status: "In Development / Concept",
+          impact: "Helping businesses stay discoverable, communicate with customers, and establish a professional online presence instantly.",
+          subProjects: [
+            "Smart SMS Marketing System",
+            "Automated Business Website Generator",
+            "Unified Business Profile"
+          ]
+        },
+        {
+          title: "AI Assistants & Insights",
+          description: "AI-driven assistants and insights engines for business operations. Includes conversational chatbots for customer support, as well as a central AI hub for analytics, integrations, and agentic workflow automation.",
+          technologies: ["AI/ML", "Chatbots", "NLP", "Data Analytics", "Integrations", "Agentic Workflows"],
+          status: "Prototype / In Development",
+          impact: "Reducing response times, improving customer satisfaction, and empowering decision-making through actionable intelligence.",
+          subProjects: [
+            "AI Chat Assistant",
+            "Central AI Business Assistant"
+          ]
+        },
+        {
+          title: "AI Compliance & Procurement Tools",
+          description: "Specialized AI tools for legal, fundraising, and procurement support. FundGuard protects startups against predatory investor terms, while TechSpec Pro generates precise technical specifications for quality procurement and supplier communication.",
+          technologies: ["AI/ML", "FinTech", "Legal Tech", "Procurement Tech", "Risk Analysis", "Document Generation"],
+          status: "Completed",
+          impact: "Enabling startups and businesses to raise responsibly and improve supply chain quality through automated compliance and documentation.",
+          subProjects: [
+            "FundGuard",
+            "TechSpec Pro"
+          ],
+          links: {
+            FundGuard: "fundguard.ecom.ac",
+            TechSpecPro: "techspecpro.ecom.ac"
+          }
+        }
+      ],
+
+    "Other Businesses & Ventures": [
+     
       {
         title: "Tourism & Safari Experiences",
         description: "Curated tourism experiences with local guides, safaris, and cultural activities. Integrated with discovery, booking, and storytelling layers.",
@@ -152,15 +133,13 @@ export default function ProjectsSection() {
         status: "Active Projects",
         impact: "Promoting East African tourism with authentic, locally-driven experiences."
       },
-    ],
-    "Energy & Engineering": [
-      {
-        title: "Zahab Solar & Engineering",
-        description: "Renewable energy, off-grid solutions, agro-tech machinery, and integrated infrastructure/industrial solutions.",
-        technologies: ["Solar Energy", "Electrical Engineering", "Automation", "IoT"],
-        status: "Operational / Expanding",
-        impact: "Delivering clean energy and scalable engineering solutions to communities and industries."
-      },
+      // {
+      //   title: "Zahab Solar & Engineering",
+      //   description: "Renewable energy, off-grid solutions, agro-tech machinery, and integrated infrastructure/industrial solutions.",
+      //   technologies: ["Solar Energy", "Electrical Engineering", "Automation", "IoT"],
+      //   status: "Operational / Expanding",
+      //   impact: "Delivering clean energy and scalable engineering solutions to communities and industries."
+      // },
       {
         title: "Solar Business Expansion & Operations",
         description: "Directed family business growth from small solar retail to comprehensive energy, security, off-grid, and agro-processing solutions. Led market education and workforce development in challenging conditions.",
@@ -169,32 +148,14 @@ export default function ProjectsSection() {
         impact: "Expanded business into multiple sectors while building skilled workforce and educating non-technical market",
         link: "zahabenergy.com"
       },
-    ],
-    "Completed Ventures": [
-      {
-        title: "FundGuard",
-        description: "Protect startups from predatory fundraising terms with AI-powered term sheet analysis. Set your strategy once, then get instant risk scoring and actionable recommendations against Y Combinator and trustworthy investor standards.",
-        technologies: ["AI/ML", "FinTech", "Legal Tech", "Risk Analysis"],
-        status: "Completed", 
-        impact: "Empowering startups to make informed fundraising decisions",
-        link: "fundguard.ecom.ac"
-      },
-      {
-        title: "TechSpec Pro",
-        description: "AI-powered platform that transforms vague requirements into precise technical specifications for quality procurement. Features automatic specification generation, built-in quality checklists, translation bridge for supplier communication, and multi-format export capabilities.",
-        technologies: ["AI/ML", "Procurement Tech", "NLP", "Document Generation"],
-        status: "Completed",
-        impact: "Streamlining technical procurement and improving supply chain quality",
-        link: "techspecpro.ecom.ac"
-      },
       {
         title: "Mechatronics & Automation Systems",
         description: "Developed industrial automation solutions during community college studies and internship experiences.",
         technologies: ["Mechatronics", "Industrial Automation", "Engineering"],
         status: "Completed",
         impact: "Gained hands-on engineering experience and technical foundation"
-      },
-    ],
+      }
+    ]
   };
 
   const getStatusColor = (status: string) => {
