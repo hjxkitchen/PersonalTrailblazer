@@ -30,10 +30,10 @@ export default function Portfolio() {
                   John Xen
                 </h1>
                 <h2 className="text-lg md:text-xl text-blue-400 font-semibold mb-1">
-                  Builder. Doer. Problem Solver.
+                  Tech. Business. Art. Impact.
                 </h2>
                 <p className="text-sm md:text-base text-slate-300">
-                  Ready to drive results through technology, business innovation, and relentless execution
+                  Building systems for a connected, resilient, and responsible world. At the edge of vision and execution.
                 </p>
 
                 {/* Social Media Icons */}
@@ -46,16 +46,16 @@ export default function Portfolio() {
                   >
                     <i className="fab fa-youtube"></i>
                   </a>
-                  <a
+                  {/* <a
                     href="https://www.instagram.com/hjxen25"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white hover:text-pink-500 text-xl transition-colors"
                   >
                     <i className="fab fa-instagram"></i>
-                  </a>
+                  </a> */}
                   <a
-                    href="https://x.com/hk6547"
+                    href="https://x.com/xen2025"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white hover:text-blue-400 text-xl transition-colors"
@@ -91,7 +91,7 @@ export default function Portfolio() {
         ) : (
           <div className="container mx-auto px-4 py-8">
             <ProjectsSection />
-            <SkillsSection />
+            {/* <SkillsSection /> */}
             <ContactSection />
           </div>
         )}
