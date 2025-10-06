@@ -17,7 +17,7 @@ export default function ProjectsSection() {
   const projectGroups: ProjectGroups = {
     "Social Commerce (Global, HyperLocal)": [
       {
-        title: "Socos AI",
+        title: "Socos",
         description:
           "A global, hyperlocal, AI-powered social e-commerce platform that integrates local discovery, vendor tools, and intelligent automation for business growth and community engagement. Includes AI-driven recommendations, smart analytics, and operational orchestration connecting inventory, sales, marketing, and fulfillment flows.",
         technologies: [
@@ -36,7 +36,7 @@ export default function ProjectsSection() {
           "Integrated ERP & Workflow Automation",
           "Blockchain-Verified Trade & Transparency",
         ],
-        link: "socos.ai",
+        // link: "socos.ai",
       },
     ],
 
