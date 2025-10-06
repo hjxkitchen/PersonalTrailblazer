@@ -183,101 +183,125 @@ export default function ProjectsSection() {
     }
   };
 
+  const renderProjectCard = (project: Project, index: number) => (
+    <div key={index} className="bg-slate-800/50 p-6 rounded-lg border border-slate-600">
+      <div className="flex justify-between items-start mb-4">
+        <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+        <span
+          className={`px-2 py-1 rounded text-xs border ${getStatusColor(project.status)}`}
+        >
+          {project.status}
+        </span>
+      </div>
+
+      <p className="text-slate-300 mb-4 leading-relaxed">
+        {project.description}
+      </p>
+
+      {project.subProjects && (
+        <div className="mb-4 bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+          <h4 className="text-sm font-bold text-blue-300 mb-2">Includes:</h4>
+          <ul className="list-disc list-inside space-y-1">
+            {project.subProjects.map((subProject, subIndex) => (
+              <li key={subIndex} className="text-sm text-slate-300">
+                {subProject}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="mb-4">
+        <h4 className="text-sm font-semibold text-slate-400 mb-2">Technologies:</h4>
+        <div className="flex flex-wrap gap-2">
+          {project.technologies.map((tech, techIndex) => (
+            <span
+              key={techIndex}
+              className="bg-slate-700/50 text-slate-300 px-2 py-1 rounded text-xs"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-t border-slate-600 pt-3">
+        <h4 className="text-sm font-semibold text-slate-400 mb-1">Impact:</h4>
+        <p className="text-sm text-slate-300">{project.impact}</p>
+      </div>
+
+      {(project.link || project.links) && (
+        <div className="border-t border-slate-600 pt-3 mt-3">
+          {project.link && (
+            <a
+              href={`https://${project.link}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+            >
+              <span>🔗</span>
+              {project.link}
+            </a>
+          )}
+          {project.links && (
+            <div className="space-y-1">
+              {Object.entries(project.links).map(([name, url]) => (
+                <a
+                  key={name}
+                  href={`https://${url}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium mr-4"
+                >
+                  <span>🔗</span>
+                  {name}: {url}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderGroupSection = (groupName: string, projects: Project[]) => (
+    <div key={groupName} className="flex-1">
+      <h3 className="text-2xl font-bold text-blue-400 mb-6 border-b border-slate-600 pb-2">
+        {groupName}
+      </h3>
+      <div className="space-y-6">
+        {projects.map((project, index) => renderProjectCard(project, index))}
+      </div>
+    </div>
+  );
+
   return (
     <section className="mb-16">
       <h2 className="text-3xl font-bold text-white mb-8 text-center">Key Projects & Experiences</h2>
       
       <div className="space-y-12">
-        {Object.entries(projectGroups).map(([groupName, projects]) => (
-          <div key={groupName}>
-            <h3 className="text-2xl font-bold text-blue-400 mb-6 border-b border-slate-600 pb-2">
-              {groupName}
-            </h3>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {projects.map((project, index) => (
-                <div key={index} className="bg-slate-800/50 p-6 rounded-lg border border-slate-600">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                    <span
-                      className={`px-2 py-1 rounded text-xs border ${getStatusColor(project.status)}`}
-                    >
-                      {project.status}
-                    </span>
-                  </div>
+        <div className="grid lg:grid-cols-2 gap-8">
+          {renderGroupSection("Social Commerce (Global, HyperLocal)", projectGroups["Social Commerce (Global, HyperLocal)"])}
+          {renderGroupSection("Social Communities & Governance (Global, HyperLocal)", projectGroups["Social Communities & Governance (Global, HyperLocal)"])}
+        </div>
 
-                  <p className="text-slate-300 mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  {project.subProjects && (
-                    <div className="mb-4 bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
-                      <h4 className="text-sm font-bold text-blue-300 mb-2">Includes:</h4>
-                      <ul className="list-disc list-inside space-y-1">
-                        {project.subProjects.map((subProject, subIndex) => (
-                          <li key={subIndex} className="text-sm text-slate-300">
-                            {subProject}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-slate-400 mb-2">Technologies:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="bg-slate-700/50 text-slate-300 px-2 py-1 rounded text-xs"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="border-t border-slate-600 pt-3">
-                    <h4 className="text-sm font-semibold text-slate-400 mb-1">Impact:</h4>
-                    <p className="text-sm text-slate-300">{project.impact}</p>
-                  </div>
-
-                  {(project.link || project.links) && (
-                    <div className="border-t border-slate-600 pt-3 mt-3">
-                      {project.link && (
-                        <a
-                          href={`https://${project.link}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
-                        >
-                          <span>🔗</span>
-                          {project.link}
-                        </a>
-                      )}
-                      {project.links && (
-                        <div className="space-y-1">
-                          {Object.entries(project.links).map(([name, url]) => (
-                            <a
-                              key={name}
-                              href={`https://${url}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium mr-4"
-                            >
-                              <span>🔗</span>
-                              {name}: {url}
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
+        {Object.entries(projectGroups)
+          .filter(([groupName]) => 
+            groupName !== "Social Commerce (Global, HyperLocal)" && 
+            groupName !== "Social Communities & Governance (Global, HyperLocal)"
+          )
+          .map(([groupName, projects]) => (
+            <div key={groupName}>
+              <h3 className="text-2xl font-bold text-blue-400 mb-6 border-b border-slate-600 pb-2">
+                {groupName}
+              </h3>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                {projects.map((project, index) => renderProjectCard(project, index))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </section>
   );
