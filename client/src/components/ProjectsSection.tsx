@@ -18,36 +18,37 @@ export default function ProjectsSection() {
     "Social Commerce (Global, HyperLocal)": [
       {
         title: "Socos",
-        description: "A global, hyperlocal, social e-commerce platform enabling local discovery, vendor tools, and AI-powered recommendations.",
-        technologies: ["AI/ML", "Marketplace", "ERP", "Blockchain"],
+        description: "A global, hyperlocal, AI-powered social e-commerce platform that integrates local discovery, vendor tools, and intelligent automation for business growth and community engagement. Includes AI-driven recommendations, smart analytics, and operational orchestration connecting inventory, sales, marketing, and fulfillment flows.",
+        technologies: ["AI/ML", "Marketplace", "ERP", "Blockchain", "Automation"],
         status: "In Development",
-        impact: "Empowering small businesses and communities through intelligent, fair, and scalable commerce."
-      },
-      {
-        title: "AI-Powered Business Applications",
-        description: "Building full AI applications and products in San Francisco, focusing on practical business solutions and venture development.",
-        technologies: ["AI/ML", "Product Development", "Business Strategy"],
-        status: "In Development",
-        impact: "Developing next-generation AI products for market deployment"
-      },
+        impact: "Empowering small businesses and communities through intelligent, fair, and scalable commerce.",
+        subProjects: [
+          "AI-Powered Vendor Tools & Recommendations",
+          "Local Discovery & Community Commerce",
+          "Integrated ERP & Workflow Automation",
+          "Blockchain-Verified Trade & Transparency"
+        ],
+        link: "socos.ai"
+      }
+
  
     ],
 
     "Social Communities & Governance (Global, HyperLocal)": [
       {
-        title: "Social Global Conversation & Humanitarian",
-        description: "A global dialogue layer enabling communities worldwide to connect across borders, languages, and humanitarian causes.",
-        technologies: ["AI Translation", "Social Platforms", "Global Networking"],
+        title: "Agora",
+        description: "A social, AI-powered platform for global and hyperlocal communities (agora.ecom.ac). It integrates immersive 3D worlds, participatory governance, and community-driven discussions that bridge the digital and physical world. Agora enables citizens to co-experience, co-create, and co-decide on global and local issues through an intelligent, inclusive network.",
+        technologies: ["AI/ML", "3D/VR", "Blockchain", "WebGL", "Social Platforms", "Civic Tech"],
         status: "Concept / MVP",
-        impact: "Creating truly global conversations and coordinated humanitarian responses."
-      },
-      {
-        title: "Governance",
-        description: "Local-to-global governance dialogues with layered community conversations (neighborhood, city, state, national, global).",
-        technologies: ["Blockchain", "AI Moderation", "Civic Tech"],
-        status: "Concept / MVP",
-        impact: "Enabling transparent, participatory, and multi-layered digital governance systems."
-      },
+        impact: "Building a foundation for digital democracy and community-led global collaboration through immersive and intelligent communication tools.",
+        subProjects: [
+          "AI-Powered Global Conversations & Humanitarian Networks",
+          "Layered Governance: Local-to-Global Civic Dialogue",
+          "3D Social Worlds & Immersive Co-Experiencing Spaces"
+        ],
+        link: "agora.ecom.ac"
+      }
+
       // {
       //   title: "People Matching",
       //   description: "AI-driven matching system for authentic, meaningful local and global human connections.",
@@ -62,13 +63,7 @@ export default function ProjectsSection() {
       //   status: "In Development",
       //   impact: "Unlocking collaboration and opportunity in the global creative economy."
       // },
-      {
-        title: "3D Co-Experiencing World (Three.js)",
-        description: "Immersive 3D environments for social interaction, co-watching, and community-based events.",
-        technologies: ["Three.js", "WebGL", "Socket.IO", "Spatial Audio"],
-        status: "Concept / MVP",
-        impact: "Delivering immersive social and experiential layers for global communities."
-      }
+
     ],
 
     
@@ -89,7 +84,8 @@ export default function ProjectsSection() {
         description: "Curated tourism experiences with local guides, safaris, and cultural activities. Integrated with discovery, booking, and storytelling layers.",
         technologies: ["Travel Tech", "AI Recommendations", "Marketplace"],
         status: "Active Projects",
-        impact: "Promoting East African tourism with authentic, locally-driven experiences."
+        impact: "Promoting East African tourism with authentic, locally-driven experiences.",
+        link: "wildearthsafaris.com"
       },
       // {
       //   title: "Zahab Solar & Engineering",
@@ -116,6 +112,45 @@ export default function ProjectsSection() {
     ],
 
     "Business Tools": [
+      {
+        title: "AI Compliance & Procurement Tools",
+        description: "Specialized AI tools for legal, fundraising, and procurement support. FundGuard protects startups against predatory investor terms, while TechSpec Pro generates precise technical specifications for quality procurement and supplier communication.",
+        technologies: ["AI/ML", "FinTech", "Legal Tech", "Procurement Tech", "Risk Analysis", "Document Generation"],
+        status: "Completed",
+        impact: "Enabling startups and businesses to raise responsibly and improve supply chain quality through automated compliance and documentation.",
+        subProjects: [
+          "FundGuard",
+          "TechSpec Pro"
+        ],
+        links: {
+          FundGuard: "fundguard.ecom.ac",
+          TechSpecPro: "techspecpro.ecom.ac"
+        }
+      },
+        {
+          title: "AI Assistants & Insights",
+          description: "AI-driven assistants and insights engines for business operations. Includes conversational chatbots for customer support, as well as a central AI hub for analytics, integrations, and agentic workflow automation.",
+          technologies: ["AI/ML", "Chatbots", "NLP", "Data Analytics", "Integrations", "Agentic Workflows"],
+          status: "Completed",
+          impact: "Reducing response times, improving customer satisfaction, and empowering decision-making through actionable intelligence.",
+          subProjects: [
+            "AI Chat Assistant",
+            "Central AI Business Assistant"
+          ]
+        },
+
+      {
+        title: "Marketing & Business Profile Tools",
+        description: "Integrated marketing and discovery stack for businesses. Features bulk SMS campaigns tied to CRM and POS, automated website generation from business data, and unified business profiles to ensure cross-platform consistency.",
+        technologies: ["SMS APIs", "Marketing Automation", "AI Targeting", "Website Builder", "No-Code Tools", "Social Discovery"],
+        status: "Completed",
+        impact: "Helping businesses stay discoverable, communicate with customers, and establish a professional online presence instantly.",
+        subProjects: [
+          "Smart SMS Marketing System",
+          "Automated Business Website Generator",
+          "Unified Business Profile"
+        ]
+      },
         {
           title: "Inventory & Sales Management",
           description: "A unified suite covering inventory, warehousing, sales, and CRM integration. Includes product management with barcodes, warehouses, POS with invoicing, customer tracking, pipeline management, and sales project oversight.",
@@ -128,44 +163,8 @@ export default function ProjectsSection() {
             "CRM with Pipelines & Campaigns"
           ]
         },
-        {
-          title: "Marketing & Business Profile Tools",
-          description: "Integrated marketing and discovery stack for businesses. Features bulk SMS campaigns tied to CRM and POS, automated website generation from business data, and unified business profiles to ensure cross-platform consistency.",
-          technologies: ["SMS APIs", "Marketing Automation", "AI Targeting", "Website Builder", "No-Code Tools", "Social Discovery"],
-          status: "Completed",
-          impact: "Helping businesses stay discoverable, communicate with customers, and establish a professional online presence instantly.",
-          subProjects: [
-            "Smart SMS Marketing System",
-            "Automated Business Website Generator",
-            "Unified Business Profile"
-          ]
-        },
-        {
-          title: "AI Assistants & Insights",
-          description: "AI-driven assistants and insights engines for business operations. Includes conversational chatbots for customer support, as well as a central AI hub for analytics, integrations, and agentic workflow automation.",
-          technologies: ["AI/ML", "Chatbots", "NLP", "Data Analytics", "Integrations", "Agentic Workflows"],
-          status: "Completed",
-          impact: "Reducing response times, improving customer satisfaction, and empowering decision-making through actionable intelligence.",
-          subProjects: [
-            "AI Chat Assistant",
-            "Central AI Business Assistant"
-          ]
-        },
-        {
-          title: "AI Compliance & Procurement Tools",
-          description: "Specialized AI tools for legal, fundraising, and procurement support. FundGuard protects startups against predatory investor terms, while TechSpec Pro generates precise technical specifications for quality procurement and supplier communication.",
-          technologies: ["AI/ML", "FinTech", "Legal Tech", "Procurement Tech", "Risk Analysis", "Document Generation"],
-          status: "Completed",
-          impact: "Enabling startups and businesses to raise responsibly and improve supply chain quality through automated compliance and documentation.",
-          subProjects: [
-            "FundGuard",
-            "TechSpec Pro"
-          ],
-          links: {
-            FundGuard: "fundguard.ecom.ac",
-            TechSpecPro: "techspecpro.ecom.ac"
-          }
-        }
+     
+        
       ],
 
    
