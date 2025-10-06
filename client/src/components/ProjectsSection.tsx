@@ -17,7 +17,7 @@ export default function ProjectsSection() {
   const projectGroups: ProjectGroups = {
     "Social Commerce (Global, HyperLocal)": [
       {
-        title: "Socos AI",
+        title: "Socos",
         description: "A global, hyperlocal, AI-powered social e-commerce platform that integrates local discovery, vendor tools, and intelligent automation for business growth and community engagement. Includes AI-driven recommendations, smart analytics, and operational orchestration connecting inventory, sales, marketing, and fulfillment flows.",
         technologies: ["AI/ML", "Marketplace", "ERP", "Blockchain", "Automation"],
         status: "In Development",
@@ -31,12 +31,12 @@ export default function ProjectsSection() {
         link: "socos.ai"
       }
 
- 
+
     ],
 
     "Social Communities & Governance (Global, HyperLocal)": [
       {
-        title: "Agora AI",
+        title: "Agora",
         description: "A social, AI-powered platform for global and hyperlocal communities (agora.ecom.ac). It integrates immersive 3D worlds, participatory governance, and community-driven discussions that bridge the digital and physical world. Agora enables citizens to co-experience, co-create, and co-decide on global and local issues through an intelligent, inclusive network.",
         technologies: ["AI/ML", "3D/VR", "Blockchain", "WebGL", "Social Platforms", "Civic Tech"],
         status: "Concept / MVP",
@@ -66,7 +66,7 @@ export default function ProjectsSection() {
 
     ],
 
-    
+
     // "Industrial / Complex Subcontracting x Resource Flows Orchestration": [
     //   {
     //     title: "Industrial Orchestration & Resource Flows",
@@ -76,11 +76,11 @@ export default function ProjectsSection() {
     //     impact: "Enabling businesses and industries to coordinate large-scale subcontracting and resource flows with transparency, efficiency, and resilience."
     //   }
     // ],
-    
+
     "Businesses & Ventures": [
 
       {
-        title: "Wild Earth Safaris",
+        title: "Tourism & Safari Experiences",
         description: "Curated tourism experiences with local guides, safaris, and cultural activities. Integrated with discovery, booking, and storytelling layers.",
         technologies: ["Travel Tech", "AI Recommendations", "Marketplace"],
         status: "Active Projects",
@@ -95,7 +95,7 @@ export default function ProjectsSection() {
       //   impact: "Delivering clean energy and scalable engineering solutions to communities and industries."
       // },
       {
-        title: "Zahab Energy",
+        title: "Solar Business Expansion & Operations",
         description: "Directed family business growth from small solar retail to comprehensive energy, security, off-grid, and agro-processing solutions. Led market education and workforce development in challenging conditions.",
         technologies: ["Solar Energy Systems", "Business Operations", "Team Leadership", "Market Development"],
         status: "Active Projects",
@@ -163,11 +163,11 @@ export default function ProjectsSection() {
             "CRM with Pipelines & Campaigns"
           ]
         },
-     
-        
+
+
       ],
 
-   
+
   };
 
   const getStatusColor = (status: string) => {
@@ -186,14 +186,14 @@ export default function ProjectsSection() {
   return (
     <section className="mb-16">
       <h2 className="text-3xl font-bold text-white mb-8 text-center">Key Projects & Experiences</h2>
-      
+
       <div className="space-y-12">
         {Object.entries(projectGroups).map(([groupName, projects]) => (
           <div key={groupName}>
             <h3 className="text-2xl font-bold text-blue-400 mb-6 border-b border-slate-600 pb-2">
               {groupName}
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               {projects.map((project, index) => (
                 <div key={index} className="bg-slate-800/50 p-6 rounded-lg border border-slate-600">

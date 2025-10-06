@@ -20,7 +20,7 @@ export default function Portfolio() {
             <div className="flex items-center gap-4 md:gap-6">
               <div className="w-32 h-32 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-blue-400 flex-shrink-0">
                 <img 
-                  src="/imgg.jpg" 
+                  src="/img.jpg" 
                   alt="Your Name" 
                   className="w-full h-full object-cover"
                 />
