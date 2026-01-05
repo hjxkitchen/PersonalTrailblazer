@@ -30,10 +30,11 @@ export default function Portfolio() {
                   John Xen
                 </h1>
                 <h2 className="text-lg md:text-xl text-blue-400 font-semibold mb-1">
-                  Tech. Business. Art. Impact.
+                Building systems for a connected, resilient, and responsible world.
+                  
                 </h2>
                 <p className="text-sm md:text-base text-slate-300">
-                  Building systems for a connected, resilient, and responsible world. At the edge of vision and execution.
+                Building Technology. Creating Value. Shaping Culture. Driving Impact.
                 </p>
 
                 {/* Social Media Icons */}
@@ -74,11 +75,18 @@ export default function Portfolio() {
 
               </div>
             </div>
+            <a href="https://spaceagevision.com">
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg transition-colors text-sm md:text-base self-start md:self-auto"
+            >
+             Mission
+            </button>
+            </a>
             <button
               onClick={toggleView}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg transition-colors text-sm md:text-base self-start md:self-auto"
             >
-              {showTraditionalPortfolio ? "Show Mission" : "Show Portfolio"}
+              {showTraditionalPortfolio ? "Show Other Projects" : "Show Main"}
             </button>
           </div>
         </div>

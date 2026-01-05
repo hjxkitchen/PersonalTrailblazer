@@ -1,106 +1,167 @@
 export default function MissionSection() {
+
+
+  const projects = [
+    {
+      
+      // 3d world game
+      name: "3d world game",
+      description: "A 3d world game built with Three.js",
+      url: "https://3dballgame.netlify.app",
+    },
+    {
+      name: "mindgraph",
+      description: "A mindgraph built with Three.js",
+      url: "https://mindgraph.socos.ai",
+    },
+    {
+      name: "Voice Pos",
+      description: "A voice powered pos system for small businesses and retailers.",
+      url: "https://vistavoicepos.netlify.app",
+    },
+    {
+      name: "Sky Walk World",
+      description: "A 3d world game where you can import 3d glb models and walk around in a 3d world built with Three.js",
+      url: "https://skywalkworld.netlify.app",
+    },
+    {
+      name: "Star Select",
+      // multiplayer game built with mediapipe and camer ahand trakcing to selct stars on a screen
+      description: "A multiplayergame built with mediapipe and camer ahand trakcing to selct stars on a screen",
+      url: "https://starselect.netlify.app",
+    },
+  ];
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-16">
-      <div className="container mx-auto px-4 max-w-4xl">
-        {/* Mission Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            My Mission
-          </h1>
-          <div className="w-24 h-1 bg-blue-500 mx-auto mb-8"></div>
-          <p className="text-xl text-slate-300 leading-relaxed">
-            Empowering the next generation of innovation in the AI age
-          </p>
-        </div>
+    <div className="hidden container mx-auto px-4 max-w-3xl">
+  
+      {/* Header */}
+      <div className="text-center mb-14">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          My Mission
+        </h1>
+        <p className="text-lg text-slate-300">
+          Unifying commerce, infrastructure, governance, and culture for the next era.
+        </p>
+      </div>
+  
+      {/* Single Mission Card */}
+      <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-10 md:p-12 border border-slate-700">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+          Build the Systems of a Resilient, Abundant Civilization
+        </h2>
+  
+        <p className="text-slate-300 leading-relaxed text-lg">
+          My work connects the full stack of how societies function — from how people buy,
+          trade, and collaborate, to how communities power themselves, govern themselves, 
+          and preserve their culture.  
+          <br /><br />
+          <span className="text-white font-semibold">Socos</span> starts at the hyperlocal level: 
+          empowering creators, small businesses, and neighborhoods with social commerce and
+          brand-driven trade. This naturally expands into <span className="text-white font-semibold">
+          B2B marketplaces</span>, supply chains, and complex commerce orchestration — creating
+          the digital flow tools needed for modern economies.
+          <br /><br />
+          Through <span className="text-white font-semibold">Zahab Energy</span>, we extend this into 
+          real-world infrastructure: resilient off-grid energy, water, agro-processing, and 
+          decentralized systems we've built for more than a decade across Tanzania. These 
+          foundations enable leapfrog development and set the stage for future industrial and 
+          space-age manufacturing in areas like neurotech, biotech, and advanced materials.
+          <br /><br />
+          In parallel, <span className="text-white font-semibold">Agora AI</span> reimagines civic 
+          engagement — regional discourse, transparent participation, humanitarian coordination, 
+          and secure-by-design governance for a digital world.
+          <br /><br />
+          And with <span className="text-white font-semibold">Wild Earth Safaris</span>, we help 
+          people explore cultures, nature, and heritage — grounding us in what makes humanity 
+          worth building for as we aim toward the stars.
+          <br /><br />
+          Together, these efforts form one mission: to build the systems, tools, and cultural 
+          foundation for an abundant, connected, and future-ready civilization.
+        </p>
+      </div>
+  
+    </div>
+    <div className="container mx-auto px-4 py-12">
+  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    {projects.map((project) => (
+      <div
+        key={project.name}
+        className="
+          group relative rounded-2xl overflow-hidden
+          border border-slate-700/60
+          bg-slate-900/80
+          transition hover:border-slate-500
+        "
+      >
+        {/* Thumbnail */}
+        <div className="relative aspect-[16/10] bg-black overflow-hidden">
+          <iframe
+            src={project.url}
+            title={project.name}
+            loading="lazy"
+            className="
+              absolute inset-0 w-full h-full
+              scale-[1.02]
+              pointer-events-none
+            "
+          />
 
-        {/* Main Mission Statement */}
-        <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 mb-12 border border-slate-700">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-            Empowering Small Businesses & Players in the AI Revolution
-          </h2>
-          <p className="text-lg text-slate-300 leading-relaxed mb-6">
-            I believe we're at a pivotal moment in history. The AI age presents unprecedented opportunities 
-            for small businesses and individual players to compete on a global scale, innovate faster, 
-            and create solutions that were once only possible for large corporations.
-          </p>
-          <p className="text-lg text-slate-300 leading-relaxed">
-            My mission is to democratize access to these powerful tools and strategies, enabling 
-            entrepreneurs and small businesses to harness AI for growth, efficiency, and innovation.
-          </p>
-        </div>
+          {/* Overlay */}
+          <div
+            className="
+              absolute inset-0
+              bg-gradient-to-t from-black/80 via-black/30 to-transparent
+              opacity-90
+            "
+          />
 
-        {/* Network Revolution Section */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-xl p-8 border border-blue-700/50">
-            <h3 className="text-xl font-bold text-white mb-4">
-              Network Revolution
-            </h3>
-            <p className="text-slate-300 leading-relaxed">
-              I believe in a network revolution that connects resources, knowledge, and opportunities 
-              more efficiently than ever before. By building interconnected systems and communities, 
-              we can maximize resource utilization and minimize waste.
-            </p>
-          </div>
-          
-          <div className="bg-gradient-to-br from-green-900/30 to-blue-900/30 rounded-xl p-8 border border-green-700/50">
-            <h3 className="text-xl font-bold text-white mb-4">
-              Responsible Innovation
-            </h3>
-            <p className="text-slate-300 leading-relaxed">
-              Technology should serve humanity responsibly. Through thoughtful implementation of AI 
-              and network technologies, we can create sustainable solutions that lead to abundance 
-              rather than scarcity, opportunity rather than displacement.
-            </p>
-          </div>
-        </div>
-
-        {/* Vision for the Future */}
-        <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-slate-700">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-            Vision for Abundance
-          </h2>
-          <p className="text-lg text-slate-300 leading-relaxed mb-6">
-            I envision a future where intelligent networks and AI-powered systems enable us to:
-          </p>
-          <ul className="space-y-4 text-slate-300">
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <span>Optimize resource allocation across communities and businesses</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <span>Enable small players to access enterprise-level capabilities</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <span>Create sustainable, interconnected economic ecosystems</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <span>Foster innovation that benefits both business and society</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <h3 className="text-2xl font-bold text-white mb-4">
-            Ready to Build the Future Together?
-          </h3>
-          <p className="text-lg text-slate-300 mb-8">
-            Let's connect and explore how we can leverage AI and network technologies 
-            to create meaningful impact in your business or project.
-          </p>
-          <a 
-            href="https://www.linkedin.com/in/john-xen-75a150209/"
+          {/* Hover CTA */}
+          <a
+            href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors"
+            className="
+              absolute inset-0 flex items-center justify-center
+              opacity-0 group-hover:opacity-100
+              transition
+            "
           >
-            Get In Touch
+            <span
+              className="
+                px-5 py-2 rounded-full
+                bg-blue-600 hover:bg-blue-500
+                text-white text-sm font-medium
+                transition
+              "
+            >
+              Visit Project →
+            </span>
           </a>
         </div>
+
+        {/* Content */}
+        <div className="p-5">
+          <h3 className="text-white font-semibold text-lg tracking-tight mb-1">
+            {project.name}
+          </h3>
+
+          {project.description && (
+            <p className="text-sm text-slate-300 leading-relaxed">
+              {project.description}
+            </p>
+          )}
+        </div>
       </div>
-    </div>
+    ))}
+  </div>
+</div>
+
+  </div>
+  
+
+  
+  
   );
 }
