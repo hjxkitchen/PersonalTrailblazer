@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Box } from "lucide-react";
+
 interface Project {
   title: string;
   description: string;
@@ -6,20 +9,99 @@ interface Project {
   link?: string;
 }
 
+// Helper function to convert project title to thumbnail filename
+function getThumbnailPath(projectTitle: string): string {
+  const thumbnailMap: Record<string, string> = {
+    "Socos": "socos.jpg",
+    "Agora": "agora.jpg",
+    "Zahab Energy": "zahab-energy.jpg",
+    "B2B Marketplace & Commerce Orchestration": "b2b-marketplace.jpg",
+    "Wild Earth Safaris": "wild-earth-safaris.jpg",
+    "Mechatronics & Automation Systems": "mechatronics.jpg",
+  };
+
+  // Try direct match first
+  if (thumbnailMap[projectTitle]) {
+    return `/thumbnails/${thumbnailMap[projectTitle]}`;
+  }
+  
+  // Convert project title to kebab-case for fallback matching
+  const normalizedName = projectTitle
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+  
+  // Try normalized match
+  for (const [key, value] of Object.entries(thumbnailMap)) {
+    const normalizedKey = key
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+    
+    if (normalizedKey === normalizedName) {
+      return `/thumbnails/${value}`;
+    }
+  }
+  
+  // Final fallback: try the normalized name directly
+  return `/thumbnails/${normalizedName}.jpg`;
+}
+
+// Thumbnail component with error handling - only shows on click, pushes content down
+function ProjectThumbnail({ project, isExpanded }: { project: Project; isExpanded: boolean }) {
+  const [imageError, setImageError] = useState(false);
+
+  if (imageError) {
+    return (
+      <div 
+        className="relative bg-slate-950 overflow-hidden flex items-center justify-center rounded-t-2xl transition-all duration-500 ease-in-out"
+        style={{ 
+          maxHeight: isExpanded ? '256px' : '0px',
+          minHeight: isExpanded ? '256px' : '0px',
+          willChange: 'max-height'
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-transparent to-purple-500/20" />
+        <div className={`relative text-slate-700 transition-all duration-300 ${isExpanded ? 'text-blue-400 opacity-100' : 'opacity-0'}`}>
+          <Box size={40} strokeWidth={1.5} />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      className="relative bg-slate-950 overflow-hidden rounded-t-2xl transition-all duration-500 ease-in-out"
+      style={{ 
+        maxHeight: isExpanded ? '256px' : '0px',
+        minHeight: isExpanded ? '256px' : '0px',
+        willChange: 'max-height'
+      }}
+    >
+      <img
+        src={getThumbnailPath(project.title)}
+        alt={project.title}
+        className={`w-full h-full object-cover transition-all duration-500 ${isExpanded ? 'scale-110 opacity-100' : 'opacity-0 scale-100'}`}
+        onError={() => setImageError(true)}
+        style={{ height: isExpanded ? '256px' : '0px', minHeight: isExpanded ? '256px' : '0px' }}
+      />
+    </div>
+  );
+}
+
 export default function ProjectsSection() {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
   const projects: Project[] = [
     {
       title: "Socos",
       description: "Hyperlocal social platform with brand-driven trade, e-commerce, and tools for the next generation of social businesses, creators, and influencers.",
       technologies: ["AI/ML", "Marketplace", "ERP", "Blockchain"],
       status: "In Development",
-    },
-    {
-      title: "Agora",
-      description: "AI-powered platform for regional governance, social discourse, humanitarian-organized projects, voting, and structured local & global civic engagement.",
-      technologies: ["AI/ML", "Blockchain", "Civic Tech"],
-      status: "Concept / MVP",
-      link: "agora.ecom.ac",
     },
     {
       title: "Zahab Energy",
@@ -29,17 +111,24 @@ export default function ProjectsSection() {
       link: "zahabenergy.com",
     },
     {
-      title: "B2B Marketplace & Commerce Orchestration",
-      description: "Platform for complex B2B marketplace operations and supply chain coordination with IoT, AI optimization, and smart contracts.",
-      technologies: ["IoT", "AI/ML", "Blockchain", "Supply Chain"],
-      status: "Concept / In Development",
-    },
-    {
       title: "Wild Earth Safaris",
       description: "Lifestyle-focused curated tourism experiences with local guides, safaris, and cultural activities.",
       technologies: ["Travel Tech", "AI Recommendations"],
       status: "Active",
       link: "wildearthsafaris.com",
+    },
+    {
+      title: "Agora",
+      description: "AI-powered platform for regional governance, social discourse, humanitarian-organized projects, voting, and structured local & global civic engagement.",
+      technologies: ["AI/ML", "Blockchain", "Civic Tech"],
+      status: "Concept / MVP",
+      link: "agora.ecom.ac",
+    },
+    {
+      title: "B2B Marketplace & Commerce Orchestration",
+      description: "Platform for complex B2B marketplace operations and supply chain coordination with IoT, AI optimization, and smart contracts.",
+      technologies: ["IoT", "AI/ML", "Blockchain", "Supply Chain"],
+      status: "Concept / In Development",
     },
     // {
     //   title: "AI Business Tools",
@@ -90,8 +179,10 @@ export default function ProjectsSection() {
         Projects
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-8 mb-16">
-  {projects.map((project, index) => (
+      <div className="columns-1 md:columns-2 gap-8 mb-16" style={{ columnGap: '2rem', contain: 'layout' }}>
+  {projects.map((project, index) => {
+    const isExpanded = expandedIndex === index;
+    return (
     <div
       key={index}
       className="
@@ -99,19 +190,28 @@ export default function ProjectsSection() {
         bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-transparent
         hover:from-blue-400/30 hover:via-purple-400/20
         transition-all duration-300
+        break-inside-avoid
+        mb-8
+        cursor-pointer
       "
+      onClick={() => setExpandedIndex(isExpanded ? null : index)}
+      style={{ contain: 'layout style' }}
     >
       <div
         className="
-          h-full rounded-2xl bg-slate-900/80 backdrop-blur
+          rounded-2xl bg-slate-900/80 backdrop-blur
           border border-slate-700/60
-          p-6
+          overflow-hidden
           transition-all duration-300
           group-hover:border-slate-600
         "
       >
-        {/* Header */}
-        <div className="flex items-start justify-between mb-4">
+        {/* Thumbnail Image - expands and pushes content down */}
+        <ProjectThumbnail project={project} isExpanded={isExpanded} />
+
+        <div className="p-6">
+          {/* Header */}
+          <div className="flex items-start justify-between mb-4">
           <h3 className="text-xl font-semibold text-white tracking-tight">
             {project.title}
           </h3>
@@ -155,6 +255,7 @@ export default function ProjectsSection() {
             href={`https://${project.link}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             className="
               inline-flex items-center gap-2 text-sm
               text-blue-400 hover:text-blue-300
@@ -169,9 +270,11 @@ export default function ProjectsSection() {
             </span>
           </a>
         )}
+        </div>
       </div>
     </div>
-  ))}
+    );
+  })}
 </div>
 
 {/* Interests */}
