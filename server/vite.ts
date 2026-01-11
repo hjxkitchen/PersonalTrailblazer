@@ -18,10 +18,15 @@ export function log(message: string, source = "express") {
 }
 
 export async function setupVite(app: Express, server: Server) {
-  // Lazy import vite only when needed (development mode)
-  // Don't import vite.config.js as it has dev dependencies
+  // Lazy import vite and plugins only when needed (development mode)
+  // This avoids pulling in dev dependencies in production builds
   const viteModule = await import("vite");
   const { nanoid } = await import("nanoid");
+  
+  // Dynamically import plugins (only available in dev)
+  const reactPlugin = await import("@vitejs/plugin-react");
+  const runtimeErrorOverlay = await import("@replit/vite-plugin-runtime-error-modal");
+  const glslPlugin = await import("vite-plugin-glsl");
   
   const viteLogger = viteModule.createLogger();
   const serverOptions: viteModule.ServerOptions = {
@@ -30,8 +35,7 @@ export async function setupVite(app: Express, server: Server) {
     allowedHosts: true,
   };
 
-  // Create minimal inline config instead of importing vite.config.js
-  // This avoids pulling in dev dependencies like @vitejs/plugin-react
+  // Create inline config with dynamically imported plugins
   const vite = await viteModule.createServer({
     root: path.resolve(__dirname, "..", "client"),
     resolve: {
@@ -50,7 +54,11 @@ export async function setupVite(app: Express, server: Server) {
     },
     server: serverOptions,
     appType: "custom",
-    plugins: [], // Plugins not needed for middleware mode
+    plugins: [
+      reactPlugin.default(),
+      runtimeErrorOverlay.default(),
+      glslPlugin.default(),
+    ],
     assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"],
   });
 
