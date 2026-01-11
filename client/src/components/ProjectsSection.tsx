@@ -10,6 +10,7 @@ interface Project {
 }
 
 // Helper function to convert project title to thumbnail filename
+// Returns path to local thumbnail file, or empty string if not found
 function getThumbnailPath(projectTitle: string): string {
   const thumbnailMap: Record<string, string> = {
     "Socos": "socos.jpg",
@@ -51,11 +52,13 @@ function getThumbnailPath(projectTitle: string): string {
   return `/thumbnails/${normalizedName}.jpg`;
 }
 
-// Thumbnail component with error handling - only shows on click, pushes content down
+// Thumbnail component - shows local thumbnail if available, otherwise placeholder
 function ProjectThumbnail({ project, isExpanded }: { project: Project; isExpanded: boolean }) {
   const [imageError, setImageError] = useState(false);
+  const thumbnailPath = getThumbnailPath(project.title);
 
-  if (imageError) {
+  // Show placeholder if image fails to load or no thumbnail path
+  if (imageError || !thumbnailPath) {
     return (
       <div 
         className="relative bg-slate-950 overflow-hidden flex items-center justify-center rounded-t-2xl transition-all duration-500 ease-in-out"
@@ -83,7 +86,7 @@ function ProjectThumbnail({ project, isExpanded }: { project: Project; isExpande
       }}
     >
       <img
-        src={getThumbnailPath(project.title)}
+        src={thumbnailPath}
         alt={project.title}
         className={`w-full h-full object-cover transition-all duration-500 ${isExpanded ? 'scale-110 opacity-100' : 'opacity-0 scale-100'}`}
         onError={() => setImageError(true)}
