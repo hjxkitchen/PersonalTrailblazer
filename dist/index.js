@@ -1,3 +1,54 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __esm = (fn, res) => function __init() {
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+};
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+
+// vite.config.ts
+var vite_config_exports = {};
+__export(vite_config_exports, {
+  default: () => vite_config_default
+});
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path, { dirname } from "path";
+import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+import { fileURLToPath } from "url";
+import glsl from "vite-plugin-glsl";
+var __filename, __dirname, vite_config_default;
+var init_vite_config = __esm({
+  "vite.config.ts"() {
+    "use strict";
+    __filename = fileURLToPath(import.meta.url);
+    __dirname = dirname(__filename);
+    vite_config_default = defineConfig({
+      plugins: [
+        react(),
+        runtimeErrorOverlay(),
+        glsl()
+        // Add GLSL shader support
+      ],
+      resolve: {
+        alias: {
+          "@": path.resolve(__dirname, "client", "src"),
+          "@shared": path.resolve(__dirname, "shared")
+        }
+      },
+      root: path.resolve(__dirname, "client"),
+      build: {
+        outDir: path.resolve(__dirname, "dist/public"),
+        emptyOutDir: true
+      },
+      // Add support for large models and audio files
+      assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"]
+    });
+  }
+});
+
 // server/index.ts
 import express2 from "express";
 
@@ -13,44 +64,8 @@ import express from "express";
 import fs from "fs";
 import path2, { dirname as dirname2 } from "path";
 import { fileURLToPath as fileURLToPath2 } from "url";
-import { createServer as createViteServer, createLogger } from "vite";
-
-// vite.config.ts
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path, { dirname } from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
-import { fileURLToPath } from "url";
-import glsl from "vite-plugin-glsl";
-var __filename = fileURLToPath(import.meta.url);
-var __dirname = dirname(__filename);
-var vite_config_default = defineConfig({
-  plugins: [
-    react(),
-    runtimeErrorOverlay(),
-    glsl()
-    // Add GLSL shader support
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "client", "src"),
-      "@shared": path.resolve(__dirname, "shared")
-    }
-  },
-  root: path.resolve(__dirname, "client"),
-  build: {
-    outDir: path.resolve(__dirname, "dist/public"),
-    emptyOutDir: true
-  },
-  // Add support for large models and audio files
-  assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"]
-});
-
-// server/vite.ts
-import { nanoid } from "nanoid";
 var __filename2 = fileURLToPath2(import.meta.url);
 var __dirname2 = dirname2(__filename2);
-var viteLogger = createLogger();
 function log(message, source = "express") {
   const formattedTime = (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -61,13 +76,17 @@ function log(message, source = "express") {
   console.log(`${formattedTime} [${source}] ${message}`);
 }
 async function setupVite(app2, server) {
+  const viteModule = await import("vite");
+  const viteConfig = await Promise.resolve().then(() => (init_vite_config(), vite_config_exports));
+  const { nanoid } = await import("nanoid");
+  const viteLogger = viteModule.createLogger();
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
     allowedHosts: true
   };
-  const vite = await createViteServer({
-    ...vite_config_default,
+  const vite = await viteModule.createServer({
+    ...viteConfig.default,
     configFile: false,
     customLogger: {
       ...viteLogger,
