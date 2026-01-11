@@ -1,54 +1,3 @@
-var __defProp = Object.defineProperty;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-};
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-
-// vite.config.ts
-var vite_config_exports = {};
-__export(vite_config_exports, {
-  default: () => vite_config_default
-});
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path, { dirname } from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
-import { fileURLToPath } from "url";
-import glsl from "vite-plugin-glsl";
-var __filename, __dirname, vite_config_default;
-var init_vite_config = __esm({
-  "vite.config.ts"() {
-    "use strict";
-    __filename = fileURLToPath(import.meta.url);
-    __dirname = dirname(__filename);
-    vite_config_default = defineConfig({
-      plugins: [
-        react(),
-        runtimeErrorOverlay(),
-        glsl()
-        // Add GLSL shader support
-      ],
-      resolve: {
-        alias: {
-          "@": path.resolve(__dirname, "client", "src"),
-          "@shared": path.resolve(__dirname, "shared")
-        }
-      },
-      root: path.resolve(__dirname, "client"),
-      build: {
-        outDir: path.resolve(__dirname, "dist/public"),
-        emptyOutDir: true
-      },
-      // Add support for large models and audio files
-      assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"]
-    });
-  }
-});
-
 // server/index.ts
 import express2 from "express";
 
@@ -62,10 +11,10 @@ async function registerRoutes(app2) {
 // server/vite.ts
 import express from "express";
 import fs from "fs";
-import path2, { dirname as dirname2 } from "path";
-import { fileURLToPath as fileURLToPath2 } from "url";
-var __filename2 = fileURLToPath2(import.meta.url);
-var __dirname2 = dirname2(__filename2);
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+var __filename = fileURLToPath(import.meta.url);
+var __dirname = dirname(__filename);
 function log(message, source = "express") {
   const formattedTime = (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -77,7 +26,6 @@ function log(message, source = "express") {
 }
 async function setupVite(app2, server) {
   const viteModule = await import("vite");
-  const viteConfig = await Promise.resolve().then(() => (init_vite_config(), vite_config_exports));
   const { nanoid } = await import("nanoid");
   const viteLogger = viteModule.createLogger();
   const serverOptions = {
@@ -86,7 +34,13 @@ async function setupVite(app2, server) {
     allowedHosts: true
   };
   const vite = await viteModule.createServer({
-    ...viteConfig.default,
+    root: path.resolve(__dirname, "..", "client"),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "..", "client", "src"),
+        "@shared": path.resolve(__dirname, "..", "shared")
+      }
+    },
     configFile: false,
     customLogger: {
       ...viteLogger,
@@ -96,14 +50,17 @@ async function setupVite(app2, server) {
       }
     },
     server: serverOptions,
-    appType: "custom"
+    appType: "custom",
+    plugins: [],
+    // Plugins not needed for middleware mode
+    assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"]
   });
   app2.use(vite.middlewares);
   app2.use("*", async (req, res, next) => {
     const url = req.originalUrl;
     try {
-      const clientTemplate = path2.resolve(
-        __dirname2,
+      const clientTemplate = path.resolve(
+        __dirname,
         "..",
         "client",
         "index.html"
@@ -123,11 +80,11 @@ async function setupVite(app2, server) {
 }
 function serveStatic(app2) {
   const possiblePaths = [
-    path2.resolve(__dirname2, "public"),
+    path.resolve(__dirname, "public"),
     // dist/public when bundled
-    path2.resolve(process.cwd(), "dist", "public"),
+    path.resolve(process.cwd(), "dist", "public"),
     // absolute from cwd
-    path2.resolve(__dirname2, "..", "dist", "public")
+    path.resolve(__dirname, "..", "dist", "public")
     // fallback
   ];
   let distPath = null;
@@ -146,7 +103,7 @@ function serveStatic(app2) {
   log(`Serving static files from: ${distPath}`, "express");
   app2.use(express.static(distPath));
   app2.use("*", (_req, res) => {
-    const indexPath = path2.resolve(distPath, "index.html");
+    const indexPath = path.resolve(distPath, "index.html");
     if (!fs.existsSync(indexPath)) {
       log(`index.html not found at: ${indexPath}`, "error");
       return res.status(500).send("index.html not found");
@@ -161,7 +118,7 @@ app.use(express2.json());
 app.use(express2.urlencoded({ extended: false }));
 app.use((req, res, next) => {
   const start = Date.now();
-  const path3 = req.path;
+  const path2 = req.path;
   let capturedJsonResponse = void 0;
   const originalResJson = res.json;
   res.json = function(bodyJson, ...args) {
@@ -170,8 +127,8 @@ app.use((req, res, next) => {
   };
   res.on("finish", () => {
     const duration = Date.now() - start;
-    if (path3.startsWith("/api")) {
-      let logLine = `${req.method} ${path3} ${res.statusCode} in ${duration}ms`;
+    if (path2.startsWith("/api")) {
+      let logLine = `${req.method} ${path2} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }

@@ -18,9 +18,9 @@ export function log(message: string, source = "express") {
 }
 
 export async function setupVite(app: Express, server: Server) {
-  // Lazy import vite and config only when needed (development mode)
+  // Lazy import vite only when needed (development mode)
+  // Don't import vite.config.js as it has dev dependencies
   const viteModule = await import("vite");
-  const viteConfig = await import("../vite.config.js");
   const { nanoid } = await import("nanoid");
   
   const viteLogger = viteModule.createLogger();
@@ -30,8 +30,16 @@ export async function setupVite(app: Express, server: Server) {
     allowedHosts: true,
   };
 
+  // Create minimal inline config instead of importing vite.config.js
+  // This avoids pulling in dev dependencies like @vitejs/plugin-react
   const vite = await viteModule.createServer({
-    ...viteConfig.default,
+    root: path.resolve(__dirname, "..", "client"),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "..", "client", "src"),
+        "@shared": path.resolve(__dirname, "..", "shared"),
+      },
+    },
     configFile: false,
     customLogger: {
       ...viteLogger,
@@ -42,6 +50,8 @@ export async function setupVite(app: Express, server: Server) {
     },
     server: serverOptions,
     appType: "custom",
+    plugins: [], // Plugins not needed for middleware mode
+    assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"],
   });
 
   app.use(vite.middlewares);
