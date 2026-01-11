@@ -30,6 +30,18 @@ export default function MissionSection() {
       description: "A multiplayergame built with mediapipe and camer ahand trakcing to selct stars on a screen",
       url: "https://starselect.netlify.app",
     },
+    {
+      name: "Fund Guard",
+      // upload invesmtent terms and get them evaluated and comapred to standards and other terms
+      description: "A tool to upload investment terms and get them evaluated and comapred to standards and other terms",
+      url: "https://investoshield.netlify.app",
+    },
+    {
+      name: "Tech Spec Pro",
+      // define criteria for procurement and get highly techincal specs to help procurement
+      description: "A tool to define criteria for procurement and get highly techincal specs to help procurement",
+      url: "https://techprocure.netlify.app",
+    },
   ];
   
   return (
