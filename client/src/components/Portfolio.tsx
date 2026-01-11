@@ -77,9 +77,9 @@ export default function Portfolio() {
             </div>
             <a href="https://spaceagevision.com">
             <button
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg transition-colors text-sm md:text-base self-start md:self-auto"
+            className="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-pink-600 hover:to-purple-500 text-white px-6 py-2 md:px-8 md:py-3 rounded-xl shadow-lg transition-all duration-200 text-sm md:text-base self-start md:self-auto font-semibold tracking-wide hover:scale-105"
             >
-             Mission
+             Space Age Mission !!
             </button>
             </a>
             <button
