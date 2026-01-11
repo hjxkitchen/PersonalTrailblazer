@@ -27,6 +27,9 @@ function log(message, source = "express") {
 async function setupVite(app2, server) {
   const viteModule = await import("vite");
   const { nanoid } = await import("nanoid");
+  const reactPlugin = await import("@vitejs/plugin-react");
+  const runtimeErrorOverlay = await import("@replit/vite-plugin-runtime-error-modal");
+  const glslPlugin = await import("vite-plugin-glsl");
   const viteLogger = viteModule.createLogger();
   const serverOptions = {
     middlewareMode: true,
@@ -51,8 +54,11 @@ async function setupVite(app2, server) {
     },
     server: serverOptions,
     appType: "custom",
-    plugins: [],
-    // Plugins not needed for middleware mode
+    plugins: [
+      reactPlugin.default(),
+      runtimeErrorOverlay.default(),
+      glslPlugin.default()
+    ],
     assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"]
   });
   app2.use(vite.middlewares);
