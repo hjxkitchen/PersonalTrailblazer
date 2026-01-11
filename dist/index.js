@@ -103,15 +103,36 @@ async function setupVite(app2, server) {
   });
 }
 function serveStatic(app2) {
-  const distPath = path2.resolve(__dirname2, "public");
-  if (!fs.existsSync(distPath)) {
+  const possiblePaths = [
+    path2.resolve(__dirname2, "public"),
+    // dist/public when bundled
+    path2.resolve(process.cwd(), "dist", "public"),
+    // absolute from cwd
+    path2.resolve(__dirname2, "..", "dist", "public")
+    // fallback
+  ];
+  let distPath = null;
+  for (const possiblePath of possiblePaths) {
+    if (fs.existsSync(possiblePath)) {
+      distPath = possiblePath;
+      break;
+    }
+  }
+  if (!distPath) {
+    log(`Could not find build directory. Tried: ${possiblePaths.join(", ")}`, "error");
     throw new Error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`
+      `Could not find the build directory. Tried: ${possiblePaths.join(", ")}`
     );
   }
+  log(`Serving static files from: ${distPath}`, "express");
   app2.use(express.static(distPath));
   app2.use("*", (_req, res) => {
-    res.sendFile(path2.resolve(distPath, "index.html"));
+    const indexPath = path2.resolve(distPath, "index.html");
+    if (!fs.existsSync(indexPath)) {
+      log(`index.html not found at: ${indexPath}`, "error");
+      return res.status(500).send("index.html not found");
+    }
+    res.sendFile(indexPath);
   });
 }
 
@@ -144,23 +165,33 @@ app.use((req, res, next) => {
   next();
 });
 (async () => {
-  const server = await registerRoutes(app);
-  app.use((err, _req, res, _next) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-    res.status(status).json({ message });
-    throw err;
-  });
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
+  try {
+    const server = await registerRoutes(app);
+    app.use((err, _req, res, _next) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Internal Server Error";
+      res.status(status).json({ message });
+      throw err;
+    });
+    if (app.get("env") === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
+    const port = Number(process.env.PORT) || 5e3;
+    server.listen({
+      port,
+      host: "0.0.0.0"
+    }, () => {
+      log(`serving on port ${port}`);
+    });
+    server.on("error", (err) => {
+      log(`Server error: ${err.message}`, "error");
+      process.exit(1);
+    });
+  } catch (error) {
+    log(`Failed to start server: ${error}`, "error");
+    console.error(error);
+    process.exit(1);
   }
-  const port = Number(process.env.PORT) || 5e3;
-  server.listen({
-    port,
-    host: "0.0.0.0"
-  }, () => {
-    log(`serving on port ${port}`);
-  });
 })();
