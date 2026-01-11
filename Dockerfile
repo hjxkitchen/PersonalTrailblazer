@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install only production dependencies (not dev dependencies)
-# RUN npm ci --only=production
+RUN npm ci --only=production
 
 # Copy pre-built dist folder (built locally)
 COPY dist ./dist
