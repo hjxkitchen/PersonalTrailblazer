@@ -165,7 +165,7 @@ const projects = [
   {
     name: "Serendipity",
     description: "Journaling tool to meet people with similar interests.",
-    url: "https://serendipity.lovable.app",
+    url: "https://serendepity995.netlify.app",
     category: "Social"
   },
   {
