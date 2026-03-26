@@ -1,0 +1,104 @@
+{
+  "viewport": { "x": 720, "y": 460, "zoom": 0.82 },
+  "elements": [
+    {
+      "id": "heading-main",
+      "type": "heading",
+      "x": -310, "y": -510, "width": 640, "zIndex": 1,
+      "content": "Portfolio Journey",
+      "fontSize": "xl",
+      "align": "center"
+    },
+    {
+      "id": "text-sub",
+      "type": "text",
+      "x": -270, "y": -420, "width": 560, "zIndex": 1,
+      "content": "Building systems for a connected, resilient, and responsible world.",
+      "fontSize": "md",
+      "align": "center"
+    },
+    {
+      "id": "story-commerce",
+      "type": "story",
+      "x": -780, "y": -300, "width": 380, "zIndex": 1,
+      "title": "Commerce & Trade",
+      "body": "Socos connects hyperlocal communities through marketplace tools, creator monetization, and brand-driven e-commerce built for emerging markets.",
+      "accent": "#3b82f6"
+    },
+    {
+      "id": "story-energy",
+      "type": "story",
+      "x": -295, "y": -300, "width": 380, "zIndex": 1,
+      "title": "Energy & Infrastructure",
+      "body": "Zahab Energy builds resilient off-grid systems — solar community grids, water infrastructure, and IoT-connected agro-processing across Tanzania.",
+      "accent": "#10b981"
+    },
+    {
+      "id": "story-tech",
+      "type": "story",
+      "x": 190, "y": -300, "width": 380, "zIndex": 1,
+      "title": "Technology & AI",
+      "body": "Across every venture, AI orchestrates operations — from multiagent systems to smart contracts, semantic manipulation, and computer vision tooling.",
+      "accent": "#8b5cf6"
+    },
+    {
+      "id": "project-socos",
+      "type": "project",
+      "x": -780, "y": 50, "width": 360, "zIndex": 1,
+      "projectName": "Socos",
+      "projectDesc": "Hyperlocal marketplace and business enablement tools for creators and small businesses.",
+      "projectUrl": "https://socos.app",
+      "projectCategory": "Commerce"
+    },
+    {
+      "id": "project-zahab",
+      "type": "project",
+      "x": -355, "y": 50, "width": 360, "zIndex": 1,
+      "projectName": "Zahab Energy",
+      "projectDesc": "Resilient off-grid energy infrastructure with solar grids and IoT agro-processing.",
+      "projectUrl": "https://zahabenergy.com",
+      "projectCategory": "Infrastructure"
+    },
+    {
+      "id": "project-safaris",
+      "type": "project",
+      "x": 70, "y": 50, "width": 360, "zIndex": 1,
+      "projectName": "Wild Earth Safaris",
+      "projectDesc": "Curated lifestyle tourism with local guides, safari experiences, and cultural immersion.",
+      "projectUrl": "https://wildearthsafaris.com",
+      "projectCategory": "Travel"
+    },
+    {
+      "id": "project-agora",
+      "type": "project",
+      "x": 495, "y": 50, "width": 360, "zIndex": 1,
+      "projectName": "Agora",
+      "projectDesc": "AI-powered civic platform for governance, social discourse, and structured global engagement.",
+      "projectUrl": "https://agora.ecom.ac",
+      "projectCategory": "Civic Tech"
+    },
+    {
+      "id": "heading-next",
+      "type": "heading",
+      "x": -230, "y": 380, "width": 480, "zIndex": 1,
+      "content": "What's Next",
+      "fontSize": "lg",
+      "align": "center"
+    },
+    {
+      "id": "story-vision",
+      "type": "story",
+      "x": -510, "y": 470, "width": 720, "zIndex": 1,
+      "title": "The Vision",
+      "body": "Building toward a civilization where every community has access to the tools, energy, and systems they need to thrive — from hyperlocal markets to decentralized governance and sustainable infrastructure.",
+      "accent": "#f59e0b"
+    },
+    {
+      "id": "link-space",
+      "type": "link",
+      "x": -100, "y": 680, "width": 240, "zIndex": 1,
+      "label": "Space Age Mission",
+      "href": "https://spaceagevision.com"
+    }
+  ]
+}
