@@ -3,10 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Type, Heading1, BookOpen, Layers, Link2, Plus, Trash2, Pencil,
   RotateCcw, ZoomIn, ZoomOut, Maximize2, ExternalLink, X, Move,
-  Minus,
+  Minus, Code2,
 } from "lucide-react";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 import defaultData from "../data/spatialCanvasData.json";
+import JsonEditModal from "./JsonEditModal";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -421,6 +422,7 @@ export default function SpatialCanvas() {
   // Interaction state
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [modal, setModal] = useState<{ type: ElementType; element?: SpatialElement } | null>(null);
+  const [showJsonEditor, setShowJsonEditor] = useState(false);
 
   // Refs for stable event-handler access (avoids stale closures)
   const viewportRef = useRef(viewport);
@@ -793,6 +795,13 @@ export default function SpatialCanvas() {
               ))}
               <div className="w-px h-5 bg-slate-700 mx-1" />
               <button
+                onClick={() => setShowJsonEditor(true)}
+                className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium transition-all border border-slate-600/40"
+                title="Edit raw JSON"
+              >
+                <Code2 size={13} /> JSON
+              </button>
+              <button
                 onClick={resetCanvas}
                 className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-red-900/60 text-slate-400 hover:text-red-400 rounded-xl text-xs font-medium transition-all"
                 title="Reset to default layout"
@@ -848,6 +857,21 @@ export default function SpatialCanvas() {
           />
         )}
       </AnimatePresence>
+
+      {/* ── JSON editor ── */}
+      {showJsonEditor && (
+        <JsonEditModal
+          data={data}
+          label="Spatial Canvas"
+          onSave={(parsed) => {
+            const next = parsed as CanvasData;
+            setData(next);
+            saveData(next);
+            setShowJsonEditor(false);
+          }}
+          onClose={() => setShowJsonEditor(false)}
+        />
+      )}
     </div>
   );
 }

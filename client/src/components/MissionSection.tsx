@@ -17,9 +17,11 @@ import {
   Trash2,
   Plus,
   RotateCcw,
+  Code2,
 } from "lucide-react";
 import defaultData from "../data/portfolioData.json";
 import ExtendedProjectEditModal, { ExtendedProject } from "./ExtendedProjectEditModal";
+import JsonEditModal from "./JsonEditModal";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 
 // ─── Icon map ────────────────────────────────────────────────────────────────
@@ -253,6 +255,7 @@ export default function MissionSection() {
   // Edit modal state
   const [editingProject, setEditingProject] = useState<ExtendedProject | null | "new">(null);
   const [editingCategory, setEditingCategory] = useState<Category | null | "new">(null);
+  const [showJsonEditor, setShowJsonEditor] = useState(false);
 
   // Drag state for projects
   const dragProjectIndex = useRef<number | null>(null);
@@ -418,6 +421,12 @@ export default function MissionSection() {
                 className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm font-medium transition-colors"
               >
                 <Plus size={15} /> Add Category
+              </button>
+              <button
+                onClick={() => setShowJsonEditor(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors border border-slate-600/50"
+              >
+                <Code2 size={14} /> Edit JSON
               </button>
               <button
                 onClick={resetToDefaults}
@@ -604,6 +613,18 @@ export default function MissionSection() {
           category={editingCategory === "new" ? undefined : editingCategory}
           onSave={saveCategory}
           onClose={() => setEditingCategory(null)}
+        />
+      )}
+      {showJsonEditor && (
+        <JsonEditModal
+          data={data}
+          label="Portfolio Projects"
+          onSave={(parsed) => {
+            const next = parsed as typeof data;
+            update(next);
+            setShowJsonEditor(false);
+          }}
+          onClose={() => setShowJsonEditor(false)}
         />
       )}
     </div>

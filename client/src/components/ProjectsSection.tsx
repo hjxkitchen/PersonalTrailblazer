@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
-import { Box, GripVertical, Pencil, Trash2, Plus, RotateCcw, X } from "lucide-react";
+import { Box, GripVertical, Pencil, Trash2, Plus, RotateCcw, X, Code2 } from "lucide-react";
 import defaultData from "../data/mainProjectsData.json";
 import MainProjectEditModal, { MainProject } from "./MainProjectEditModal";
+import JsonEditModal from "./JsonEditModal";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 
 // ─── LocalStorage helpers ─────────────────────────────────────────────────────
@@ -143,6 +144,7 @@ export default function ProjectsSection() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [editingProject, setEditingProject] = useState<MainProject | null | "new">(null);
   const [editingInterests, setEditingInterests] = useState(false);
+  const [showJsonEditor, setShowJsonEditor] = useState(false);
 
   // Drag state
   const dragIndex = useRef<number | null>(null);
@@ -214,6 +216,12 @@ export default function ProjectsSection() {
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors"
           >
             <Plus size={15} /> Add Project
+          </button>
+          <button
+            onClick={() => setShowJsonEditor(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors border border-slate-600/50"
+          >
+            <Code2 size={14} /> Edit JSON
           </button>
           <span className="text-xs text-slate-500 italic self-center">Drag cards to reorder</span>
         </div>
@@ -362,6 +370,17 @@ export default function ProjectsSection() {
           interests={data.interests}
           onSave={(interests) => update({ ...data, interests })}
           onClose={() => setEditingInterests(false)}
+        />
+      )}
+      {showJsonEditor && (
+        <JsonEditModal
+          data={data}
+          label="Main Projects"
+          onSave={(parsed) => {
+            update(parsed as MainData);
+            setShowJsonEditor(false);
+          }}
+          onClose={() => setShowJsonEditor(false)}
         />
       )}
     </section>
