@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useSpring, useTransform } from "framer-motion";
+import { useMousePosition } from "../hooks/useMousePosition";
+import TiltCard from "./TiltCard";
 import {
   Sparkles,
   Box,
@@ -238,6 +240,16 @@ export default function MissionSection() {
   const [data, setData] = useState(() => loadData());
   const [activeCategory, setActiveCategory] = useState("All");
 
+  // ── Parallax background blobs ──
+  const { x: mouseX, y: mouseY } = useMousePosition();
+  const blobSpringCfg = { stiffness: 40, damping: 20 };
+  const smoothX = useSpring(mouseX, blobSpringCfg);
+  const smoothY = useSpring(mouseY, blobSpringCfg);
+  const blob1X = useTransform(smoothX, [0, typeof window !== "undefined" ? window.innerWidth : 1440], [-28, 28]);
+  const blob1Y = useTransform(smoothY, [0, typeof window !== "undefined" ? window.innerHeight : 900], [-20, 20]);
+  const blob2X = useTransform(smoothX, [0, typeof window !== "undefined" ? window.innerWidth : 1440], [28, -28]);
+  const blob2Y = useTransform(smoothY, [0, typeof window !== "undefined" ? window.innerHeight : 900], [20, -20]);
+
   // Edit modal state
   const [editingProject, setEditingProject] = useState<ExtendedProject | null | "new">(null);
   const [editingCategory, setEditingCategory] = useState<Category | null | "new">(null);
@@ -360,10 +372,16 @@ export default function MissionSection() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-blue-500/30">
       <div className="relative overflow-hidden pt-24 pb-16">
-        {/* Background */}
+        {/* Background — parallax blobs */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full" />
+          <motion.div
+            style={{ x: blob1X, y: blob1Y }}
+            className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full"
+          />
+          <motion.div
+            style={{ x: blob2X, y: blob2Y }}
+            className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full"
+          />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -486,6 +504,7 @@ export default function MissionSection() {
                   onDragOver={(e) => isEditMode && onProjectDragOver(e, visibleIdx)}
                   onDrop={() => isEditMode && onProjectDrop()}
                 >
+                  <TiltCard disabled={isEditMode} className="h-full">
                   <div className={`
                     h-full bg-slate-900/40 backdrop-blur-sm rounded-2xl overflow-hidden
                     border transition-all duration-500
@@ -551,6 +570,7 @@ export default function MissionSection() {
                       </div>
                     </div>
                   </div>
+                  </TiltCard>
                 </motion.div>
               ))}
             </AnimatePresence>

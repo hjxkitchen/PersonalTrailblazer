@@ -6,6 +6,8 @@ import ProjectsSection from "./ProjectsSection";
 import ContactSection from "./ContactSection";
 import MissionSection from "./MissionSection";
 import PasswordModal from "./PasswordModal";
+import CursorGlow from "./CursorGlow";
+import ClickBurst from "./ClickBurst";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Pencil, X } from "lucide-react";
@@ -24,6 +26,10 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-x-hidden overflow-y-auto">
+      {/* Global interactive effects */}
+      <CursorGlow />
+      <ClickBurst />
+
       {/* Edit mode banner */}
       {isEditMode && (
         <div className="fixed top-0 left-0 right-0 z-40 bg-blue-600/95 backdrop-blur-sm text-white text-center py-1.5 text-sm font-medium flex items-center justify-center gap-3">
