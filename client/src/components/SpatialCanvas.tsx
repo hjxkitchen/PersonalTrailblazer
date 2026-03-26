@@ -652,10 +652,18 @@ export default function SpatialCanvas() {
 
   // ── Screen-space position of selected element (for mini toolbar) ──
   const selectedEl = elements.find((e) => e.id === selectedId);
+
+  // Convert canvas coords → fixed viewport coords by adding the container's page offset
+  const containerRect = containerRef.current?.getBoundingClientRect();
+  const containerLeft = containerRect?.left ?? 0;
+  const containerTop  = containerRect?.top  ?? 0;
+
   const selectedScreenX = selectedEl
-    ? selectedEl.x * viewport.zoom + viewport.x + (selectedEl.width * viewport.zoom) / 2
+    ? selectedEl.x * viewport.zoom + viewport.x + (selectedEl.width * viewport.zoom) / 2 + containerLeft
     : 0;
-  const selectedScreenY = selectedEl ? selectedEl.y * viewport.zoom + viewport.y : 0;
+  const selectedScreenY = selectedEl
+    ? selectedEl.y * viewport.zoom + viewport.y + containerTop
+    : 0;
 
   // ── Dot grid background ──
   const dotSpacing = Math.max(16, 32 * viewport.zoom);
