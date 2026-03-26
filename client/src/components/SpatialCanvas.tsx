@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Type, Heading1, BookOpen, Layers, Link2, Plus, Trash2, Pencil,
+  Type, Heading1, BookOpen, Layers, Link2, Trash2, Pencil,
   RotateCcw, ZoomIn, ZoomOut, Maximize2, ExternalLink, X, Move,
-  Minus, Code2,
+  Minus, Code2, ArrowRight, Square as SquareIcon,
 } from "lucide-react";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 import defaultData from "../data/spatialCanvasData.json";
@@ -13,7 +13,7 @@ import JsonEditModal from "./JsonEditModal";
 
 type FontSize = "sm" | "md" | "lg" | "xl";
 type Align = "left" | "center" | "right";
-type ElementType = "heading" | "text" | "story" | "project" | "link";
+type ElementType = "heading" | "text" | "story" | "project" | "link" | "line" | "arrow" | "square";
 
 export interface SpatialElement {
   id: string;
@@ -21,6 +21,7 @@ export interface SpatialElement {
   x: number;
   y: number;
   width: number;
+  height?: number;
   zIndex?: number;
   // heading / text
   content?: string;
@@ -38,6 +39,11 @@ export interface SpatialElement {
   // link
   label?: string;
   href?: string;
+  // line / arrow
+  strokeColor?: string;
+  flipY?: boolean;
+  // square
+  fillColor?: string;
 }
 
 interface Viewport {
@@ -96,7 +102,19 @@ const ACCENT_PRESETS = [
   { label: "Amber",  value: "#f59e0b" },
   { label: "Pink",   value: "#ec4899" },
   { label: "Teal",   value: "#14b8a6" },
+  { label: "Red",    value: "#ef4444" },
+  { label: "Slate",  value: "#64748b" },
+  { label: "White",  value: "#f1f5f9" },
 ];
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Returns explicit height for shape elements; undefined = auto (content) */
+function getElHeight(el: SpatialElement): number | undefined {
+  if (el.type === "line" || el.type === "arrow") return Math.max(el.height ?? 2, 24);
+  if (el.type === "square") return el.height ?? el.width;
+  return undefined;
+}
 
 // ─── Element renderers ────────────────────────────────────────────────────────
 
@@ -117,9 +135,7 @@ function TextEl({ el }: { el: SpatialElement }) {
   const fs = el.fontSize ?? "md";
   const align = el.align ?? "left";
   return (
-    <p
-      className={`${FONT_SIZES[fs]} ${ALIGN_CLASSES[align]} text-slate-300 leading-relaxed select-none`}
-    >
+    <p className={`${FONT_SIZES[fs]} ${ALIGN_CLASSES[align]} text-slate-300 leading-relaxed select-none`}>
       {el.content || "Text block"}
     </p>
   );
@@ -137,9 +153,7 @@ function StoryEl({ el }: { el: SpatialElement }) {
           {el.title}
         </h3>
       )}
-      {el.body && (
-        <p className="text-slate-300 text-sm leading-relaxed">{el.body}</p>
-      )}
+      {el.body && <p className="text-slate-300 text-sm leading-relaxed">{el.body}</p>}
     </div>
   );
 }
@@ -187,6 +201,63 @@ function LinkEl({ el }: { el: SpatialElement }) {
   );
 }
 
+function LineEl({ el }: { el: SpatialElement }) {
+  const stroke = el.strokeColor ?? "#94a3b8";
+  const flipY = el.flipY ?? false;
+  const h = el.height ?? 2;
+  const divH = Math.max(h, 24);
+  const isFlat = h <= 2;
+  const y1 = isFlat ? divH / 2 : flipY ? divH - 1 : 1;
+  const y2 = isFlat ? divH / 2 : flipY ? 1 : divH - 1;
+  return (
+    <svg width={el.width} height={divH} style={{ display: "block" }}>
+      <line x1={1} y1={y1} x2={el.width - 1} y2={y2} stroke={stroke} strokeWidth={2} strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ArrowEl({ el }: { el: SpatialElement }) {
+  const stroke = el.strokeColor ?? "#94a3b8";
+  const flipY = el.flipY ?? false;
+  const h = el.height ?? 2;
+  const divH = Math.max(h, 24);
+  const isFlat = h <= 2;
+  const y1 = isFlat ? divH / 2 : flipY ? divH - 1 : 1;
+  const y2 = isFlat ? divH / 2 : flipY ? 1 : divH - 1;
+  const markerId = `arrow-head-${el.id}`;
+  return (
+    <svg width={el.width} height={divH} style={{ display: "block" }}>
+      <defs>
+        <marker id={markerId} markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill={stroke} />
+        </marker>
+      </defs>
+      <line
+        x1={1} y1={y1} x2={el.width - 10} y2={y2}
+        stroke={stroke} strokeWidth={2} strokeLinecap="round"
+        markerEnd={`url(#${markerId})`}
+      />
+    </svg>
+  );
+}
+
+function SquareEl({ el }: { el: SpatialElement }) {
+  const fill = el.fillColor ?? "#3b82f6";
+  const stroke = el.strokeColor;
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        background: fill,
+        borderRadius: 8,
+        border: stroke ? `2px solid ${stroke}` : "none",
+        opacity: 0.9,
+      }}
+    />
+  );
+}
+
 function renderElement(el: SpatialElement) {
   switch (el.type) {
     case "heading": return <HeadingEl el={el} />;
@@ -194,7 +265,50 @@ function renderElement(el: SpatialElement) {
     case "story":   return <StoryEl el={el} />;
     case "project": return <ProjectEl el={el} />;
     case "link":    return <LinkEl el={el} />;
+    case "line":    return <LineEl el={el} />;
+    case "arrow":   return <ArrowEl el={el} />;
+    case "square":  return <SquareEl el={el} />;
   }
+}
+
+// ─── Color swatch picker ──────────────────────────────────────────────────────
+
+function ColorPicker({
+  value,
+  onChange,
+  allowNone,
+}: {
+  value?: string;
+  onChange: (v: string | undefined) => void;
+  allowNone?: boolean;
+}) {
+  return (
+    <div className="flex gap-2 flex-wrap items-center">
+      {allowNone && (
+        <button
+          type="button"
+          onClick={() => onChange(undefined)}
+          className={`px-3 py-1 rounded-lg text-xs border transition-colors ${
+            !value ? "border-white text-white bg-slate-700" : "border-slate-600 text-slate-400 bg-slate-800"
+          }`}
+        >
+          None
+        </button>
+      )}
+      {ACCENT_PRESETS.map((p) => (
+        <button
+          key={p.value}
+          type="button"
+          onClick={() => onChange(p.value)}
+          title={p.label}
+          className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${
+            value === p.value ? "border-white scale-110" : "border-transparent"
+          }`}
+          style={{ background: p.value }}
+        />
+      ))}
+    </div>
+  );
 }
 
 // ─── Edit modal ───────────────────────────────────────────────────────────────
@@ -209,11 +323,7 @@ interface EditModalProps {
 function EditModal({ element, type, onSave, onClose }: EditModalProps) {
   const isNew = !element;
   const [form, setForm] = useState<SpatialElement>(
-    element ?? {
-      id: `el-${Date.now()}`,
-      type,
-      x: 0, y: 0, width: 360, zIndex: 1,
-    }
+    element ?? { id: `el-${Date.now()}`, type, x: 0, y: 0, width: 360, zIndex: 1 }
   );
 
   const set = <K extends keyof SpatialElement>(k: K, v: SpatialElement[K]) =>
@@ -229,10 +339,7 @@ function EditModal({ element, type, onSave, onClose }: EditModalProps) {
   const labelCls = "block text-xs text-slate-400 mb-1.5 uppercase tracking-wider";
 
   return (
-    <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={onClose}>
       <div
         className="relative bg-slate-900 border border-slate-700 rounded-2xl p-8 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
@@ -270,11 +377,7 @@ function EditModal({ element, type, onSave, onClose }: EditModalProps) {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className={labelCls}>Size</label>
-                  <select
-                    value={form.fontSize ?? "md"}
-                    onChange={(e) => set("fontSize", e.target.value as FontSize)}
-                    className={inputCls}
-                  >
+                  <select value={form.fontSize ?? "md"} onChange={(e) => set("fontSize", e.target.value as FontSize)} className={inputCls}>
                     <option value="sm">Small</option>
                     <option value="md">Medium</option>
                     <option value="lg">Large</option>
@@ -283,11 +386,7 @@ function EditModal({ element, type, onSave, onClose }: EditModalProps) {
                 </div>
                 <div>
                   <label className={labelCls}>Alignment</label>
-                  <select
-                    value={form.align ?? "left"}
-                    onChange={(e) => set("align", e.target.value as Align)}
-                    className={inputCls}
-                  >
+                  <select value={form.align ?? "left"} onChange={(e) => set("align", e.target.value as Align)} className={inputCls}>
                     <option value="left">Left</option>
                     <option value="center">Center</option>
                     <option value="right">Right</option>
@@ -302,39 +401,15 @@ function EditModal({ element, type, onSave, onClose }: EditModalProps) {
             <>
               <div>
                 <label className={labelCls}>Title</label>
-                <input
-                  value={form.title ?? ""}
-                  onChange={(e) => set("title", e.target.value)}
-                  className={inputCls}
-                  placeholder="Section title"
-                />
+                <input value={form.title ?? ""} onChange={(e) => set("title", e.target.value)} className={inputCls} placeholder="Section title" />
               </div>
               <div>
                 <label className={labelCls}>Body</label>
-                <textarea
-                  value={form.body ?? ""}
-                  onChange={(e) => set("body", e.target.value)}
-                  rows={4}
-                  className={`${inputCls} resize-none`}
-                  placeholder="Story content..."
-                />
+                <textarea value={form.body ?? ""} onChange={(e) => set("body", e.target.value)} rows={4} className={`${inputCls} resize-none`} placeholder="Story content..." />
               </div>
               <div>
                 <label className={labelCls}>Accent color</label>
-                <div className="flex gap-2 flex-wrap">
-                  {ACCENT_PRESETS.map((p) => (
-                    <button
-                      key={p.value}
-                      type="button"
-                      onClick={() => set("accent", p.value)}
-                      title={p.label}
-                      className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${
-                        form.accent === p.value ? "border-white scale-110" : "border-transparent"
-                      }`}
-                      style={{ background: p.value }}
-                    />
-                  ))}
-                </div>
+                <ColorPicker value={form.accent} onChange={(v) => set("accent", v)} />
               </div>
             </>
           )}
@@ -348,12 +423,7 @@ function EditModal({ element, type, onSave, onClose }: EditModalProps) {
               </div>
               <div>
                 <label className={labelCls}>Description</label>
-                <textarea
-                  value={form.projectDesc ?? ""}
-                  onChange={(e) => set("projectDesc", e.target.value)}
-                  rows={3}
-                  className={`${inputCls} resize-none`}
-                />
+                <textarea value={form.projectDesc ?? ""} onChange={(e) => set("projectDesc", e.target.value)} rows={3} className={`${inputCls} resize-none`} />
               </div>
               <div>
                 <label className={labelCls}>URL</label>
@@ -380,18 +450,76 @@ function EditModal({ element, type, onSave, onClose }: EditModalProps) {
             </>
           )}
 
-          {/* Width */}
-          <div>
-            <label className={labelCls}>Width (px on canvas)</label>
-            <input
-              type="number"
-              min={150}
-              max={900}
-              value={form.width}
-              onChange={(e) => set("width", Number(e.target.value))}
-              className={inputCls}
-            />
-          </div>
+          {/* Line / Arrow */}
+          {(type === "line" || type === "arrow") && (
+            <>
+              <div>
+                <label className={labelCls}>Color</label>
+                <ColorPicker value={form.strokeColor} onChange={(v) => set("strokeColor", v)} />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className={labelCls}>Length (px)</label>
+                  <input type="number" min={20} max={1200} value={form.width} onChange={(e) => set("width", Number(e.target.value))} className={inputCls} />
+                </div>
+                <div>
+                  <label className={labelCls}>Height / Angle (px)</label>
+                  <input type="number" min={0} max={800} value={form.height ?? 0} onChange={(e) => set("height", Number(e.target.value))} className={inputCls} />
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="flipY-cb"
+                  checked={form.flipY ?? false}
+                  onChange={(e) => set("flipY", e.target.checked)}
+                  className="w-4 h-4 accent-blue-500"
+                />
+                <label htmlFor="flipY-cb" className="text-sm text-slate-300 cursor-pointer">
+                  Flip direction (↗ instead of ↘)
+                </label>
+              </div>
+            </>
+          )}
+
+          {/* Square */}
+          {type === "square" && (
+            <>
+              <div>
+                <label className={labelCls}>Fill color</label>
+                <ColorPicker value={form.fillColor} onChange={(v) => set("fillColor", v)} />
+              </div>
+              <div>
+                <label className={labelCls}>Border color</label>
+                <ColorPicker value={form.strokeColor} onChange={(v) => set("strokeColor", v)} allowNone />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className={labelCls}>Width (px)</label>
+                  <input type="number" min={20} max={900} value={form.width} onChange={(e) => set("width", Number(e.target.value))} className={inputCls} />
+                </div>
+                <div>
+                  <label className={labelCls}>Height (px)</label>
+                  <input type="number" min={20} max={900} value={form.height ?? form.width} onChange={(e) => set("height", Number(e.target.value))} className={inputCls} />
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Width — only for content-based types */}
+          {type !== "line" && type !== "arrow" && type !== "square" && (
+            <div>
+              <label className={labelCls}>Width (px on canvas)</label>
+              <input
+                type="number"
+                min={150}
+                max={900}
+                value={form.width}
+                onChange={(e) => set("width", Number(e.target.value))}
+                className={inputCls}
+              />
+            </div>
+          )}
 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 py-2.5 rounded-lg text-sm">
@@ -411,7 +539,6 @@ function EditModal({ element, type, onSave, onClose }: EditModalProps) {
 
 export default function SpatialCanvas() {
   const { isEditMode } = usePortfolio();
-
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Canvas data (persisted)
@@ -419,26 +546,34 @@ export default function SpatialCanvas() {
   const viewport = data.viewport;
   const elements = data.elements;
 
-  // Interaction state
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Multi-select state
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [primarySelectedId, setPrimarySelectedId] = useState<string | null>(null);
+
   const [modal, setModal] = useState<{ type: ElementType; element?: SpatialElement } | null>(null);
   const [showJsonEditor, setShowJsonEditor] = useState(false);
 
-  // Refs for stable event-handler access (avoids stale closures)
+  // Refs for stable event-handler access
   const viewportRef = useRef(viewport);
   useEffect(() => { viewportRef.current = viewport; }, [viewport]);
 
   const isEditRef = useRef(isEditMode);
   useEffect(() => { isEditRef.current = isEditMode; }, [isEditMode]);
 
+  const selectedIdsRef = useRef<Set<string>>(selectedIds);
+  useEffect(() => { selectedIdsRef.current = selectedIds; }, [selectedIds]);
+
+  const elementsRef = useRef(elements);
+  useEffect(() => { elementsRef.current = elements; }, [elements]);
+
   // Pan state
   const panInfo = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
 
-  // Element drag state
+  // Element drag state — tracks original positions of ALL selected elements
   const dragInfo = useRef<{
-    id: string;
-    startX: number; startY: number;
-    origX: number; origY: number;
+    startX: number;
+    startY: number;
+    origPositions: Record<string, { x: number; y: number }>;
     moved: boolean;
   } | null>(null);
 
@@ -459,7 +594,7 @@ export default function SpatialCanvas() {
     });
   }, []);
 
-  // ── Wheel zoom (passive: false required) ──
+  // ── Wheel zoom ──
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -487,7 +622,6 @@ export default function SpatialCanvas() {
   // ── Global mouse move / up ──
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      // Pan
       if (panInfo.current) {
         const dx = e.clientX - panInfo.current.startX;
         const dy = e.clientY - panInfo.current.startY;
@@ -497,21 +631,20 @@ export default function SpatialCanvas() {
           y: panInfo.current!.origY + dy,
         }));
       }
-      // Element drag (edit mode only)
       if (dragInfo.current && isEditRef.current) {
         const vp = viewportRef.current;
         const dx = (e.clientX - dragInfo.current.startX) / vp.zoom;
         const dy = (e.clientY - dragInfo.current.startY) / vp.zoom;
         if (Math.abs(dx) > 2 || Math.abs(dy) > 2) {
           dragInfo.current.moved = true;
-          const id = dragInfo.current.id;
-          const nx = dragInfo.current.origX + dx;
-          const ny = dragInfo.current.origY + dy;
+          const origPositions = dragInfo.current.origPositions;
           setData((d) => ({
             ...d,
-            elements: d.elements.map((el) =>
-              el.id === id ? { ...el, x: nx, y: ny } : el
-            ),
+            elements: d.elements.map((el) => {
+              const orig = origPositions[el.id];
+              if (orig) return { ...el, x: orig.x + dx, y: orig.y + dy };
+              return el;
+            }),
           }));
         }
       }
@@ -521,7 +654,6 @@ export default function SpatialCanvas() {
       panInfo.current = null;
       if (dragInfo.current) {
         if (dragInfo.current.moved) {
-          // persist final position
           setData((d) => { saveData(d); return d; });
         }
         dragInfo.current = null;
@@ -540,40 +672,65 @@ export default function SpatialCanvas() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!isEditRef.current) return;
-      if ((e.key === "Delete" || e.key === "Backspace") &&
-          selectedId &&
-          (e.target as HTMLElement).tagName !== "INPUT" &&
-          (e.target as HTMLElement).tagName !== "TEXTAREA") {
-        deleteElement(selectedId);
-        setSelectedId(null);
+      const sIds = selectedIdsRef.current;
+      if (
+        (e.key === "Delete" || e.key === "Backspace") &&
+        sIds.size > 0 &&
+        (e.target as HTMLElement).tagName !== "INPUT" &&
+        (e.target as HTMLElement).tagName !== "TEXTAREA"
+      ) {
+        const count = sIds.size;
+        if (!confirm(count > 1 ? `Remove ${count} elements from the canvas?` : "Remove this element from the canvas?")) return;
+        updateElements((els) => els.filter((el) => !sIds.has(el.id)));
+        setSelectedIds(new Set());
+        setPrimarySelectedId(null);
       }
-      if (e.key === "Escape") setSelectedId(null);
+      if (e.key === "Escape") {
+        setSelectedIds(new Set());
+        setPrimarySelectedId(null);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [selectedId]);
+  }, [updateElements]);
 
-  // ── Container (background) mouse down → start pan ──
+  // ── Background mouse down → pan + deselect ──
   const handleBgMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return;
-    setSelectedId(null);
-    panInfo.current = {
-      startX: e.clientX, startY: e.clientY,
-      origX: viewport.x, origY: viewport.y,
-    };
+    setSelectedIds(new Set());
+    setPrimarySelectedId(null);
+    panInfo.current = { startX: e.clientX, startY: e.clientY, origX: viewport.x, origY: viewport.y };
   };
 
-  // ── Element mouse down → start drag or select ──
+  // ── Element mouse down → select + drag ──
   const handleElementMouseDown = (e: React.MouseEvent, el: SpatialElement) => {
     e.stopPropagation();
-    setSelectedId(el.id);
-    if (isEditMode) {
-      dragInfo.current = {
-        id: el.id,
-        startX: e.clientX, startY: e.clientY,
-        origX: el.x, origY: el.y,
-        moved: false,
-      };
+
+    let newIds: Set<string>;
+    if (e.shiftKey) {
+      // Toggle this element in selection
+      const next = new Set(selectedIdsRef.current);
+      if (next.has(el.id)) next.delete(el.id);
+      else next.add(el.id);
+      newIds = next;
+    } else if (selectedIdsRef.current.has(el.id) && selectedIdsRef.current.size > 1) {
+      // Clicking inside existing multi-select: keep the group for dragging
+      newIds = new Set(selectedIdsRef.current);
+    } else {
+      // Regular click: select just this element
+      newIds = new Set([el.id]);
+    }
+
+    setSelectedIds(newIds);
+    setPrimarySelectedId(el.id);
+
+    if (isEditMode && newIds.size > 0) {
+      const origPositions: Record<string, { x: number; y: number }> = {};
+      Array.from(newIds).forEach((id) => {
+        const elem = elementsRef.current.find((e) => e.id === id);
+        if (elem) origPositions[id] = { x: elem.x, y: elem.y };
+      });
+      dragInfo.current = { startX: e.clientX, startY: e.clientY, origPositions, moved: false };
     }
   };
 
@@ -589,39 +746,47 @@ export default function SpatialCanvas() {
       return [...els, el];
     });
     setModal(null);
-    setSelectedId(el.id);
+    setSelectedIds(new Set([el.id]));
+    setPrimarySelectedId(el.id);
   };
 
-  const deleteElement = (id: string) => {
-    if (!confirm("Remove this element from the canvas?")) return;
-    updateElements((els) => els.filter((e) => e.id !== id));
-    setSelectedId(null);
+  const deleteSelected = (ids: Set<string>) => {
+    const count = ids.size;
+    if (!confirm(count > 1 ? `Remove ${count} elements?` : "Remove this element from the canvas?")) return;
+    updateElements((els) => els.filter((e) => !ids.has(e.id)));
+    setSelectedIds(new Set());
+    setPrimarySelectedId(null);
   };
 
   const addElement = (type: ElementType) => {
-    // Place at current viewport center
     const rect = containerRef.current?.getBoundingClientRect();
     const cx = rect ? rect.width / 2 : 400;
     const cy = rect ? rect.height / 2 : 300;
     const canvasX = (cx - viewport.x) / viewport.zoom - 180;
     const canvasY = (cy - viewport.y) / viewport.zoom - 80;
+
+    const widthDefaults: Partial<Record<ElementType, number>> = {
+      link: 240, heading: 500, line: 200, arrow: 200, square: 200,
+    };
+    const heightDefaults: Partial<Record<ElementType, number>> = {
+      line: 0, arrow: 0, square: 200,
+    };
+
     const base: SpatialElement = {
       id: `el-${Date.now()}`,
       type,
       x: canvasX,
       y: canvasY,
-      width: type === "link" ? 240 : type === "heading" ? 500 : 380,
+      width: widthDefaults[type] ?? 380,
+      height: heightDefaults[type],
       zIndex: elements.length + 1,
+      strokeColor: (type === "line" || type === "arrow") ? "#94a3b8" : undefined,
+      fillColor: type === "square" ? "#3b82f6" : undefined,
     };
     setModal({ type, element: { ...base } });
   };
 
-  // New element from modal — position already set, just save
-  const handleNewElementSave = (el: SpatialElement) => {
-    saveElement(el);
-  };
-
-  // ── Fit all elements to view ──
+  // ── Fit all to view ──
   const fitToView = () => {
     if (elements.length === 0) return;
     const rect = containerRef.current?.getBoundingClientRect();
@@ -629,7 +794,7 @@ export default function SpatialCanvas() {
     const minX = Math.min(...elements.map((e) => e.x));
     const maxX = Math.max(...elements.map((e) => e.x + e.width));
     const minY = Math.min(...elements.map((e) => e.y));
-    const maxY = Math.max(...elements.map((e) => e.y + 200));
+    const maxY = Math.max(...elements.map((e) => e.y + (e.height ?? 200)));
     const padding = 80;
     const zoom = Math.min(
       (rect.width - padding * 2) / (maxX - minX),
@@ -647,22 +812,24 @@ export default function SpatialCanvas() {
     if (!confirm("Reset canvas to default layout?")) return;
     localStorage.removeItem(LS_KEY);
     setData(defaultData as CanvasData);
-    setSelectedId(null);
+    setSelectedIds(new Set());
+    setPrimarySelectedId(null);
   };
 
-  // ── Screen-space position of selected element (for mini toolbar) ──
-  const selectedEl = elements.find((e) => e.id === selectedId);
+  // ── Toolbar positioning ──
+  const primaryEl = primarySelectedId
+    ? elements.find((e) => e.id === primarySelectedId && selectedIds.has(e.id))
+    : null;
 
-  // Convert canvas coords → fixed viewport coords by adding the container's page offset
   const containerRect = containerRef.current?.getBoundingClientRect();
   const containerLeft = containerRect?.left ?? 0;
   const containerTop  = containerRect?.top  ?? 0;
 
-  const selectedScreenX = selectedEl
-    ? selectedEl.x * viewport.zoom + viewport.x + (selectedEl.width * viewport.zoom) / 2 + containerLeft
+  const toolbarScreenX = primaryEl
+    ? primaryEl.x * viewport.zoom + viewport.x + (primaryEl.width * viewport.zoom) / 2 + containerLeft
     : 0;
-  const selectedScreenY = selectedEl
-    ? selectedEl.y * viewport.zoom + viewport.y + containerTop
+  const toolbarScreenY = primaryEl
+    ? primaryEl.y * viewport.zoom + viewport.y + containerTop
     : 0;
 
   // ── Dot grid background ──
@@ -684,9 +851,8 @@ export default function SpatialCanvas() {
         }}
         onMouseDown={handleBgMouseDown}
       >
-        {/* Vignette edges */}
-        <div className="absolute inset-0 pointer-events-none z-[3]"
-          style={{ boxShadow: "inset 0 0 140px rgba(2,6,23,0.8)" }} />
+        {/* Vignette */}
+        <div className="absolute inset-0 pointer-events-none z-[3]" style={{ boxShadow: "inset 0 0 140px rgba(2,6,23,0.8)" }} />
 
         {/* Canvas world */}
         <div
@@ -698,7 +864,8 @@ export default function SpatialCanvas() {
           }}
         >
           {elements.map((el) => {
-            const isSelected = selectedId === el.id;
+            const isSelected = selectedIds.has(el.id);
+            const elH = getElHeight(el);
             return (
               <div
                 key={el.id}
@@ -707,15 +874,15 @@ export default function SpatialCanvas() {
                   left: el.x,
                   top: el.y,
                   width: el.width,
+                  height: elH,
                   zIndex: isSelected ? 1000 : (el.zIndex ?? 1),
-                  cursor: isEditMode ? (dragInfo.current?.id === el.id ? "grabbing" : "grab") : "default",
+                  cursor: isEditMode ? "grab" : "default",
                 }}
                 onMouseDown={(e) => handleElementMouseDown(e, el)}
               >
-                {/* Selection ring */}
                 {isSelected && (
                   <div
-                    className="absolute pointer-events-none rounded-2xl"
+                    className="absolute pointer-events-none"
                     style={{
                       inset: -6,
                       border: "2px solid rgba(59,130,246,0.7)",
@@ -731,38 +898,42 @@ export default function SpatialCanvas() {
         </div>
       </div>
 
-      {/* ── Mini toolbar above selected element (fixed) ── */}
+      {/* ── Mini toolbar above selected element ── */}
       <AnimatePresence>
-        {isEditMode && selectedEl && (
+        {isEditMode && primaryEl && (
           <motion.div
-            key={selectedId}
+            key={primarySelectedId}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.15 }}
             className="fixed z-[1001] pointer-events-auto"
-            style={{
-              left: selectedScreenX,
-              top: selectedScreenY - 52,
-              transform: "translateX(-50%)",
-            }}
+            style={{ left: toolbarScreenX, top: toolbarScreenY - 52, transform: "translateX(-50%)" }}
           >
             <div className="flex items-center gap-1 bg-slate-900 border border-slate-700 rounded-xl px-2 py-1.5 shadow-2xl">
-              <span className="text-[10px] text-slate-500 uppercase tracking-wider px-1 font-medium">
-                {selectedEl.type}
-              </span>
+              {selectedIds.size > 1 ? (
+                <span className="text-[10px] text-blue-400 uppercase tracking-wider px-1 font-medium">
+                  {selectedIds.size} selected
+                </span>
+              ) : (
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider px-1 font-medium">
+                  {primaryEl.type}
+                </span>
+              )}
               <div className="w-px h-4 bg-slate-700" />
+              {selectedIds.size === 1 && (
+                <button
+                  onClick={() => setModal({ type: primaryEl.type, element: primaryEl })}
+                  className="flex items-center gap-1 px-2 py-1 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg text-xs transition-colors"
+                >
+                  <Pencil size={12} /> Edit
+                </button>
+              )}
               <button
-                onClick={() => setModal({ type: selectedEl.type, element: selectedEl })}
-                className="flex items-center gap-1 px-2 py-1 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg text-xs transition-colors"
-              >
-                <Pencil size={12} /> Edit
-              </button>
-              <button
-                onClick={() => deleteElement(selectedEl.id)}
+                onClick={() => deleteSelected(selectedIds)}
                 className="flex items-center gap-1 px-2 py-1 text-slate-400 hover:text-red-400 hover:bg-red-950/40 rounded-lg text-xs transition-colors"
               >
-                <Trash2 size={12} /> Delete
+                <Trash2 size={12} /> {selectedIds.size > 1 ? `Delete ${selectedIds.size}` : "Delete"}
               </button>
               <div className="w-px h-4 bg-slate-700" />
               <div className="flex items-center gap-1 px-2 text-slate-600 text-[10px]">
@@ -773,7 +944,7 @@ export default function SpatialCanvas() {
         )}
       </AnimatePresence>
 
-      {/* ── Add toolbar (bottom center, edit mode only) ── */}
+      {/* ── Add toolbar ── */}
       <AnimatePresence>
         {isEditMode && (
           <motion.div
@@ -802,6 +973,29 @@ export default function SpatialCanvas() {
                 </button>
               ))}
               <div className="w-px h-5 bg-slate-700 mx-1" />
+              {/* Shape tools */}
+              <button
+                onClick={() => addElement("line")}
+                className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-600 text-slate-300 hover:text-white rounded-xl text-xs font-medium transition-all"
+                title="Add line"
+              >
+                <Minus size={13} /> Line
+              </button>
+              <button
+                onClick={() => addElement("arrow")}
+                className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-600 text-slate-300 hover:text-white rounded-xl text-xs font-medium transition-all"
+                title="Add arrow"
+              >
+                <ArrowRight size={13} /> Arrow
+              </button>
+              <button
+                onClick={() => addElement("square")}
+                className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-600 text-slate-300 hover:text-white rounded-xl text-xs font-medium transition-all"
+                title="Add square"
+              >
+                <SquareIcon size={13} /> Square
+              </button>
+              <div className="w-px h-5 bg-slate-700 mx-1" />
               <button
                 onClick={() => setShowJsonEditor(true)}
                 className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium transition-all border border-slate-600/40"
@@ -821,7 +1015,7 @@ export default function SpatialCanvas() {
         )}
       </AnimatePresence>
 
-      {/* ── Zoom / nav controls (always visible) ── */}
+      {/* ── Zoom controls ── */}
       <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-2">
         <button
           onClick={() => updateViewport((v) => ({ ...v, zoom: Math.min(4, v.zoom * 1.2) }))}
@@ -847,7 +1041,7 @@ export default function SpatialCanvas() {
         </button>
       </div>
 
-      {/* ── Hint (non-edit mode) ── */}
+      {/* ── Hint ── */}
       {!isEditMode && (
         <div className="fixed bottom-6 left-6 z-[100] text-[11px] text-slate-600 pointer-events-none select-none">
           Scroll to zoom · Drag to pan
@@ -860,7 +1054,7 @@ export default function SpatialCanvas() {
           <EditModal
             type={modal.type}
             element={modal.element}
-            onSave={handleNewElementSave}
+            onSave={saveElement}
             onClose={() => setModal(null)}
           />
         )}
