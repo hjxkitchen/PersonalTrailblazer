@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Type, Heading1, BookOpen, Layers, Link2, Trash2, Pencil,
   RotateCcw, ZoomIn, ZoomOut, Maximize2, ExternalLink, X, Move,
-  Minus, Code2, ArrowRight, Square as SquareIcon,
+  Minus, Code2, ArrowRight, Square as SquareIcon, Eye, EyeOff,
 } from "lucide-react";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 import defaultData from "../data/spatialCanvasData.json";
@@ -626,6 +626,12 @@ export default function SpatialCanvas() {
   const [drawMode, setDrawMode] = useState<DrawType | null>(null);
   const [drawPreview, setDrawPreview] = useState<DrawPreview | null>(null);
 
+  // Follow mode — canvas pans to follow the mouse
+  const [followMode, setFollowMode] = useState(false);
+  const followBaseVp = useRef<Viewport | null>(null);
+  const followMousePos = useRef<{ x: number; y: number } | null>(null);
+  const followRaf = useRef<number | null>(null);
+
   const [modal, setModal] = useState<{ type: ElementType; element?: SpatialElement } | null>(null);
   const [showJsonEditor, setShowJsonEditor] = useState(false);
 
@@ -645,6 +651,15 @@ export default function SpatialCanvas() {
   const elementsRef = useRef(elements);
   useEffect(() => { elementsRef.current = elements; }, [elements]);
 
+  // History for undo
+  const dataRef = useRef<CanvasData>(data);
+  useEffect(() => { dataRef.current = data; }, [data]);
+  const historyRef = useRef<CanvasData[]>([]);
+  const pushHistory = useCallback(() => {
+    const snap = JSON.parse(JSON.stringify(dataRef.current)) as CanvasData;
+    historyRef.current = [...historyRef.current.slice(-49), snap];
+  }, []);
+
   // Pan state
   const panInfo = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
 
@@ -654,6 +669,19 @@ export default function SpatialCanvas() {
     startY: number;
     origPositions: Record<string, { x: number; y: number }>;
     moved: boolean;
+  } | null>(null);
+
+  // Resize state — corner drag to resize a single element
+  const resizeInfo = useRef<{
+    corner: "nw" | "ne" | "sw" | "se";
+    startX: number;
+    startY: number;
+    origX: number;
+    origY: number;
+    origWidth: number;
+    origHeight: number;
+    id: string;
+    resizeHeight: boolean;
   } | null>(null);
 
   // Draw-in-progress state (stored in ref so it's accessible in global handlers)
@@ -728,6 +756,24 @@ export default function SpatialCanvas() {
           y: panInfo.current!.origY + dy,
         }));
       }
+      // Corner resize (scale)
+      if (resizeInfo.current && isEditRef.current) {
+        const { corner, startX, startY, origX, origY, origWidth, origHeight, id, resizeHeight } = resizeInfo.current;
+        const vp = viewportRef.current;
+        const dx = (e.clientX - startX) / vp.zoom;
+        const scale = Math.max(0.05, corner.includes("e") ? (origWidth + dx) / origWidth : (origWidth - dx) / origWidth);
+        const newWidth = origWidth * scale;
+        const newHeight = origHeight * scale;
+        const newX = corner.includes("w") ? origX + origWidth - newWidth : origX;
+        const newY = resizeHeight && corner.includes("n") ? origY + origHeight - newHeight : origY;
+        setData((d) => ({
+          ...d,
+          elements: d.elements.map((el) =>
+            el.id === id ? { ...el, x: newX, y: newY, width: newWidth, ...(resizeHeight ? { height: newHeight } : {}) } : el
+          ),
+        }));
+        return;
+      }
       // Element drag
       if (dragInfo.current && isEditRef.current) {
         const vp = viewportRef.current;
@@ -766,6 +812,11 @@ export default function SpatialCanvas() {
 
     const onUp = () => {
       panInfo.current = null;
+      if (resizeInfo.current) {
+        setData((d) => { saveData(d); return d; });
+        resizeInfo.current = null;
+        return;
+      }
       if (dragInfo.current) {
         if (dragInfo.current.moved) setData((d) => { saveData(d); return d; });
         dragInfo.current = null;
@@ -774,6 +825,7 @@ export default function SpatialCanvas() {
       if (drawRef.current) {
         const p = drawRef.current.preview;
         if (p && (p.width > 10 || p.height > 10)) {
+          pushHistory();
           const newEl: SpatialElement = {
             id: `el-${Date.now()}`,
             type: p.type,
@@ -801,11 +853,18 @@ export default function SpatialCanvas() {
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", onUp);
     };
-  }, [updateViewport, updateElements]);
+  }, [updateViewport, updateElements, pushHistory]);
 
   // ── Keyboard ──
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // Undo — works regardless of edit mode
+      if ((e.key === "z" || e.key === "Z") && (e.metaKey || e.ctrlKey) && !e.shiftKey) {
+        e.preventDefault();
+        const prev = historyRef.current.pop();
+        if (prev) { setData(prev); saveData(prev); }
+        return;
+      }
       if (!isEditRef.current) return;
       const sIds = selectedIdsRef.current;
       if (
@@ -816,6 +875,7 @@ export default function SpatialCanvas() {
       ) {
         const count = sIds.size;
         if (!confirm(count > 1 ? `Remove ${count} elements from the canvas?` : "Remove this element from the canvas?")) return;
+        pushHistory();
         updateElements((els) => els.filter((el) => !sIds.has(el.id)));
         setSelectedIds(new Set());
         setPrimarySelectedId(null);
@@ -830,7 +890,79 @@ export default function SpatialCanvas() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [updateElements]);
+  }, [updateElements, pushHistory]);
+
+  // ── Follow mode ──
+  const toggleFollowMode = useCallback(() => {
+    setFollowMode((prev) => {
+      if (!prev) {
+        // Activate: zoom in toward canvas center
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (!rect) return false;
+        const vp = viewportRef.current;
+        const newZoom = Math.min(vp.zoom * 1.4, 2.5);
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const nextVp: Viewport = {
+          zoom: newZoom,
+          x: cx - (cx - vp.x) * (newZoom / vp.zoom),
+          y: cy - (cy - vp.y) * (newZoom / vp.zoom),
+        };
+        followBaseVp.current = nextVp;
+        setData((d) => ({ ...d, viewport: nextVp }));
+        return true;
+      } else {
+        // Deactivate
+        if (followRaf.current) cancelAnimationFrame(followRaf.current);
+        followRaf.current = null;
+        followBaseVp.current = null;
+        followMousePos.current = null;
+        return false;
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!followMode) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const onMouseMove = (e: MouseEvent) => {
+      followMousePos.current = { x: e.clientX, y: e.clientY };
+    };
+    container.addEventListener("mousemove", onMouseMove);
+
+    const tick = () => {
+      const base = followBaseVp.current;
+      const mouse = followMousePos.current;
+      if (base && mouse) {
+        const rect = container.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = mouse.x - cx;
+        const dy = mouse.y - cy;
+        const sensitivity = 1.6;
+        const targetX = base.x - dx * sensitivity;
+        const targetY = base.y - dy * sensitivity;
+        setData((d) => ({
+          ...d,
+          viewport: {
+            ...d.viewport,
+            x: d.viewport.x + (targetX - d.viewport.x) * 0.09,
+            y: d.viewport.y + (targetY - d.viewport.y) * 0.09,
+          },
+        }));
+      }
+      followRaf.current = requestAnimationFrame(tick);
+    };
+    followRaf.current = requestAnimationFrame(tick);
+
+    return () => {
+      container.removeEventListener("mousemove", onMouseMove);
+      if (followRaf.current) cancelAnimationFrame(followRaf.current);
+      followRaf.current = null;
+    };
+  }, [followMode]);
 
   // ── Toggle draw mode (selecting a shape tool) ──
   const toggleDrawMode = (type: DrawType) => {
@@ -845,6 +977,7 @@ export default function SpatialCanvas() {
   // ── Background mouse down ──
   const handleBgMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return;
+    if (followMode) return; // follow mode owns the viewport
 
     if (drawModeRef.current) {
       // Start a draw stroke
@@ -881,6 +1014,7 @@ export default function SpatialCanvas() {
     setPrimarySelectedId(el.id);
 
     if (isEditMode && newIds.size > 0) {
+      pushHistory();
       const origPositions: Record<string, { x: number; y: number }> = {};
       Array.from(newIds).forEach((id) => {
         const elem = elementsRef.current.find((e) => e.id === id);
@@ -890,8 +1024,28 @@ export default function SpatialCanvas() {
     }
   };
 
+  // ── Corner resize handle mouse down ──
+  const handleCornerMouseDown = (e: React.MouseEvent, el: SpatialElement, corner: "nw" | "ne" | "sw" | "se") => {
+    e.stopPropagation();
+    e.preventDefault();
+    pushHistory();
+    const resizeHeight = el.type === "line" || el.type === "arrow" || el.type === "square";
+    resizeInfo.current = {
+      corner,
+      startX: e.clientX,
+      startY: e.clientY,
+      origX: el.x,
+      origY: el.y,
+      origWidth: el.width,
+      origHeight: getElHeight(el) ?? 100,
+      id: el.id,
+      resizeHeight,
+    };
+  };
+
   // ── CRUD ──
   const saveElement = (el: SpatialElement) => {
+    pushHistory();
     updateElements((els) => {
       const idx = els.findIndex((e) => e.id === el.id);
       if (idx >= 0) {
@@ -909,6 +1063,7 @@ export default function SpatialCanvas() {
   const deleteSelected = (ids: Set<string>) => {
     const count = ids.size;
     if (!confirm(count > 1 ? `Remove ${count} elements?` : "Remove this element from the canvas?")) return;
+    pushHistory();
     updateElements((els) => els.filter((e) => !ids.has(e.id)));
     setSelectedIds(new Set());
     setPrimarySelectedId(null);
@@ -1044,6 +1199,30 @@ export default function SpatialCanvas() {
                       borderRadius: 20,
                     }}
                   />
+                )}
+                {isSelected && isEditMode && !drawMode && selectedIds.size === 1 && (
+                  <>
+                    {(["nw", "ne", "sw", "se"] as const).map((corner) => (
+                      <div
+                        key={corner}
+                        onMouseDown={(e) => handleCornerMouseDown(e, el, corner)}
+                        style={{
+                          position: "absolute",
+                          width: 10,
+                          height: 10,
+                          background: "white",
+                          border: "2px solid rgba(59,130,246,0.9)",
+                          borderRadius: 3,
+                          zIndex: 10,
+                          cursor: `${corner}-resize`,
+                          ...(corner === "nw" ? { left: -11, top: -11 } :
+                              corner === "ne" ? { right: -11, top: -11 } :
+                              corner === "sw" ? { left: -11, bottom: -11 } :
+                                               { right: -11, bottom: -11 }),
+                        }}
+                      />
+                    ))}
+                  </>
                 )}
                 {renderElement(el)}
               </div>
@@ -1189,6 +1368,20 @@ export default function SpatialCanvas() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── Follow mode toggle ── */}
+      <button
+        onClick={toggleFollowMode}
+        title={followMode ? "Exit follow mode" : "Follow mode — canvas follows your mouse"}
+        className={`fixed top-4 right-20 z-[1002] flex items-center gap-2 px-3 py-2 rounded-full text-xs font-medium shadow-lg backdrop-blur-sm transition-all duration-200 ${
+          followMode
+            ? "bg-blue-600 text-white ring-2 ring-blue-400/50 shadow-blue-900/50"
+            : "bg-slate-900/90 border border-slate-700 text-slate-400 hover:text-white hover:border-slate-500"
+        }`}
+      >
+        {followMode ? <EyeOff size={13} /> : <Eye size={13} />}
+        <span>{followMode ? "Following" : "Follow"}</span>
+      </button>
 
       {/* ── Zoom controls ── */}
       <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-2">
