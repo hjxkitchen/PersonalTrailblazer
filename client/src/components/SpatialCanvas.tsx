@@ -14,6 +14,7 @@ import JsonEditModal from "./JsonEditModal";
 type FontSize = "sm" | "md" | "lg" | "xl";
 type Align = "left" | "center" | "right";
 type ElementType = "heading" | "text" | "story" | "project" | "link" | "line" | "arrow" | "square";
+type DrawType = "line" | "arrow" | "square";
 
 export interface SpatialElement {
   id: string;
@@ -110,7 +111,7 @@ const ACCENT_PRESETS = [
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 /** Returns explicit height for shape elements; undefined = auto (content) */
-function getElHeight(el: SpatialElement): number | undefined {
+function getElHeight(el: { type: ElementType; width: number; height?: number }): number | undefined {
   if (el.type === "line" || el.type === "arrow") return Math.max(el.height ?? 2, 24);
   if (el.type === "square") return el.height ?? el.width;
   return undefined;
@@ -535,6 +536,77 @@ function EditModal({ element, type, onSave, onClose }: EditModalProps) {
   );
 }
 
+// ─── Draw preview ─────────────────────────────────────────────────────────────
+
+interface DrawPreview {
+  type: DrawType;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  flipY: boolean;
+}
+
+function DrawPreviewEl({ p }: { p: DrawPreview }) {
+  const divH = getElHeight({ type: p.type, width: p.width, height: p.height }) ?? p.height;
+
+  if (p.type === "square") {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          left: p.x,
+          top: p.y,
+          width: Math.max(p.width, 4),
+          height: Math.max(divH, 4),
+          background: "rgba(59,130,246,0.12)",
+          border: "2px dashed rgba(59,130,246,0.6)",
+          borderRadius: 8,
+          pointerEvents: "none",
+          zIndex: 2000,
+        }}
+      />
+    );
+  }
+
+  const isFlat = p.height <= 2;
+  const y1 = isFlat ? divH / 2 : p.flipY ? divH - 1 : 1;
+  const y2 = isFlat ? divH / 2 : p.flipY ? 1 : divH - 1;
+  const x2end = p.width - (p.type === "arrow" ? 10 : 1);
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: p.x,
+        top: p.y,
+        width: Math.max(p.width, 4),
+        height: Math.max(divH, 4),
+        pointerEvents: "none",
+        zIndex: 2000,
+      }}
+    >
+      <svg width={Math.max(p.width, 4)} height={Math.max(divH, 4)} style={{ display: "block" }}>
+        {p.type === "arrow" && (
+          <defs>
+            <marker id="dp-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="rgba(148,163,184,0.8)" />
+            </marker>
+          </defs>
+        )}
+        <line
+          x1={1} y1={y1} x2={x2end} y2={y2}
+          stroke="rgba(148,163,184,0.8)"
+          strokeWidth={2}
+          strokeDasharray="6 3"
+          strokeLinecap="round"
+          markerEnd={p.type === "arrow" ? "url(#dp-arrow)" : undefined}
+        />
+      </svg>
+    </div>
+  );
+}
+
 // ─── Main Canvas Component ────────────────────────────────────────────────────
 
 export default function SpatialCanvas() {
@@ -550,6 +622,10 @@ export default function SpatialCanvas() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [primarySelectedId, setPrimarySelectedId] = useState<string | null>(null);
 
+  // Draw mode state
+  const [drawMode, setDrawMode] = useState<DrawType | null>(null);
+  const [drawPreview, setDrawPreview] = useState<DrawPreview | null>(null);
+
   const [modal, setModal] = useState<{ type: ElementType; element?: SpatialElement } | null>(null);
   const [showJsonEditor, setShowJsonEditor] = useState(false);
 
@@ -559,6 +635,9 @@ export default function SpatialCanvas() {
 
   const isEditRef = useRef(isEditMode);
   useEffect(() => { isEditRef.current = isEditMode; }, [isEditMode]);
+
+  const drawModeRef = useRef<DrawType | null>(drawMode);
+  useEffect(() => { drawModeRef.current = drawMode; }, [drawMode]);
 
   const selectedIdsRef = useRef<Set<string>>(selectedIds);
   useEffect(() => { selectedIdsRef.current = selectedIds; }, [selectedIds]);
@@ -577,6 +656,14 @@ export default function SpatialCanvas() {
     moved: boolean;
   } | null>(null);
 
+  // Draw-in-progress state (stored in ref so it's accessible in global handlers)
+  const drawRef = useRef<{
+    type: DrawType;
+    startCanvasX: number;
+    startCanvasY: number;
+    preview: DrawPreview | null;  // kept in sync with drawPreview state
+  } | null>(null);
+
   // ── Update helpers ──
   const updateViewport = useCallback((fn: (v: Viewport) => Viewport) => {
     setData((d) => {
@@ -592,6 +679,15 @@ export default function SpatialCanvas() {
       saveData(next);
       return next;
     });
+  }, []);
+
+  // ── Screen → canvas coordinate helper ──
+  const screenToCanvas = useCallback((screenX: number, screenY: number) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    const vp = viewportRef.current;
+    const offsetX = rect ? screenX - rect.left : screenX;
+    const offsetY = rect ? screenY - rect.top : screenY;
+    return { x: (offsetX - vp.x) / vp.zoom, y: (offsetY - vp.y) / vp.zoom };
   }, []);
 
   // ── Wheel zoom ──
@@ -622,6 +718,7 @@ export default function SpatialCanvas() {
   // ── Global mouse move / up ──
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
+      // Pan
       if (panInfo.current) {
         const dx = e.clientX - panInfo.current.startX;
         const dy = e.clientY - panInfo.current.startY;
@@ -631,6 +728,7 @@ export default function SpatialCanvas() {
           y: panInfo.current!.origY + dy,
         }));
       }
+      // Element drag
       if (dragInfo.current && isEditRef.current) {
         const vp = viewportRef.current;
         const dx = (e.clientX - dragInfo.current.startX) / vp.zoom;
@@ -648,15 +746,52 @@ export default function SpatialCanvas() {
           }));
         }
       }
+      // Draw stroke
+      if (drawRef.current) {
+        const { type, startCanvasX: sx, startCanvasY: sy } = drawRef.current;
+        const rect = containerRef.current?.getBoundingClientRect();
+        const vp = viewportRef.current;
+        const ex = ((rect ? e.clientX - rect.left : e.clientX) - vp.x) / vp.zoom;
+        const ey = ((rect ? e.clientY - rect.top  : e.clientY) - vp.y) / vp.zoom;
+        const x = Math.min(sx, ex);
+        const y = Math.min(sy, ey);
+        const width = Math.max(Math.abs(ex - sx), 1);
+        const height = Math.max(Math.abs(ey - sy), 1);
+        const flipY = (ex >= sx) !== (ey >= sy);
+        const preview: DrawPreview = { type, x, y, width, height, flipY };
+        drawRef.current.preview = preview;
+        setDrawPreview(preview);
+      }
     };
 
     const onUp = () => {
       panInfo.current = null;
       if (dragInfo.current) {
-        if (dragInfo.current.moved) {
-          setData((d) => { saveData(d); return d; });
-        }
+        if (dragInfo.current.moved) setData((d) => { saveData(d); return d; });
         dragInfo.current = null;
+      }
+      // Finalize drawn shape
+      if (drawRef.current) {
+        const p = drawRef.current.preview;
+        if (p && (p.width > 10 || p.height > 10)) {
+          const newEl: SpatialElement = {
+            id: `el-${Date.now()}`,
+            type: p.type,
+            x: p.x,
+            y: p.y,
+            width: Math.max(p.width, 10),
+            height: p.type === "square" ? Math.max(p.height, 10) : p.height,
+            zIndex: elementsRef.current.length + 1,
+            strokeColor: (p.type === "line" || p.type === "arrow") ? "#94a3b8" : undefined,
+            fillColor: p.type === "square" ? "#3b82f6" : undefined,
+            flipY: p.type !== "square" ? p.flipY : undefined,
+          };
+          updateElements((els) => [...els, newEl]);
+          setSelectedIds(new Set([newEl.id]));
+          setPrimarySelectedId(newEl.id);
+        }
+        drawRef.current = null;
+        setDrawPreview(null);
       }
     };
 
@@ -666,7 +801,7 @@ export default function SpatialCanvas() {
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", onUp);
     };
-  }, [updateViewport]);
+  }, [updateViewport, updateElements]);
 
   // ── Keyboard ──
   useEffect(() => {
@@ -688,15 +823,37 @@ export default function SpatialCanvas() {
       if (e.key === "Escape") {
         setSelectedIds(new Set());
         setPrimarySelectedId(null);
+        setDrawMode(null);
+        drawRef.current = null;
+        setDrawPreview(null);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [updateElements]);
 
-  // ── Background mouse down → pan + deselect ──
+  // ── Toggle draw mode (selecting a shape tool) ──
+  const toggleDrawMode = (type: DrawType) => {
+    setDrawMode((prev) => {
+      if (prev === type) return null;
+      setSelectedIds(new Set());
+      setPrimarySelectedId(null);
+      return type;
+    });
+  };
+
+  // ── Background mouse down ──
   const handleBgMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return;
+
+    if (drawModeRef.current) {
+      // Start a draw stroke
+      const c = screenToCanvas(e.clientX, e.clientY);
+      drawRef.current = { type: drawModeRef.current, startCanvasX: c.x, startCanvasY: c.y, preview: null };
+      return;
+    }
+
+    // Normal: deselect + pan
     setSelectedIds(new Set());
     setPrimarySelectedId(null);
     panInfo.current = { startX: e.clientX, startY: e.clientY, origX: viewport.x, origY: viewport.y };
@@ -704,20 +861,19 @@ export default function SpatialCanvas() {
 
   // ── Element mouse down → select + drag ──
   const handleElementMouseDown = (e: React.MouseEvent, el: SpatialElement) => {
+    // In draw mode, let background handler deal with it (or just ignore elements)
+    if (drawModeRef.current) return;
     e.stopPropagation();
 
     let newIds: Set<string>;
     if (e.shiftKey) {
-      // Toggle this element in selection
       const next = new Set(selectedIdsRef.current);
       if (next.has(el.id)) next.delete(el.id);
       else next.add(el.id);
       newIds = next;
     } else if (selectedIdsRef.current.has(el.id) && selectedIdsRef.current.size > 1) {
-      // Clicking inside existing multi-select: keep the group for dragging
       newIds = new Set(selectedIdsRef.current);
     } else {
-      // Regular click: select just this element
       newIds = new Set([el.id]);
     }
 
@@ -766,10 +922,7 @@ export default function SpatialCanvas() {
     const canvasY = (cy - viewport.y) / viewport.zoom - 80;
 
     const widthDefaults: Partial<Record<ElementType, number>> = {
-      link: 240, heading: 500, line: 200, arrow: 200, square: 200,
-    };
-    const heightDefaults: Partial<Record<ElementType, number>> = {
-      line: 0, arrow: 0, square: 200,
+      link: 240, heading: 500,
     };
 
     const base: SpatialElement = {
@@ -778,10 +931,7 @@ export default function SpatialCanvas() {
       x: canvasX,
       y: canvasY,
       width: widthDefaults[type] ?? 380,
-      height: heightDefaults[type],
       zIndex: elements.length + 1,
-      strokeColor: (type === "line" || type === "arrow") ? "#94a3b8" : undefined,
-      fillColor: type === "square" ? "#3b82f6" : undefined,
     };
     setModal({ type, element: { ...base } });
   };
@@ -814,6 +964,7 @@ export default function SpatialCanvas() {
     setData(defaultData as CanvasData);
     setSelectedIds(new Set());
     setPrimarySelectedId(null);
+    setDrawMode(null);
   };
 
   // ── Toolbar positioning ──
@@ -837,6 +988,9 @@ export default function SpatialCanvas() {
   const bgX = ((viewport.x % dotSpacing) + dotSpacing) % dotSpacing;
   const bgY = ((viewport.y % dotSpacing) + dotSpacing) % dotSpacing;
 
+  // Cursor: crosshair when drawing, grabbing when panning, grab otherwise
+  const canvasCursor = drawMode ? "crosshair" : "grab";
+
   return (
     <div className="relative w-full" style={{ height: "calc(100vh - 117px)" }}>
       {/* Canvas container */}
@@ -844,7 +998,7 @@ export default function SpatialCanvas() {
         ref={containerRef}
         className="absolute inset-0 overflow-hidden bg-[#020617] select-none"
         style={{
-          cursor: panInfo.current ? "grabbing" : "grab",
+          cursor: canvasCursor,
           backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.065) 1px, transparent 1px)",
           backgroundSize: `${dotSpacing}px ${dotSpacing}px`,
           backgroundPosition: `${bgX}px ${bgY}px`,
@@ -876,7 +1030,7 @@ export default function SpatialCanvas() {
                   width: el.width,
                   height: elH,
                   zIndex: isSelected ? 1000 : (el.zIndex ?? 1),
-                  cursor: isEditMode ? "grab" : "default",
+                  cursor: isEditMode && !drawMode ? "grab" : "default",
                 }}
                 onMouseDown={(e) => handleElementMouseDown(e, el)}
               >
@@ -895,12 +1049,34 @@ export default function SpatialCanvas() {
               </div>
             );
           })}
+
+          {/* Draw preview */}
+          {drawPreview && <DrawPreviewEl p={drawPreview} />}
         </div>
       </div>
 
+      {/* ── Draw mode indicator ── */}
+      <AnimatePresence>
+        {drawMode && (
+          <motion.div
+            key="draw-indicator"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.15 }}
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-[1002] pointer-events-none"
+          >
+            <div className="flex items-center gap-2 bg-blue-600/90 text-white text-xs font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur-sm">
+              <span className="capitalize">{drawMode}</span>
+              <span className="text-blue-200">· Click and drag to draw · ESC to cancel</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* ── Mini toolbar above selected element ── */}
       <AnimatePresence>
-        {isEditMode && primaryEl && (
+        {isEditMode && primaryEl && !drawMode && (
           <motion.div
             key={primarySelectedId}
             initial={{ opacity: 0, y: 8 }}
@@ -973,28 +1149,27 @@ export default function SpatialCanvas() {
                 </button>
               ))}
               <div className="w-px h-5 bg-slate-700 mx-1" />
-              {/* Shape tools */}
-              <button
-                onClick={() => addElement("line")}
-                className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-600 text-slate-300 hover:text-white rounded-xl text-xs font-medium transition-all"
-                title="Add line"
-              >
-                <Minus size={13} /> Line
-              </button>
-              <button
-                onClick={() => addElement("arrow")}
-                className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-600 text-slate-300 hover:text-white rounded-xl text-xs font-medium transition-all"
-                title="Add arrow"
-              >
-                <ArrowRight size={13} /> Arrow
-              </button>
-              <button
-                onClick={() => addElement("square")}
-                className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-600 text-slate-300 hover:text-white rounded-xl text-xs font-medium transition-all"
-                title="Add square"
-              >
-                <SquareIcon size={13} /> Square
-              </button>
+              {/* Draw shape tools */}
+              {(
+                [
+                  { type: "line"   as DrawType, icon: Minus,      label: "Line" },
+                  { type: "arrow"  as DrawType, icon: ArrowRight,  label: "Arrow" },
+                  { type: "square" as DrawType, icon: SquareIcon,  label: "Box" },
+                ] as const
+              ).map(({ type, icon: Icon, label }) => (
+                <button
+                  key={type}
+                  onClick={() => toggleDrawMode(type)}
+                  title={`Draw ${label} (click and drag)`}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+                    drawMode === type
+                      ? "bg-blue-600 text-white ring-2 ring-blue-400/60"
+                      : "bg-slate-800 hover:bg-slate-600 text-slate-300 hover:text-white"
+                  }`}
+                >
+                  <Icon size={13} /> {label}
+                </button>
+              ))}
               <div className="w-px h-5 bg-slate-700 mx-1" />
               <button
                 onClick={() => setShowJsonEditor(true)}
