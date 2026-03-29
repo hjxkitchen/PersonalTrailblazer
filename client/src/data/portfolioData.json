@@ -288,12 +288,13 @@
     },
     {
       "id": "agihack",
-      "name": "Agihack",
-      "description": "Experimental framework for AGI development.",
-      "url": "https://agihack.netlify.app",
+      "name": "agihack",
+      "description": "",
+      "url": "https://github.com/HusseinJX/agihack",
       "github": "",
-      "category": "Hackathon",
-      "visible": true
+      "category": "hackathon",
+      "visible": true,
+      "githubUrl": "https://github.com/HusseinJX/agihack"
     },
     {
       "id": "fraud-detection-multiagent",
@@ -750,6 +751,254 @@
       "url": "https://github.com/hjxkitchen/Sovereign",
       "githubUrl": "https://github.com/hjxkitchen/Sovereign",
       "category": "tools"
+    },
+    {
+      "id": "slackbot",
+      "name": "slackbot",
+      "description": "",
+      "url": "https://github.com/HusseinJX/slackbot",
+      "githubUrl": "https://github.com/HusseinJX/slackbot",
+      "category": "tools"
+    },
+    {
+      "id": "3dsensai",
+      "name": "3dsensai",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Interactive & Games"
+    },
+    {
+      "id": "agents-commerce",
+      "name": "agents_commerce",
+      "description": "Build, simulate, deploy, and monetize AI agent workflows using natural language.",
+      "url": "https://github.com/HusseinJX/agents_commerce",
+      "githubUrl": "https://github.com/HusseinJX/agents_commerce",
+      "category": "hackathon"
+    },
+    {
+      "id": "airmouse",
+      "name": "airmouse",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "tools"
+    },
+    {
+      "id": "atlas",
+      "name": "atlas",
+      "description": "",
+      "url": "https://github.com/HusseinJX/atlas",
+      "githubUrl": "https://github.com/HusseinJX/atlas",
+      "category": "Social"
+    },
+    {
+      "id": "dailymindgraph",
+      "name": "DailyMindGraph",
+      "description": "",
+      "url": "https://github.com/ZahabTZ/DailyMindGraph",
+      "githubUrl": "https://github.com/ZahabTZ/DailyMindGraph",
+      "category": "AI & Intelligence"
+    },
+    {
+      "id": "deepmind-hack",
+      "name": "deepmind-hack",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "hackathon"
+    },
+    {
+      "id": "devsecops",
+      "name": "devsecops",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "devtools"
+    },
+    {
+      "id": "erpflow",
+      "name": "erpflow",
+      "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+      "url": "https://github.com/hjxkitchen/erpflow",
+      "githubUrl": "https://github.com/hjxkitchen/erpflow",
+      "category": "Infrastructure"
+    },
+    {
+      "id": "fpshoot",
+      "name": "fpshoot",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Interactive & Games"
+    },
+    {
+      "id": "linearmodel",
+      "name": "linearmodel",
+      "description": "",
+      "url": "https://github.com/HusseinJX/linearmodel",
+      "githubUrl": "https://github.com/HusseinJX/linearmodel",
+      "category": "AI & Intelligence"
+    },
+    {
+      "id": "loclaw",
+      "name": "loclaw",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "mastramultiagent",
+      "name": "mastramultiagent",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "medipipett",
+      "name": "medipipett",
+      "description": "",
+      "url": "https://github.com/HusseinJX/medipipett",
+      "githubUrl": "https://github.com/HusseinJX/medipipett",
+      "category": "Productivity"
+    },
+    {
+      "id": "mlmodelgame",
+      "name": "mlmodelgame",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "operationsorchestrator",
+      "name": "OperationsOrchestrator",
+      "description": "",
+      "url": "https://github.com/ZahabTZ/OperationsOrchestrator",
+      "githubUrl": "https://github.com/ZahabTZ/OperationsOrchestrator",
+      "category": "Productivity"
+    },
+    {
+      "id": "p5",
+      "name": "p5",
+      "description": "",
+      "url": "https://github.com/HusseinJX/p5",
+      "githubUrl": "https://github.com/HusseinJX/p5",
+      "category": "Productivity"
+    },
+    {
+      "id": "playful-insights",
+      "name": "playful-insights",
+      "description": "A multi-agent fraud detection system that uses value-of-information reasoning to autonomously decide when to purchase premium fraud signals. The system implements the x402 payment protocol for paywalled signals, with complete auditability through MongoDB Atlas.",
+      "url": "https://github.com/ZahabTZ/playful-insights",
+      "githubUrl": "https://github.com/ZahabTZ/playful-insights",
+      "category": "Productivity"
+    },
+    {
+      "id": "prolocaliq",
+      "name": "prolocaliq",
+      "description": "> **AI-powered local business discovery platform** that connects users with nearby businesses, events, and experiences through intelligent recommendations and proximity-based filtering.",
+      "url": "https://github.com/HusseinJX/prolocaliq",
+      "githubUrl": "https://github.com/HusseinJX/prolocaliq",
+      "category": "Productivity"
+    },
+    {
+      "id": "sensai",
+      "name": "sensai",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "sensaifps",
+      "name": "sensaifps",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "smartcontract",
+      "name": "smartcontract",
+      "description": "A full-stack blockchain application featuring a Solidity smart contract for managing transactions between members, complete with a Node.js interaction script and a beautiful React frontend.",
+      "url": "https://github.com/HusseinJX/smartcontract",
+      "githubUrl": "https://github.com/HusseinJX/smartcontract",
+      "category": "Productivity"
+    },
+    {
+      "id": "solaros",
+      "name": "solaros",
+      "description": "Modular business platform for solar companies. Monorepo layout:",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "supplychainbasic",
+      "name": "supplychainbasic",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "svelte-chat-viewer",
+      "name": "svelte-chat-viewer",
+      "description": "This template should help get you started developing with Svelte in Vite.",
+      "url": "https://github.com/HusseinJX/chatgpt-export-chat-viewer",
+      "githubUrl": "https://github.com/HusseinJX/chatgpt-export-chat-viewer",
+      "category": "Productivity"
+    },
+    {
+      "id": "vibe-curator",
+      "name": "vibe-curator",
+      "description": "**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID",
+      "url": "https://github.com/ZahabTZ/vibe-curator",
+      "githubUrl": "https://github.com/ZahabTZ/vibe-curator",
+      "category": "Productivity"
+    },
+    {
+      "id": "vibecodenight",
+      "name": "vibecodenight",
+      "description": "",
+      "url": "https://github.com/HusseinJX/vibecodenight",
+      "githubUrl": "https://github.com/HusseinJX/vibecodenight",
+      "category": "Productivity"
+    },
+    {
+      "id": "vrsensai",
+      "name": "vrsensai",
+      "description": "",
+      "url": "https://github.com/HusseinJX/vrsensai",
+      "githubUrl": "https://github.com/HusseinJX/vrsensai",
+      "category": "Productivity"
+    },
+    {
+      "id": "what-local-launch",
+      "name": "what-local-launch",
+      "description": "**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID",
+      "url": "https://github.com/ZahabTZ/what-local-launch",
+      "githubUrl": "https://github.com/ZahabTZ/what-local-launch",
+      "category": "Productivity"
+    },
+    {
+      "id": "whatnotclone",
+      "name": "whatnotclone",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "whatslocalnative",
+      "name": "whatslocalnative",
+      "description": "A comprehensive React Native social app connecting local vendors with communities through events, posts, and location-based discovery.",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
     }
   ]
 }
