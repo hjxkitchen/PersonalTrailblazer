@@ -662,6 +662,94 @@
       "url": "",
       "githubUrl": "",
       "category": "flair"
+    },
+    {
+      "id": "alphafold",
+      "name": "alphafold",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "AI & Intelligence"
+    },
+    {
+      "id": "ar-feast-finder",
+      "name": "ar-feast-finder",
+      "description": "**URL**: https://lovable.dev/projects/1f8db32c-f541-40cd-ba5e-8a01a317d48b",
+      "url": "https://github.com/ZahabTZ/ar-feast-finder",
+      "githubUrl": "https://github.com/ZahabTZ/ar-feast-finder",
+      "category": "Commerce & Business"
+    },
+    {
+      "id": "artevent",
+      "name": "artevent",
+      "description": "",
+      "url": "https://github.com/HusseinJX/atlas",
+      "githubUrl": "https://github.com/HusseinJX/atlas",
+      "category": "Social"
+    },
+    {
+      "id": "design-safer",
+      "name": "design-safer",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "devtools"
+    },
+    {
+      "id": "dream-journal-ui",
+      "name": "dream-journal-ui",
+      "description": "**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID",
+      "url": "https://github.com/ZahabTZ/dream-journal-ui",
+      "githubUrl": "https://github.com/ZahabTZ/dream-journal-ui",
+      "category": "tools"
+    },
+    {
+      "id": "dual-future-narratives",
+      "name": "dual-future-narratives",
+      "description": "**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID",
+      "url": "https://github.com/ZahabTZ/dual-future-narratives",
+      "githubUrl": "https://github.com/ZahabTZ/dual-future-narratives",
+      "category": "Social"
+    },
+    {
+      "id": "flyout-app",
+      "name": "flyout-app",
+      "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+      "url": "",
+      "githubUrl": "",
+      "category": "hackathon"
+    },
+    {
+      "id": "hackthestack",
+      "name": "hackthestack",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "hackathon"
+    },
+    {
+      "id": "nextgencrm",
+      "name": "nextgencrm",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "tools"
+    },
+    {
+      "id": "nexus",
+      "name": "nexus",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "tools"
+    },
+    {
+      "id": "sovereign",
+      "name": "Sovereign",
+      "description": "",
+      "url": "https://github.com/hjxkitchen/Sovereign",
+      "githubUrl": "https://github.com/hjxkitchen/Sovereign",
+      "category": "tools"
     }
   ]
 }
