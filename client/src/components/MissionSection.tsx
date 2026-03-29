@@ -26,6 +26,10 @@ import {
   ChevronUp,
   ChevronDown,
   ChevronsUpDown,
+  Eye,
+  EyeOff,
+  Github,
+  Check,
 } from "lucide-react";
 import defaultData from "../data/portfolioData.json";
 import ExtendedProjectEditModal, { ExtendedProject } from "./ExtendedProjectEditModal";
@@ -207,13 +211,102 @@ export default function MissionSection() {
 
   // List view state
   const [listView, setListView] = useState(false);
-  type SortCol = "name" | "category" | "url" | "media";
+  type SortCol = "name" | "category" | "url" | "github" | "media" | "visible";
   const [sortCol, setSortCol] = useState<SortCol>("name");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
   const toggleSort = (col: SortCol) => {
     if (sortCol === col) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     else { setSortCol(col); setSortDir("asc"); }
+  };
+
+  // List view filters
+  const [listVisFilter, setListVisFilter] = useState<"all" | "visible" | "hidden">("all");
+  const [listCatFilter, setListCatFilter] = useState("All");
+
+  // Inline row editing
+  const [editingRowId, setEditingRowId] = useState<string | null>(null);
+  const [rowDraft, setRowDraft] = useState<Partial<ExtendedProject>>({});
+
+  const startRowEdit = (project: ExtendedProject) => {
+    setEditingRowId(project.id);
+    setRowDraft({ ...project });
+  };
+
+  const saveRowEdit = () => {
+    if (!editingRowId) return;
+    const orig = data.projects.find((p) => p.id === editingRowId);
+    if (!orig) return;
+    const updated = { ...orig, ...rowDraft };
+    update({ ...data, projects: data.projects.map((p) => (p.id === editingRowId ? updated : p)) });
+    setEditingRowId(null);
+    setRowDraft({});
+  };
+
+  const cancelRowEdit = () => {
+    setEditingRowId(null);
+    setRowDraft({});
+  };
+
+  // Drag-select state
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const isDragSelecting = useRef(false);
+  const dragAnchorIdx = useRef<number | null>(null);
+  const dragMoved = useRef(false);
+  const lastClickIdx = useRef<number | null>(null);
+
+  const onRowMouseDown = (e: React.MouseEvent, idx: number, id: string) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    isDragSelecting.current = true;
+    dragAnchorIdx.current = idx;
+    dragMoved.current = false;
+
+    if (e.shiftKey && lastClickIdx.current !== null) {
+      const start = Math.min(lastClickIdx.current, idx);
+      const end = Math.max(lastClickIdx.current, idx);
+      setSelectedIds(new Set(sortedProjects.slice(start, end + 1).map((p) => p.id)));
+    } else if (e.ctrlKey || e.metaKey) {
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id); else next.add(id);
+        return next;
+      });
+      lastClickIdx.current = idx;
+    } else {
+      setSelectedIds(new Set([id]));
+      lastClickIdx.current = idx;
+    }
+  };
+
+  const onRowMouseEnter = (e: React.MouseEvent, idx: number) => {
+    if (!isDragSelecting.current || e.buttons !== 1) return;
+    const anchor = dragAnchorIdx.current ?? idx;
+    if (idx !== anchor) dragMoved.current = true;
+    const start = Math.min(anchor, idx);
+    const end = Math.max(anchor, idx);
+    setSelectedIds(new Set(sortedProjects.slice(start, end + 1).map((p) => p.id)));
+  };
+
+  const onRowMouseUp = (e: React.MouseEvent, project: ExtendedProject) => {
+    isDragSelecting.current = false;
+    if (!dragMoved.current && !isEditMode) {
+      setSelectedProject(project);
+    }
+  };
+
+  const bulkSetVisibility = (vis: boolean) => {
+    const next = data.projects.map((p) =>
+      selectedIds.has(p.id) ? { ...p, visible: vis } : p
+    );
+    update({ ...data, projects: next });
+  };
+
+  const toggleVisibility = (id: string) => {
+    const next = data.projects.map((p) =>
+      p.id === id ? { ...p, visible: p.visible === false ? true : false } : p
+    );
+    update({ ...data, projects: next });
   };
 
   // Edit modal state
@@ -282,18 +375,31 @@ export default function MissionSection() {
   };
 
   // ── Project drag-and-drop (reorder) ──
-  const visibleProjects =
-    activeCategory === "All"
-      ? data.projects
-      : data.projects.filter((p) => p.category === activeCategory);
+  const visibleProjects = (() => {
+    const catFiltered =
+      activeCategory === "All"
+        ? data.projects
+        : data.projects.filter((p) => p.category === activeCategory);
+    // In normal mode, hide projects with visible === false
+    return isEditMode ? catFiltered : catFiltered.filter((p) => p.visible !== false);
+  })();
 
   const sortedProjects = [...visibleProjects].sort((a, b) => {
     let cmp = 0;
     if (sortCol === "name") cmp = a.name.localeCompare(b.name);
     else if (sortCol === "category") cmp = a.category.localeCompare(b.category);
     else if (sortCol === "url") cmp = (a.url ? 1 : 0) - (b.url ? 1 : 0);
+    else if (sortCol === "github") cmp = (a.github ? 1 : 0) - (b.github ? 1 : 0);
     else if (sortCol === "media") cmp = (a.media?.length ?? 0) - (b.media?.length ?? 0);
+    else if (sortCol === "visible") cmp = (a.visible === false ? 0 : 1) - (b.visible === false ? 0 : 1);
     return sortDir === "asc" ? cmp : -cmp;
+  });
+
+  const listFilteredProjects = sortedProjects.filter((p) => {
+    if (listVisFilter === "visible" && p.visible === false) return false;
+    if (listVisFilter === "hidden" && p.visible !== false) return false;
+    if (listCatFilter !== "All" && p.category !== listCatFilter) return false;
+    return true;
   });
 
   const onProjectDragStart = (visibleIdx: number) => {
@@ -512,108 +618,312 @@ export default function MissionSection() {
           </div>
 
           {/* List view */}
-          {listView && !isEditMode && (
-            <div className="rounded-xl border border-slate-800 overflow-hidden mb-8 text-sm">
-              {/* Column headers */}
-              <div className="grid bg-slate-900 border-b border-slate-800 text-slate-500 text-[11px] uppercase tracking-wider font-semibold select-none"
-                style={{ gridTemplateColumns: "1.8fr 130px 2fr 170px 64px" }}
-              >
-                {(
-                  [
-                    { col: "name" as SortCol, label: "Name" },
-                    { col: "category" as SortCol, label: "Category" },
-                    { col: null, label: "Description" },
-                    { col: "url" as SortCol, label: "URL" },
-                    { col: "media" as SortCol, label: "Media" },
-                  ] as const
-                ).map(({ col, label }) => (
+          {listView && (
+            <div className="mb-8">
+
+              {/* ── Filter bar ── */}
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                {/* Category filter */}
+                <select
+                  value={listCatFilter}
+                  onChange={(e) => setListCatFilter(e.target.value)}
+                  className="bg-slate-800 border border-slate-700 text-slate-300 text-xs rounded-lg px-3 py-1.5 outline-none focus:border-blue-500 cursor-pointer"
+                >
+                  <option value="All">All Categories</option>
+                  {data.categories.filter((c) => c.id !== "All").map((c) => (
+                    <option key={c.id} value={c.id}>{c.label}</option>
+                  ))}
+                </select>
+
+                {/* Visibility filter — always show, but "Hidden" only useful in edit mode */}
+                <div className="flex items-center gap-1 bg-slate-800/60 border border-slate-700/60 rounded-lg p-0.5">
+                  {(["all", "visible", "hidden"] as const).map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setListVisFilter(f)}
+                      className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                        listVisFilter === f
+                          ? "bg-slate-600 text-white"
+                          : "text-slate-500 hover:text-slate-300"
+                      }`}
+                    >
+                      {f === "all" ? "All" : f === "visible" ? "Visible" : "Hidden"}
+                    </button>
+                  ))}
+                </div>
+
+                <span className="text-xs text-slate-600 ml-auto">{listFilteredProjects.length} project{listFilteredProjects.length !== 1 ? "s" : ""}</span>
+              </div>
+
+              {/* ── Bulk action bar ── */}
+              {isEditMode && selectedIds.size > 0 && (
+                <div className="flex items-center gap-3 mb-2 px-3 py-2 bg-blue-600/10 border border-blue-500/30 rounded-lg">
+                  <span className="text-blue-300 text-xs font-medium">{selectedIds.size} selected</span>
+                  <div className="flex gap-2 ml-auto">
+                    <button onClick={() => bulkSetVisibility(true)} className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded text-xs transition-colors"><Eye size={11} /> Show</button>
+                    <button onClick={() => bulkSetVisibility(false)} className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded text-xs transition-colors"><EyeOff size={11} /> Hide</button>
+                    <button onClick={() => setSelectedIds(new Set())} className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded text-xs transition-colors">Clear</button>
+                  </div>
+                </div>
+              )}
+
+              {/* ── Table ── */}
+              {(() => {
+                // Column template — minmax(0,Xfr) prevents grid blowout
+                const COLS = isEditMode
+                  ? "28px minmax(0,2fr) 136px minmax(0,1.8fr) 144px 144px 48px 72px"
+                  : "minmax(0,2fr) 136px minmax(0,1.8fr) 144px 144px 48px";
+
+                const SortBtn = ({ col, label }: { col: SortCol | null; label: string }) => (
                   <button
-                    key={label}
                     onClick={() => col && toggleSort(col)}
-                    className={`px-3 py-2 text-left flex items-center gap-1 transition-colors ${
-                      col ? "hover:text-slate-300 cursor-pointer" : "cursor-default"
-                    } ${col && sortCol === col ? "text-blue-400" : ""}`}
+                    className={`w-full h-full px-3 py-2 text-left flex items-center gap-1 text-[11px] uppercase tracking-wider font-semibold transition-colors ${
+                      col ? "cursor-pointer hover:text-slate-300" : "cursor-default"
+                    } ${col && sortCol === col ? "text-blue-400" : "text-slate-500"}`}
                   >
                     {label}
-                    {col ? (
-                      sortCol === col ? (
-                        sortDir === "asc" ? <ChevronUp size={11} /> : <ChevronDown size={11} />
-                      ) : (
-                        <ChevronsUpDown size={10} className="opacity-30" />
-                      )
-                    ) : null}
+                    {col && (sortCol === col
+                      ? (sortDir === "asc" ? <ChevronUp size={10} /> : <ChevronDown size={10} />)
+                      : <ChevronsUpDown size={9} className="opacity-25" />)}
                   </button>
-                ))}
-              </div>
-              {/* Rows */}
-              {sortedProjects.map((project, i) => {
-                const hostname = project.url
-                  ? (() => { try { return new URL(project.url).hostname; } catch { return project.url; } })()
-                  : null;
-                const hasMedia = project.media && project.media.length > 0;
+                );
+
                 return (
                   <div
-                    key={project.id}
-                    onClick={() => setSelectedProject(project)}
-                    className={`grid items-center border-b border-slate-800/50 last:border-0 cursor-pointer hover:bg-slate-800/50 transition-colors group ${
-                      i % 2 === 0 ? "bg-slate-900/10" : "bg-slate-900/30"
-                    }`}
-                    style={{ gridTemplateColumns: "1.8fr 130px 2fr 170px 64px" }}
+                    className="rounded-xl border border-slate-800 overflow-hidden text-xs select-none"
+                    onMouseUp={() => { isDragSelecting.current = false; }}
+                    onMouseLeave={() => { isDragSelecting.current = false; }}
                   >
-                    <div className="px-3 py-2 text-white font-medium truncate group-hover:text-blue-300 transition-colors">
-                      {project.name}
+                    {/* Header */}
+                    <div className="grid bg-slate-900/80 border-b border-slate-800" style={{ gridTemplateColumns: COLS }}>
+                      {isEditMode && (
+                        <div className="flex items-center justify-center px-1 py-2">
+                          <SortBtn col="visible" label="" />
+                        </div>
+                      )}
+                      <SortBtn col="name" label="Name" />
+                      <SortBtn col="category" label="Category" />
+                      <SortBtn col={null} label="Description" />
+                      <SortBtn col="github" label="GitHub" />
+                      <SortBtn col="url" label="URL" />
+                      <SortBtn col="media" label="Media" />
+                      {isEditMode && <div />}
                     </div>
-                    <div className="px-3 py-2">
-                      <span className="text-[10px] uppercase tracking-widest text-slate-400 bg-slate-800/70 px-2 py-0.5 rounded border border-slate-700/50 whitespace-nowrap">
-                        {project.category}
-                      </span>
-                    </div>
-                    <div className="px-3 py-2 text-slate-500 text-xs truncate">
-                      {project.description}
-                    </div>
-                    <div className="px-3 py-2 font-mono text-[11px] truncate">
-                      {hostname ? (
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1"
+
+                    {/* Rows */}
+                    {listFilteredProjects.map((project, i) => {
+                      const isEditing = editingRowId === project.id;
+                      const isHidden = project.visible === false;
+                      const isSelected = selectedIds.has(project.id);
+
+                      const hostname = project.url
+                        ? (() => { try { return new URL(project.url).hostname; } catch { return project.url; } })()
+                        : null;
+                      const githubDisplay = project.github
+                        ? (() => { try { const u = new URL(project.github); return (u.pathname.replace(/^\//, "").replace(/\/$/, "") || u.hostname); } catch { return project.github; } })()
+                        : null;
+
+                      // ── Editing row ──
+                      if (isEditing) {
+                        const inputCls = "w-full bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-xs outline-none focus:border-blue-500 min-w-0";
+                        return (
+                          <div
+                            key={project.id}
+                            className="grid items-center border-b border-slate-800/40 last:border-0 bg-blue-950/30"
+                            style={{ gridTemplateColumns: COLS }}
+                          >
+                            {/* Vis toggle */}
+                            {isEditMode && (
+                              <div className="flex justify-center px-1 py-2">
+                                <button
+                                  onClick={() => setRowDraft((d) => ({ ...d, visible: d.visible === false ? true : false }))}
+                                  className={`p-0.5 rounded transition-colors ${
+                                    rowDraft.visible === false ? "text-slate-600 hover:text-slate-400" : "text-green-400 hover:text-green-300"
+                                  }`}
+                                >
+                                  {rowDraft.visible === false ? <EyeOff size={13} /> : <Eye size={13} />}
+                                </button>
+                              </div>
+                            )}
+                            {/* Name */}
+                            <div className="px-2 py-1.5 min-w-0">
+                              <input className={inputCls} value={rowDraft.name ?? ""} onChange={(e) => setRowDraft((d) => ({ ...d, name: e.target.value }))} placeholder="Name" />
+                            </div>
+                            {/* Category */}
+                            <div className="px-2 py-1.5 min-w-0">
+                              <select
+                                className={inputCls}
+                                value={rowDraft.category ?? ""}
+                                onChange={(e) => setRowDraft((d) => ({ ...d, category: e.target.value }))}
+                              >
+                                {data.categories.filter((c) => c.id !== "All").map((c) => (
+                                  <option key={c.id} value={c.id}>{c.label}</option>
+                                ))}
+                              </select>
+                            </div>
+                            {/* Description */}
+                            <div className="px-2 py-1.5 min-w-0">
+                              <input className={inputCls} value={rowDraft.description ?? ""} onChange={(e) => setRowDraft((d) => ({ ...d, description: e.target.value }))} placeholder="Description" />
+                            </div>
+                            {/* GitHub */}
+                            <div className="px-2 py-1.5 min-w-0">
+                              <input className={inputCls} value={rowDraft.github ?? ""} onChange={(e) => setRowDraft((d) => ({ ...d, github: e.target.value }))} placeholder="https://github.com/..." />
+                            </div>
+                            {/* URL */}
+                            <div className="px-2 py-1.5 min-w-0">
+                              <input className={inputCls} value={rowDraft.url ?? ""} onChange={(e) => setRowDraft((d) => ({ ...d, url: e.target.value }))} placeholder="https://..." />
+                            </div>
+                            {/* Media */}
+                            <div className="px-2 py-1.5 text-center text-slate-500">
+                              {project.media?.length ?? 0}
+                            </div>
+                            {/* Save / Cancel */}
+                            {isEditMode && (
+                              <div className="px-1.5 py-1 flex items-center justify-end gap-1">
+                                <button onClick={saveRowEdit} className="p-1 text-green-400 hover:text-green-300 transition-colors rounded" title="Save"><Check size={13} /></button>
+                                <button onClick={cancelRowEdit} className="p-1 text-slate-500 hover:text-slate-300 transition-colors rounded" title="Cancel"><X size={13} /></button>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      }
+
+                      // ── Display row ──
+                      return (
+                        <div
+                          key={project.id}
+                          className={`grid items-center border-b border-slate-800/40 last:border-0 transition-colors group ${
+                            isSelected ? "bg-blue-600/15" : i % 2 === 0 ? "" : "bg-white/[0.015]"
+                          } ${isHidden ? "opacity-40" : ""} hover:bg-blue-600/10 cursor-default`}
+                          style={{ gridTemplateColumns: COLS }}
+                          onMouseDown={(e) => onRowMouseDown(e, i, project.id)}
+                          onMouseEnter={(e) => onRowMouseEnter(e, i)}
+                          onMouseUp={(e) => onRowMouseUp(e, project)}
                         >
-                          <ExternalLink size={10} className="shrink-0" />
-                          <span className="truncate">{hostname}</span>
-                        </a>
-                      ) : (
-                        <span className="text-slate-700">—</span>
-                      )}
-                    </div>
-                    <div className="px-3 py-2 text-center">
-                      {hasMedia ? (
-                        <span className="inline-flex items-center gap-1 text-slate-400 text-xs">
-                          <ImageIcon size={10} />
-                          {project.media!.length}
-                        </span>
-                      ) : (
-                        <span className="text-slate-700 text-xs">—</span>
-                      )}
-                    </div>
+                          {/* Vis toggle */}
+                          {isEditMode && (
+                            <div className="flex justify-center px-1 py-2">
+                              <button
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onClick={(e) => { e.stopPropagation(); toggleVisibility(project.id); }}
+                                className={`p-0.5 rounded transition-colors ${isHidden ? "text-slate-700 hover:text-slate-500" : "text-green-500 hover:text-green-400"}`}
+                                title={isHidden ? "Hidden" : "Visible"}
+                              >
+                                {isHidden ? <EyeOff size={13} /> : <Eye size={13} />}
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Name */}
+                          <div className={`px-3 py-2 font-medium truncate min-w-0 transition-colors ${isHidden ? "text-slate-500" : isSelected ? "text-blue-200" : "text-slate-100"}`}>
+                            {project.name}
+                          </div>
+
+                          {/* Category */}
+                          <div className="px-3 py-2 min-w-0 overflow-hidden">
+                            <span className="inline-block text-[10px] uppercase tracking-wider font-semibold text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700/60 max-w-full truncate">
+                              {project.category}
+                            </span>
+                          </div>
+
+                          {/* Description */}
+                          <div className="px-3 py-2 text-slate-500 truncate min-w-0 text-[11px]">
+                            {project.description || <span className="text-slate-700">—</span>}
+                          </div>
+
+                          {/* GitHub */}
+                          <div className="px-3 py-2 min-w-0 overflow-hidden">
+                            {githubDisplay ? (
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center gap-1 text-slate-400 hover:text-slate-200 transition-colors min-w-0"
+                              >
+                                <Github size={10} className="shrink-0" />
+                                <span className="truncate font-mono text-[11px]">{githubDisplay}</span>
+                              </a>
+                            ) : (
+                              <span className="text-slate-700">—</span>
+                            )}
+                          </div>
+
+                          {/* URL */}
+                          <div className="px-3 py-2 min-w-0 overflow-hidden">
+                            {hostname ? (
+                              <a
+                                href={project.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors min-w-0"
+                              >
+                                <ExternalLink size={10} className="shrink-0" />
+                                <span className="truncate font-mono text-[11px]">{hostname}</span>
+                              </a>
+                            ) : (
+                              <span className="text-slate-700">—</span>
+                            )}
+                          </div>
+
+                          {/* Media */}
+                          <div className="px-3 py-2 text-center">
+                            {(project.media?.length ?? 0) > 0 ? (
+                              <span className="inline-flex items-center gap-0.5 text-slate-400">
+                                <ImageIcon size={10} />
+                                {project.media!.length}
+                              </span>
+                            ) : (
+                              <span className="text-slate-700">—</span>
+                            )}
+                          </div>
+
+                          {/* Actions */}
+                          {isEditMode && (
+                            <div className="px-2 py-1.5 flex items-center justify-end gap-0.5">
+                              <button
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onClick={(e) => { e.stopPropagation(); startRowEdit(project); }}
+                                className="p-1.5 text-slate-600 hover:text-blue-400 hover:bg-slate-700/50 transition-colors rounded"
+                                title="Edit row"
+                              >
+                                <Pencil size={11} />
+                              </button>
+                              <button
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onClick={(e) => { e.stopPropagation(); deleteProject(project.id); }}
+                                className="p-1.5 text-slate-600 hover:text-red-400 hover:bg-slate-700/50 transition-colors rounded"
+                                title="Delete"
+                              >
+                                <Trash2 size={11} />
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+
+                    {listFilteredProjects.length === 0 && (
+                      <div className="py-16 text-center text-slate-600 text-sm">No projects match the current filters</div>
+                    )}
                   </div>
                 );
-              })}
-              {sortedProjects.length === 0 && (
-                <div className="py-12 text-center text-slate-600 text-sm">No projects in this category</div>
-              )}
+              })()}
             </div>
           )}
 
           {/* Projects grid */}
-          {(!listView || isEditMode) && (
+          {!listView && (
           <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             <AnimatePresence mode="popLayout">
               {visibleProjects.map((project, visibleIdx) => {
                 const hasMedia = project.media && project.media.length > 0;
                 const isFileDragTarget = fileDragOverId === project.id;
                 const Icon = ICON_MAP[getCategoryIcon(project.category)] || Box;
+                const isHiddenCard = project.visible === false;
 
                 return (
                   <motion.div
@@ -654,6 +964,7 @@ export default function MissionSection() {
                         h-full bg-slate-900/40 backdrop-blur-sm rounded-2xl overflow-hidden
                         border transition-all duration-500
                         flex flex-col
+                        ${isHiddenCard ? "opacity-40" : ""}
                         ${isFileDragTarget
                           ? "border-blue-400 bg-slate-900/80 shadow-lg shadow-blue-500/20"
                           : isEditMode
@@ -681,8 +992,21 @@ export default function MissionSection() {
                           </div>
                         )}
                         {isEditMode && (
-                          <div className="absolute top-2 left-2 z-20 p-1.5 text-slate-500">
-                            <GripVertical size={16} />
+                          <div className="absolute top-2 left-2 z-20 flex items-center gap-1">
+                            <div className="p-1.5 text-slate-500">
+                              <GripVertical size={16} />
+                            </div>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); toggleVisibility(project.id); }}
+                              className={`p-1.5 rounded-lg transition-colors ${
+                                isHiddenCard
+                                  ? "bg-slate-900/90 text-slate-600 hover:text-slate-300"
+                                  : "bg-slate-900/90 text-green-400 hover:text-green-300"
+                              }`}
+                              title={isHiddenCard ? "Hidden — click to show" : "Visible — click to hide"}
+                            >
+                              {isHiddenCard ? <EyeOff size={13} /> : <Eye size={13} />}
+                            </button>
                           </div>
                         )}
 

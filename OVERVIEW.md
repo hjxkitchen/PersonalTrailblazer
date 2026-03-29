@@ -41,3 +41,17 @@ Existing projects without `media`/`longDescription`/`technologies` continue to w
   - Category filter tabs still work in list view (filters rows to the active category).
   - Button text/icon swaps between "List" (List icon) and "Grid" (LayoutGrid icon) to reflect current state.
   - Grid view is always shown in edit mode regardless of toggle state.
+
+---
+
+## Checkpoint 3 — List View: filter bar, inline row editing, improved table layout
+
+**Changes made to `MissionSection.tsx`:**
+
+- **Filter bar** (above the table): Category dropdown and Visible/Hidden/All pill-toggle so users can filter list rows without changing the global category tab. Shows a live project count on the right.
+- **`listFilteredProjects`** derived from `sortedProjects`, applying both visibility and category filters.
+- **Inline row editing**: Clicking the pencil icon in edit mode now opens the row in-place (blue-tinted background) with text inputs for Name, Description, GitHub, URL; a select for Category; and a visibility toggle button. Save (Check icon) / Cancel (X icon) buttons commit or discard the draft. Uses `editingRowId` + `rowDraft` state with `startRowEdit` / `saveRowEdit` / `cancelRowEdit` helpers.
+- **Table layout improvements**: Switched to `minmax(0, Xfr)` column template to prevent grid blowout; header cells use a reusable `SortBtn` component; rows use consistent `px-3` padding.
+- **Bulk action bar** redesigned to be more compact (text-xs, smaller gaps).
+- Added `Check` to lucide-react imports.
+- Build verified clean.
