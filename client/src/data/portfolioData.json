@@ -1,15 +1,55 @@
 {
   "categories": [
-    { "id": "All", "label": "All Works", "icon": "Layers" },
-    { "id": "AI & Intelligence", "label": "AI & Intel", "icon": "Sparkles" },
-    { "id": "Spatial Computing", "label": "Spatial & 3D", "icon": "Box" },
-    { "id": "Commerce & Business", "label": "Commerce", "icon": "Briefcase" },
-    { "id": "Infrastructure", "label": "Infrastructure", "icon": "Cpu" },
-    { "id": "Interactive & Games", "label": "Games", "icon": "Gamepad2" },
-    { "id": "Productivity", "label": "Productivity", "icon": "Briefcase" },
-    { "id": "Hackathon", "label": "Hackathon", "icon": "Rocket" },
-    { "id": "Hardware", "label": "Hardware", "icon": "Cpu" },
-    { "id": "Social", "label": "Social", "icon": "Users" }
+    {
+      "id": "All",
+      "label": "All Works",
+      "icon": "Layers"
+    },
+    {
+      "id": "AI & Intelligence",
+      "label": "AI & Intel",
+      "icon": "Sparkles"
+    },
+    {
+      "id": "Spatial Computing",
+      "label": "Spatial & 3D",
+      "icon": "Box"
+    },
+    {
+      "id": "Commerce & Business",
+      "label": "Commerce",
+      "icon": "Briefcase"
+    },
+    {
+      "id": "Infrastructure",
+      "label": "Infrastructure",
+      "icon": "Cpu"
+    },
+    {
+      "id": "Interactive & Games",
+      "label": "Games",
+      "icon": "Gamepad2"
+    },
+    {
+      "id": "Productivity",
+      "label": "Productivity",
+      "icon": "Briefcase"
+    },
+    {
+      "id": "Hackathon",
+      "label": "Hackathon",
+      "icon": "Rocket"
+    },
+    {
+      "id": "Hardware",
+      "label": "Hardware",
+      "icon": "Cpu"
+    },
+    {
+      "id": "Social",
+      "label": "Social",
+      "icon": "Users"
+    }
   ],
   "projects": [
     {
@@ -410,12 +450,13 @@
     },
     {
       "id": "wall3d",
-      "name": "Wall3d",
-      "description": "Interactive 3D wall visualizations.",
-      "url": "https://wall3d.netlify.app",
+      "name": "wall3d",
+      "description": "",
+      "url": "https://github.com/HusseinJX/wall3d",
       "github": "",
-      "category": "Interactive & Games",
-      "visible": true
+      "category": "visual",
+      "visible": true,
+      "githubUrl": "https://github.com/HusseinJX/wall3d"
     },
     {
       "id": "party-promoter",
@@ -468,8 +509,9 @@
       "description": "A Chrome Extension (Manifest V3) that allows you to annotate, tag, and save selected ChatGPT messages.",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "tools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "seespeak",
@@ -477,17 +519,19 @@
       "description": "",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "tools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "disruption-response-agent",
       "name": "disruption-response-agent",
-      "description": "AI-powered supply chain disruption copilot that monitors shipments, detects problems, generates recovery recommendations, and provides a War Room UI for operations teams.",
+      "description": "AI-powered supply chain disruption copilot that monitors shipments, detects problems, generates recovery recommendations, and provides a \"War Room\" UI for operations teams.",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "tools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "calltester",
@@ -495,8 +539,9 @@
       "description": "",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "tools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "tinderforstartups",
@@ -504,8 +549,9 @@
       "description": "",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "devtools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "systemdesigner",
@@ -513,8 +559,9 @@
       "description": "A two-panel web application where users can describe system architectures through natural language conversation and see them automatically visualized using Excalidraw.",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "devtools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "appshelf",
@@ -522,8 +569,9 @@
       "description": "",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "tools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "journai-crm",
@@ -531,8 +579,9 @@
       "description": "",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "tools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "invoicetostore",
@@ -540,8 +589,9 @@
       "description": "",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "tools",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "shelfscancatalog",
@@ -549,8 +599,9 @@
       "description": "",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "visual",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "zahabenergy",
@@ -558,8 +609,9 @@
       "description": "",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "old5",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "proompter",
@@ -567,8 +619,49 @@
       "description": "clipcards",
       "url": "",
       "github": "",
-      "category": "Productivity",
-      "visible": false
+      "category": "tools",
+      "visible": true,
+      "githubUrl": ""
+    },
+    {
+      "id": "shipsafer",
+      "name": "shipsafer",
+      "description": "- 127.0.0.1:3000, use this, very important, otherwise the app will not work!",
+      "url": "",
+      "githubUrl": "",
+      "category": "devtools"
+    },
+    {
+      "id": "tanzaniatourscape",
+      "name": "TanzaniaTourscape",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "old5"
+    },
+    {
+      "id": "personaltrailblazer",
+      "name": "PersonalTrailblazer",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "old5"
+    },
+    {
+      "id": "loanops",
+      "name": "loanops",
+      "description": "Automated loan document intake and extraction for mortgage cases.",
+      "url": "",
+      "githubUrl": "",
+      "category": "flair"
+    },
+    {
+      "id": "loanops-runner",
+      "name": "loanops-runner",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "flair"
     }
   ]
 }
