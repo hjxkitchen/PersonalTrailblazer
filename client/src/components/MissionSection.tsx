@@ -21,6 +21,11 @@ import {
   Code2,
   Upload,
   ImageIcon,
+  List,
+  LayoutGrid,
+  ChevronUp,
+  ChevronDown,
+  ChevronsUpDown,
 } from "lucide-react";
 import defaultData from "../data/portfolioData.json";
 import ExtendedProjectEditModal, { ExtendedProject } from "./ExtendedProjectEditModal";
@@ -200,6 +205,17 @@ export default function MissionSection() {
   const blob2X = useTransform(smoothX, [0, typeof window !== "undefined" ? window.innerWidth : 1440], [28, -28]);
   const blob2Y = useTransform(smoothY, [0, typeof window !== "undefined" ? window.innerHeight : 900], [20, -20]);
 
+  // List view state
+  const [listView, setListView] = useState(false);
+  type SortCol = "name" | "category" | "url" | "media";
+  const [sortCol, setSortCol] = useState<SortCol>("name");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+
+  const toggleSort = (col: SortCol) => {
+    if (sortCol === col) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    else { setSortCol(col); setSortDir("asc"); }
+  };
+
   // Edit modal state
   const [editingProject, setEditingProject] = useState<ExtendedProject | null | "new">(null);
   const [editingCategory, setEditingCategory] = useState<Category | null | "new">(null);
@@ -270,6 +286,15 @@ export default function MissionSection() {
     activeCategory === "All"
       ? data.projects
       : data.projects.filter((p) => p.category === activeCategory);
+
+  const sortedProjects = [...visibleProjects].sort((a, b) => {
+    let cmp = 0;
+    if (sortCol === "name") cmp = a.name.localeCompare(b.name);
+    else if (sortCol === "category") cmp = a.category.localeCompare(b.category);
+    else if (sortCol === "url") cmp = (a.url ? 1 : 0) - (b.url ? 1 : 0);
+    else if (sortCol === "media") cmp = (a.media?.length ?? 0) - (b.media?.length ?? 0);
+    return sortDir === "asc" ? cmp : -cmp;
+  });
 
   const onProjectDragStart = (visibleIdx: number) => {
     isDraggingCard.current = true;
@@ -365,13 +390,27 @@ export default function MissionSection() {
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 relative">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight"
+              className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight inline-flex items-center gap-4"
             >
               The Portfolio
+              {!isEditMode && (
+                <button
+                  onClick={() => setListView((v) => !v)}
+                  title={listView ? "Grid view" : "List view"}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border ${
+                    listView
+                      ? "bg-blue-600 border-blue-500 text-white"
+                      : "bg-slate-800/80 border-slate-700 text-slate-400 hover:text-slate-200 hover:border-slate-600"
+                  }`}
+                >
+                  {listView ? <LayoutGrid size={15} /> : <List size={15} />}
+                  <span className="text-sm font-medium">{listView ? "Grid" : "List"}</span>
+                </button>
+              )}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -472,7 +511,103 @@ export default function MissionSection() {
             })}
           </div>
 
+          {/* List view */}
+          {listView && !isEditMode && (
+            <div className="rounded-xl border border-slate-800 overflow-hidden mb-8 text-sm">
+              {/* Column headers */}
+              <div className="grid bg-slate-900 border-b border-slate-800 text-slate-500 text-[11px] uppercase tracking-wider font-semibold select-none"
+                style={{ gridTemplateColumns: "1.8fr 130px 2fr 170px 64px" }}
+              >
+                {(
+                  [
+                    { col: "name" as SortCol, label: "Name" },
+                    { col: "category" as SortCol, label: "Category" },
+                    { col: null, label: "Description" },
+                    { col: "url" as SortCol, label: "URL" },
+                    { col: "media" as SortCol, label: "Media" },
+                  ] as const
+                ).map(({ col, label }) => (
+                  <button
+                    key={label}
+                    onClick={() => col && toggleSort(col)}
+                    className={`px-3 py-2 text-left flex items-center gap-1 transition-colors ${
+                      col ? "hover:text-slate-300 cursor-pointer" : "cursor-default"
+                    } ${col && sortCol === col ? "text-blue-400" : ""}`}
+                  >
+                    {label}
+                    {col ? (
+                      sortCol === col ? (
+                        sortDir === "asc" ? <ChevronUp size={11} /> : <ChevronDown size={11} />
+                      ) : (
+                        <ChevronsUpDown size={10} className="opacity-30" />
+                      )
+                    ) : null}
+                  </button>
+                ))}
+              </div>
+              {/* Rows */}
+              {sortedProjects.map((project, i) => {
+                const hostname = project.url
+                  ? (() => { try { return new URL(project.url).hostname; } catch { return project.url; } })()
+                  : null;
+                const hasMedia = project.media && project.media.length > 0;
+                return (
+                  <div
+                    key={project.id}
+                    onClick={() => setSelectedProject(project)}
+                    className={`grid items-center border-b border-slate-800/50 last:border-0 cursor-pointer hover:bg-slate-800/50 transition-colors group ${
+                      i % 2 === 0 ? "bg-slate-900/10" : "bg-slate-900/30"
+                    }`}
+                    style={{ gridTemplateColumns: "1.8fr 130px 2fr 170px 64px" }}
+                  >
+                    <div className="px-3 py-2 text-white font-medium truncate group-hover:text-blue-300 transition-colors">
+                      {project.name}
+                    </div>
+                    <div className="px-3 py-2">
+                      <span className="text-[10px] uppercase tracking-widest text-slate-400 bg-slate-800/70 px-2 py-0.5 rounded border border-slate-700/50 whitespace-nowrap">
+                        {project.category}
+                      </span>
+                    </div>
+                    <div className="px-3 py-2 text-slate-500 text-xs truncate">
+                      {project.description}
+                    </div>
+                    <div className="px-3 py-2 font-mono text-[11px] truncate">
+                      {hostname ? (
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1"
+                        >
+                          <ExternalLink size={10} className="shrink-0" />
+                          <span className="truncate">{hostname}</span>
+                        </a>
+                      ) : (
+                        <span className="text-slate-700">—</span>
+                      )}
+                    </div>
+                    <div className="px-3 py-2 text-center">
+                      {hasMedia ? (
+                        <span className="inline-flex items-center gap-1 text-slate-400 text-xs">
+                          <ImageIcon size={10} />
+                          {project.media!.length}
+                        </span>
+                      ) : (
+                        <span className="text-slate-700 text-xs">—</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+              {sortedProjects.length === 0 && (
+                <div className="py-12 text-center text-slate-600 text-sm">No projects in this category</div>
+              )}
+            </div>
+          )}
+
           {/* Projects grid */}
+          {(!listView || isEditMode) && (
           <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             <AnimatePresence mode="popLayout">
               {visibleProjects.map((project, visibleIdx) => {
@@ -620,6 +755,7 @@ export default function MissionSection() {
               })}
             </AnimatePresence>
           </motion.div>
+          )}
 
           {/* Add project shortcut in edit mode */}
           {isEditMode && (

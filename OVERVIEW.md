@@ -27,3 +27,17 @@
 }
 ```
 Existing projects without `media`/`longDescription`/`technologies` continue to work unchanged.
+
+---
+
+## Checkpoint 2 — Portfolio List View (Finder-style)
+
+**Changes made:**
+
+- **`MissionSection.tsx`**: Added a List/Grid toggle button next to "The Portfolio" heading (hidden in edit mode). Clicking it switches between the card grid and a compact Finder-style table.
+  - **Table columns**: Name · Category · Description · URL · Media count — all sortable by clicking the column header (Name, Category, URL presence, Media count).
+  - Sort direction toggles on repeated clicks; active column highlighted in blue with ↑/↓ chevron; inactive columns show a dim ⇅ icon.
+  - Rows are alternating-shade, hover-highlighted; clicking a row opens the AppDetailModal same as a card click. URL column renders a clickable hostname with ExternalLink icon; cells show `—` when empty.
+  - Category filter tabs still work in list view (filters rows to the active category).
+  - Button text/icon swaps between "List" (List icon) and "Grid" (LayoutGrid icon) to reflect current state.
+  - Grid view is always shown in edit mode regardless of toggle state.
