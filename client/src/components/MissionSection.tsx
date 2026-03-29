@@ -66,12 +66,13 @@ function loadData(): { categories: Category[]; projects: ExtendedProject[] } {
       const saved = JSON.parse(raw) as { categories: Category[]; projects: ExtendedProject[] };
       // Build a map of saved extras keyed by id
       const savedMap = new Map(saved.projects.map((p) => [p.id, p]));
-      // Merge: JSON fields win for core data; saved fields win for media/longDescription/technologies
+      // Merge: JSON fields win for core data; saved fields win for media/longDescription/technologies/visible
       const merged = jsonProjects.map((jp) => {
         const sp = savedMap.get(jp.id);
         if (!sp) return jp;
         return {
-          ...jp, // core fields from JSON (url, github, visible, name, description, category)
+          ...jp, // core fields from JSON (url, github, name, description, category)
+          visible: sp.visible !== undefined ? sp.visible : jp.visible,
           media: sp.media,
           longDescription: sp.longDescription,
           technologies: sp.technologies,
@@ -575,20 +576,18 @@ export default function MissionSection() {
               className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight inline-flex items-center gap-4"
             >
               The Portfolio
-              {!isEditMode && (
-                <button
-                  onClick={() => setListView((v) => !v)}
-                  title={listView ? "Grid view" : "List view"}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border ${
-                    listView
-                      ? "bg-blue-600 border-blue-500 text-white"
-                      : "bg-slate-800/80 border-slate-700 text-slate-400 hover:text-slate-200 hover:border-slate-600"
-                  }`}
-                >
-                  {listView ? <LayoutGrid size={15} /> : <List size={15} />}
-                  <span className="text-sm font-medium">{listView ? "Grid" : "List"}</span>
-                </button>
-              )}
+              <button
+                onClick={() => setListView((v) => !v)}
+                title={listView ? "Grid view" : "List view"}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all border ${
+                  listView
+                    ? "bg-blue-600 border-blue-500 text-white"
+                    : "bg-slate-800/80 border-slate-700 text-slate-400 hover:text-slate-200 hover:border-slate-600"
+                }`}
+              >
+                {listView ? <LayoutGrid size={15} /> : <List size={15} />}
+                <span className="text-sm font-medium">{listView ? "Grid" : "List"}</span>
+              </button>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
