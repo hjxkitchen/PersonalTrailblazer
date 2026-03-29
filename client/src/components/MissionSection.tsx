@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useSpring, useTransform } from "framer-motion";
 import { useMousePosition } from "../hooks/useMousePosition";
 import TiltCard from "./TiltCard";
@@ -30,6 +30,7 @@ import {
   EyeOff,
   Github,
   Check,
+  Search,
 } from "lucide-react";
 import defaultData from "../data/portfolioData.json";
 import ExtendedProjectEditModal, { ExtendedProject } from "./ExtendedProjectEditModal";
@@ -53,14 +54,35 @@ interface Category {
 const LS_KEY = "portfolio-extended-data";
 
 function loadData(): { categories: Category[]; projects: ExtendedProject[] } {
+  // JSON is the source of truth for core fields (url, github, visible, name, description, category).
+  // localStorage only persists additive/edit-only fields: media, longDescription, technologies.
+  const jsonProjects = defaultData.projects as ExtendedProject[];
+  const jsonCategories = defaultData.categories as Category[];
+
   try {
     const raw = localStorage.getItem(LS_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const saved = JSON.parse(raw) as { categories: Category[]; projects: ExtendedProject[] };
+      // Build a map of saved extras keyed by id
+      const savedMap = new Map(saved.projects.map((p) => [p.id, p]));
+      // Merge: JSON fields win for core data; saved fields win for media/longDescription/technologies
+      const merged = jsonProjects.map((jp) => {
+        const sp = savedMap.get(jp.id);
+        if (!sp) return jp;
+        return {
+          ...jp, // core fields from JSON (url, github, visible, name, description, category)
+          media: sp.media,
+          longDescription: sp.longDescription,
+          technologies: sp.technologies,
+        };
+      });
+      // Include any projects added via the UI that aren't in the JSON
+      const jsonIds = new Set(jsonProjects.map((p) => p.id));
+      const extraProjects = saved.projects.filter((p) => !jsonIds.has(p.id));
+      return { categories: jsonCategories, projects: [...merged, ...extraProjects] };
+    }
   } catch {}
-  return {
-    categories: defaultData.categories as Category[],
-    projects: defaultData.projects as ExtendedProject[],
-  };
+  return { categories: jsonCategories, projects: jsonProjects };
 }
 
 function saveData(data: { categories: Category[]; projects: ExtendedProject[] }) {
@@ -209,6 +231,29 @@ export default function MissionSection() {
   const blob2X = useTransform(smoothX, [0, typeof window !== "undefined" ? window.innerWidth : 1440], [28, -28]);
   const blob2Y = useTransform(smoothY, [0, typeof window !== "undefined" ? window.innerHeight : 900], [20, -20]);
 
+  // Search
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (e.key === "/") {
+        e.preventDefault();
+        setSearchOpen(true);
+        setTimeout(() => searchRef.current?.focus(), 0);
+      }
+      if (e.key === "Escape") {
+        setSearchOpen(false);
+        setSearchQuery("");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   // List view state
   const [listView, setListView] = useState(false);
   type SortCol = "name" | "category" | "url" | "github" | "media" | "visible";
@@ -265,7 +310,7 @@ export default function MissionSection() {
     if (e.shiftKey && lastClickIdx.current !== null) {
       const start = Math.min(lastClickIdx.current, idx);
       const end = Math.max(lastClickIdx.current, idx);
-      setSelectedIds(new Set(sortedProjects.slice(start, end + 1).map((p) => p.id)));
+      setSelectedIds(new Set(listFilteredProjects.slice(start, end + 1).map((p) => p.id)));
     } else if (e.ctrlKey || e.metaKey) {
       setSelectedIds((prev) => {
         const next = new Set(prev);
@@ -285,7 +330,7 @@ export default function MissionSection() {
     if (idx !== anchor) dragMoved.current = true;
     const start = Math.min(anchor, idx);
     const end = Math.max(anchor, idx);
-    setSelectedIds(new Set(sortedProjects.slice(start, end + 1).map((p) => p.id)));
+    setSelectedIds(new Set(listFilteredProjects.slice(start, end + 1).map((p) => p.id)));
   };
 
   const onRowMouseUp = (e: React.MouseEvent, project: ExtendedProject) => {
@@ -375,13 +420,25 @@ export default function MissionSection() {
   };
 
   // ── Project drag-and-drop (reorder) ──
+  const searchLower = searchQuery.trim().toLowerCase();
+
+  const matchesSearch = (p: ExtendedProject) => {
+    if (!searchLower) return true;
+    return (
+      p.name.toLowerCase().includes(searchLower) ||
+      p.description?.toLowerCase().includes(searchLower) ||
+      p.category.toLowerCase().includes(searchLower) ||
+      p.technologies?.some((t) => t.toLowerCase().includes(searchLower))
+    );
+  };
+
   const visibleProjects = (() => {
     const catFiltered =
       activeCategory === "All"
         ? data.projects
         : data.projects.filter((p) => p.category === activeCategory);
-    // In normal mode, hide projects with visible === false
-    return isEditMode ? catFiltered : catFiltered.filter((p) => p.visible !== false);
+    const visFiltered = isEditMode ? catFiltered : catFiltered.filter((p) => p.visible !== false);
+    return visFiltered.filter(matchesSearch);
   })();
 
   const sortedProjects = [...visibleProjects].sort((a, b) => {
@@ -395,12 +452,26 @@ export default function MissionSection() {
     return sortDir === "asc" ? cmp : -cmp;
   });
 
-  const listFilteredProjects = sortedProjects.filter((p) => {
-    if (listVisFilter === "visible" && p.visible === false) return false;
-    if (listVisFilter === "hidden" && p.visible !== false) return false;
-    if (listCatFilter !== "All" && p.category !== listCatFilter) return false;
-    return true;
-  });
+  // List view pulls directly from data.projects so hidden items are never lost,
+  // regardless of which category tab is active or edit-mode state.
+  const listFilteredProjects = (() => {
+    let base = [...data.projects];
+    base.sort((a, b) => {
+      let cmp = 0;
+      if (sortCol === "name") cmp = a.name.localeCompare(b.name);
+      else if (sortCol === "category") cmp = a.category.localeCompare(b.category);
+      else if (sortCol === "url") cmp = (a.url ? 1 : 0) - (b.url ? 1 : 0);
+      else if (sortCol === "github") cmp = (a.github ? 1 : 0) - (b.github ? 1 : 0);
+      else if (sortCol === "media") cmp = (a.media?.length ?? 0) - (b.media?.length ?? 0);
+      else if (sortCol === "visible") cmp = (a.visible === false ? 0 : 1) - (b.visible === false ? 0 : 1);
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+    if (listVisFilter === "visible") base = base.filter((p) => p.visible !== false);
+    else if (listVisFilter === "hidden") base = base.filter((p) => p.visible === false);
+    if (listCatFilter !== "All") base = base.filter((p) => p.category === listCatFilter);
+    base = base.filter(matchesSearch);
+    return base;
+  })();
 
   const onProjectDragStart = (visibleIdx: number) => {
     isDraggingCard.current = true;
@@ -558,6 +629,62 @@ export default function MissionSection() {
               <span className="text-xs text-slate-500 italic">Drag cards or tabs to reorder · Drop images/videos onto cards</span>
             </div>
           )}
+
+          {/* Search bar */}
+          <div className="flex justify-center mb-6">
+            <div className={`relative flex items-center transition-all duration-300 ${
+              searchOpen ? "w-full max-w-lg" : "w-auto"
+            }`}>
+              {searchOpen ? (
+                <div className="relative w-full">
+                  <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+                  <input
+                    ref={searchRef}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") { setSearchOpen(false); setSearchQuery(""); }
+                    }}
+                    placeholder="Search projects…"
+                    className="w-full bg-slate-900/80 border border-slate-700 focus:border-blue-500 rounded-xl pl-9 pr-10 py-2.5 text-white placeholder-slate-500 text-sm outline-none transition-colors backdrop-blur-sm shadow-lg"
+                    autoComplete="off"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                    >
+                      <Search size={13} className="hidden" />
+                      <span className="text-xs font-medium">✕</span>
+                    </button>
+                  )}
+                  {!searchQuery && (
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-600 font-mono bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">esc</span>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={() => { setSearchOpen(true); setTimeout(() => searchRef.current?.focus(), 0); }}
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-slate-600 text-slate-500 hover:text-slate-300 rounded-xl text-sm transition-all"
+                >
+                  <Search size={14} />
+                  <span>Search</span>
+                  <span className="text-[11px] font-mono bg-slate-900 border border-slate-700 px-1.5 py-0.5 rounded text-slate-600">/</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Search results count */}
+          {searchQuery && (() => {
+            const count = listView ? listFilteredProjects.length : visibleProjects.length;
+            return (
+              <p className="text-center text-sm text-slate-500 mb-6 -mt-2">
+                {count} result{count !== 1 ? "s" : ""} for <span className="text-white font-medium">"{searchQuery}"</span>
+                <button onClick={() => setSearchQuery("")} className="ml-3 text-slate-600 hover:text-slate-400 text-xs underline">clear</button>
+              </p>
+            );
+          })()}
 
           {/* Category tabs */}
           <div className="flex flex-wrap justify-center items-center gap-3 mb-16">

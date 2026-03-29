@@ -8,8 +8,10 @@ export interface ExtendedProject {
   longDescription?: string;
   technologies?: string[];
   url: string;
+  github?: string;
   category: string;
   media?: string[];
+  visible?: boolean; // undefined/true = visible; false = hidden
 }
 
 interface Props {
@@ -105,8 +107,10 @@ export default function ExtendedProjectEditModal({ project, categories, onSave, 
       longDescription: "",
       technologies: [],
       url: "",
+      github: "",
       category: categories[0] ?? "",
       media: [],
+      visible: true,
     }
   );
   const [techInput, setTechInput] = useState("");
@@ -237,14 +241,26 @@ export default function ExtendedProjectEditModal({ project, categories, onSave, 
             />
           </div>
 
-          {/* URL */}
-          <div>
-            <label className="block text-xs text-slate-400 mb-1.5 uppercase tracking-wider">URL</label>
-            <input
-              value={form.url}
-              onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 text-sm"
-            />
+          {/* URLs row */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs text-slate-400 mb-1.5 uppercase tracking-wider">URL</label>
+              <input
+                value={form.url}
+                onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
+                placeholder="https://..."
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-400 mb-1.5 uppercase tracking-wider">GitHub</label>
+              <input
+                value={form.github ?? ""}
+                onChange={(e) => setForm((f) => ({ ...f, github: e.target.value }))}
+                placeholder="https://github.com/..."
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 text-sm"
+              />
+            </div>
           </div>
 
           {/* Category */}
@@ -389,6 +405,27 @@ export default function ExtendedProjectEditModal({ project, categories, onSave, 
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Visibility */}
+          <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
+            <div>
+              <p className="text-sm font-medium text-white">Visible on site</p>
+              <p className="text-xs text-slate-500 mt-0.5">Hidden projects only appear in edit mode</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setForm((f) => ({ ...f, visible: f.visible === false ? true : false }))}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                form.visible !== false ? "bg-blue-600" : "bg-slate-600"
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                  form.visible !== false ? "translate-x-6" : "translate-x-1"
+                }`}
+              />
+            </button>
           </div>
 
           <div className="flex gap-3 pt-2">
