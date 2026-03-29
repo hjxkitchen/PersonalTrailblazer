@@ -31,6 +31,7 @@ import {
   Github,
   Check,
   Search,
+  X,
 } from "lucide-react";
 import defaultData from "../data/portfolioData.json";
 import ExtendedProjectEditModal, { ExtendedProject } from "./ExtendedProjectEditModal";
@@ -798,7 +799,7 @@ export default function MissionSection() {
               {(() => {
                 // Column template — minmax(0,Xfr) prevents grid blowout
                 const COLS = isEditMode
-                  ? "28px minmax(0,2fr) 136px minmax(0,1.8fr) 144px 144px 48px 72px"
+                  ? "48px minmax(0,2fr) 136px minmax(0,1.8fr) 144px 144px 48px 72px"
                   : "minmax(0,2fr) 136px minmax(0,1.8fr) 144px 144px 48px";
 
                 const SortBtn = ({ col, label }: { col: SortCol | null; label: string }) => (
@@ -824,7 +825,35 @@ export default function MissionSection() {
                     {/* Header */}
                     <div className="grid bg-slate-900/80 border-b border-slate-800" style={{ gridTemplateColumns: COLS }}>
                       {isEditMode && (
-                        <div className="flex items-center justify-center px-1 py-2">
+                        <div className="flex items-center justify-center gap-1 px-1 py-2">
+                          <button
+                            onMouseDown={(e) => e.stopPropagation()}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const allSelected = listFilteredProjects.length > 0 && listFilteredProjects.every((p) => selectedIds.has(p.id));
+                              if (allSelected) {
+                                setSelectedIds(new Set());
+                              } else {
+                                setSelectedIds(new Set(listFilteredProjects.map((p) => p.id)));
+                              }
+                            }}
+                            className="flex items-center justify-center w-4 h-4 rounded border border-slate-600 hover:border-blue-400 transition-colors flex-shrink-0"
+                            style={{
+                              background: listFilteredProjects.length > 0 && listFilteredProjects.every((p) => selectedIds.has(p.id))
+                                ? "rgb(37 99 235)"
+                                : listFilteredProjects.some((p) => selectedIds.has(p.id))
+                                ? "rgba(37,99,235,0.4)"
+                                : "transparent",
+                            }}
+                            title="Select all"
+                          >
+                            {listFilteredProjects.length > 0 && listFilteredProjects.every((p) => selectedIds.has(p.id)) && (
+                              <Check size={10} className="text-white" />
+                            )}
+                            {listFilteredProjects.some((p) => selectedIds.has(p.id)) && !listFilteredProjects.every((p) => selectedIds.has(p.id)) && (
+                              <span className="block w-2 h-0.5 bg-blue-300 rounded" />
+                            )}
+                          </button>
                           <SortBtn col="visible" label="" />
                         </div>
                       )}
