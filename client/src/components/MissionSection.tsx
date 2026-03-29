@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence, useSpring, useTransform } from "framer-motion";
 import { useMousePosition } from "../hooks/useMousePosition";
 import TiltCard from "./TiltCard";
+import type { LucideIcon } from "lucide-react";
 import {
   Sparkles,
   Box,
@@ -18,14 +19,17 @@ import {
   Plus,
   RotateCcw,
   Code2,
+  Upload,
+  ImageIcon,
 } from "lucide-react";
 import defaultData from "../data/portfolioData.json";
 import ExtendedProjectEditModal, { ExtendedProject } from "./ExtendedProjectEditModal";
+import AppDetailModal from "./AppDetailModal";
 import JsonEditModal from "./JsonEditModal";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 
 // ─── Icon map ────────────────────────────────────────────────────────────────
-const ICON_MAP: Record<string, React.ComponentType<{ className?: string; size?: number; strokeWidth?: number }>> = {
+const ICON_MAP: Record<string, LucideIcon> = {
   Sparkles, Box, Briefcase, Cpu, Gamepad2, Rocket, Users, Layers,
 };
 
@@ -54,117 +58,59 @@ function saveData(data: { categories: Category[]; projects: ExtendedProject[] })
   localStorage.setItem(LS_KEY, JSON.stringify(data));
 }
 
-// ─── Thumbnail ────────────────────────────────────────────────────────────────
-const THUMBNAIL_MAP: Record<string, string> = {
-  "3d ball game": "3d-ball-game.jpg",
-  "mindgraph": "mindgraph.jpg",
-  "Voice Pos": "voice-pos.jpg",
-  "Sky Walk World": "sky-walk-world.jpg",
-  "Star Select": "star-select.jpg",
-  "Fund Guard": "fund-guard.jpg",
-  "Tech Spec Pro": "tech-spec-pro.jpg",
-  "ShelfScan Catalog": "shelfscan-catalog.jpg",
-  "Serendipity": "serendipity.jpg",
-  "BusDev": "busdev.jpg",
-  "World Culture Events": "world-culture-events.jpg",
-  "Bus Onboard": "bus-onboard.jpg",
-  "Business Card AR": "business-card-ar.jpg",
-  "3d Social World": "3d-social-world.jpg",
-  "Socos": "socos.jpg",
-  "Gpt Chat Viewer": "gpt-chat-viewer.jpg",
-  "Prompt Generator": "prompt-generator.jpg",
-  "OpenCV": "opencv.jpg",
-  "Smart Contract": "smart-contract.jpg",
-  "Applauncher": "applauncher.jpg",
-  "Native CRM": "native-crm.jpg",
-  "N8n Clone": "n8n-clone.jpg",
-  "Alpha Crispr Chemical Library": "alpha-crispr-chemical-library.jpg",
-  "Vr Sensai": "vr-sensai.jpg",
-  "Ml Models": "ml-models.jpg",
-  "Multiagent": "multiagent.jpg",
-  "Agihack": "agihack.jpg",
-  "Fraud Detection Multiagent": "fraud-detection-multiagent.jpg",
-  "Smart Irrigation": "smart-irrigation.jpg",
-  "Water Token Dispense Mobile Money": "water-token-dispense-mobile-money.jpg",
-  "Bulk Sms Automation": "bulk-sms-automation.jpg",
-  "Stepwise Erp and Apip": "stepwise-erp-and-apip.jpg",
-  "Hc Pe Consolidation": "hc-pe-consolidation.jpg",
-  "Isaac Sim Semantic Manipulation": "isaac-sim-semantic-manipulation.jpg",
-  "IoT Blockchain Supply Chain": "iot-blockchain-supply-chain.jpg",
-  "Autonomous Retail Robots": "autonomous-retail-robots.jpg",
-  "Solar Flow": "solar-flow.jpg",
-  "Virtual Sphere": "virtual-sphere.jpg",
-  "Delivery Swarm": "delivery-swarm.jpg",
-  "Tanzania Trekker": "tanzania-trekker.jpg",
-  "Data Dialog": "datadialog.jpg",
-  "Meeting Manager": "meeting-manager.jpg",
-  "Sightline": "sightline.jpg",
-  "Neurotech Horror": "neurotech-horror.jpg",
-  "Wall3d": "wall3d.jpg",
-  "Party Promoter": "party-promoter.jpg",
-  "MindCRM / Journai": "mindcrm-journai.jpg",
-  "Mlgame": "mlgame.jpg",
-  "P5 Art": "p5-art.jpg",
-  "Mediapipe Table Tennis": "mediapipe-table-tennis.jpg",
-};
-
-function getThumbnailPath(name: string): string {
-  if (THUMBNAIL_MAP[name]) return `/thumbnails/${THUMBNAIL_MAP[name]}`;
-  const slug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "");
-  return `/thumbnails/${slug}.jpg`;
+// ─── Image processing for card drops ─────────────────────────────────────────
+async function processImageFile(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const maxDim = 1400;
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d")!.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.85));
+      };
+      img.onerror = reject;
+      img.src = e.target!.result as string;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
-// ─── Card thumbnail ───────────────────────────────────────────────────────────
-function ThumbnailImage({ project, iconName }: { project: ExtendedProject; iconName: string }) {
-  const [imageError, setImageError] = useState(false);
-  const Icon = ICON_MAP[iconName] || Box;
-
-  if (imageError) {
-    return (
-      <div className="relative h-48 bg-slate-950 overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-transparent to-purple-500/20" />
-        <div className="relative text-slate-700 group-hover:text-blue-400 transition-colors">
-          <Icon size={48} strokeWidth={1.5} />
-        </div>
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute inset-0 flex items-center justify-center bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex items-center gap-2 px-4 py-2 bg-white text-slate-950 rounded-full text-sm font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform">
-            Open Project <ExternalLink size={14} />
-          </div>
-        </a>
-      </div>
-    );
+async function processFiles(files: FileList): Promise<string[]> {
+  const results: string[] = [];
+  for (const file of Array.from(files)) {
+    try {
+      if (file.type.startsWith("image/")) {
+        results.push(await processImageFile(file));
+      } else if (file.type.startsWith("video/")) {
+        await new Promise<void>((res) => {
+          const reader = new FileReader();
+          reader.onload = (e) => { results.push(e.target!.result as string); res(); };
+          reader.readAsDataURL(file);
+        });
+      }
+    } catch {
+      console.warn("Failed to process", file.name);
+    }
   }
-
-  return (
-    <div className="relative h-48 bg-slate-950 overflow-hidden">
-      <img
-        src={getThumbnailPath(project.name)}
-        alt={project.name}
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        onError={() => setImageError(true)}
-      />
-      <a
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute inset-0 flex items-center justify-center bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center gap-2 px-4 py-2 bg-white text-slate-950 rounded-full text-sm font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform">
-          Open Project <ExternalLink size={14} />
-        </div>
-      </a>
-    </div>
-  );
+  return results;
 }
 
-// ─── Category Edit Modal (inline / simple) ────────────────────────────────────
+// ─── Category Edit Modal ──────────────────────────────────────────────────────
 function CategoryEditModal({
   category,
   onSave,
@@ -206,7 +152,7 @@ function CategoryEditModal({
             />
           </div>
           <div>
-            <label className="block text-xs text-slate-400 mb-1.5 uppercase tracking-wider">Category ID (unique key)</label>
+            <label className="block text-xs text-slate-400 mb-1.5 uppercase tracking-wider">Category ID</label>
             <input
               value={form.id}
               onChange={(e) => setForm((f) => ({ ...f, id: e.target.value }))}
@@ -241,6 +187,8 @@ export default function MissionSection() {
   const { isEditMode } = usePortfolio();
   const [data, setData] = useState(() => loadData());
   const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedProject, setSelectedProject] = useState<ExtendedProject | null>(null);
+  const [fileDragOverId, setFileDragOverId] = useState<string | null>(null);
 
   // ── Parallax background blobs ──
   const { x: mouseX, y: mouseY } = useMousePosition();
@@ -257,9 +205,10 @@ export default function MissionSection() {
   const [editingCategory, setEditingCategory] = useState<Category | null | "new">(null);
   const [showJsonEditor, setShowJsonEditor] = useState(false);
 
-  // Drag state for projects
+  // Drag state for project reordering
   const dragProjectIndex = useRef<number | null>(null);
   const dragOverProjectIndex = useRef<number | null>(null);
+  const isDraggingCard = useRef(false);
 
   // Drag state for categories
   const dragCatIndex = useRef<number | null>(null);
@@ -316,39 +265,66 @@ export default function MissionSection() {
     if (activeCategory === id) setActiveCategory("All");
   };
 
-  // ── Project drag-and-drop ──
+  // ── Project drag-and-drop (reorder) ──
   const visibleProjects =
     activeCategory === "All"
       ? data.projects
       : data.projects.filter((p) => p.category === activeCategory);
 
   const onProjectDragStart = (visibleIdx: number) => {
+    isDraggingCard.current = true;
     dragProjectIndex.current = visibleIdx;
   };
 
   const onProjectDragOver = (e: React.DragEvent, visibleIdx: number) => {
+    // Only handle card reorder if not dropping files
+    if (e.dataTransfer.types.includes("Files")) return;
     e.preventDefault();
     dragOverProjectIndex.current = visibleIdx;
   };
 
-  const onProjectDrop = () => {
+  const onProjectDrop = (e: React.DragEvent, visibleIdx: number) => {
+    if (e.dataTransfer.types.includes("Files")) return;
     const from = dragProjectIndex.current;
     const to = dragOverProjectIndex.current;
     if (from === null || to === null || from === to) return;
 
-    // Map visible indices to full array indices
     const allProjects = [...data.projects];
     const fromId = visibleProjects[from].id;
     const toId = visibleProjects[to].id;
     const fromGlobal = allProjects.findIndex((p) => p.id === fromId);
     const toGlobal = allProjects.findIndex((p) => p.id === toId);
-
     const [moved] = allProjects.splice(fromGlobal, 1);
     allProjects.splice(toGlobal, 0, moved);
     update({ ...data, projects: allProjects });
 
     dragProjectIndex.current = null;
     dragOverProjectIndex.current = null;
+    isDraggingCard.current = false;
+  };
+
+  // ── File drop on card (add media) ──
+  const onCardFileDragOver = (e: React.DragEvent, projectId: string) => {
+    if (!e.dataTransfer.types.includes("Files")) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setFileDragOverId(projectId);
+  };
+
+  const onCardFileDrop = async (e: React.DragEvent, project: ExtendedProject) => {
+    if (!e.dataTransfer.files.length) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setFileDragOverId(null);
+
+    const newMedia = await processFiles(e.dataTransfer.files);
+    if (!newMedia.length) return;
+
+    const updated: ExtendedProject = {
+      ...project,
+      media: [...(project.media ?? []), ...newMedia],
+    };
+    saveProject(updated);
   };
 
   // ── Category drag-and-drop ──
@@ -366,7 +342,7 @@ export default function MissionSection() {
     dragOverCatIndex.current = null;
   };
 
-  // ── Active category icon (for thumbnail fallback) ──
+  // ── Active category icon ──
   const getCategoryIcon = (categoryId: string) => {
     const cat = data.categories.find((c) => c.id === categoryId);
     return cat?.icon || "Box";
@@ -375,7 +351,7 @@ export default function MissionSection() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-blue-500/30">
       <div className="relative overflow-hidden pt-24 pb-16">
-        {/* Background — parallax blobs */}
+        {/* Background blobs */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
           <motion.div
             style={{ x: blob1X, y: blob1Y }}
@@ -434,7 +410,7 @@ export default function MissionSection() {
               >
                 <RotateCcw size={14} /> Reset to Defaults
               </button>
-              <span className="text-xs text-slate-500 italic">Drag cards or tabs to reorder</span>
+              <span className="text-xs text-slate-500 italic">Drag cards or tabs to reorder · Drop images/videos onto cards</span>
             </div>
           )}
 
@@ -499,89 +475,149 @@ export default function MissionSection() {
           {/* Projects grid */}
           <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             <AnimatePresence mode="popLayout">
-              {visibleProjects.map((project, visibleIdx) => (
-                <motion.div
-                  layout
-                  key={project.id}
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="group relative"
-                  draggable={isEditMode}
-                  onDragStart={() => isEditMode && onProjectDragStart(visibleIdx)}
-                  onDragOver={(e) => isEditMode && onProjectDragOver(e, visibleIdx)}
-                  onDrop={() => isEditMode && onProjectDrop()}
-                >
-                  <TiltCard disabled={isEditMode} className="h-full">
-                  <div className={`
-                    h-full bg-slate-900/40 backdrop-blur-sm rounded-2xl overflow-hidden
-                    border transition-all duration-500
-                    flex flex-col
-                    ${isEditMode
-                      ? "border-blue-500/30 hover:border-blue-400/60 cursor-grab active:cursor-grabbing"
-                      : "border-slate-800/60 hover:border-blue-500/50 hover:bg-slate-900/60 hover:shadow-2xl hover:shadow-blue-500/10"}
-                  `}>
-                    {/* Edit overlay controls */}
-                    {isEditMode && (
-                      <div className="absolute top-2 right-2 z-20 flex gap-1.5">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); setEditingProject(project); }}
-                          className="p-1.5 bg-slate-900/90 hover:bg-blue-600 text-slate-300 hover:text-white rounded-lg transition-colors"
-                          title="Edit project"
-                        >
-                          <Pencil size={13} />
-                        </button>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); deleteProject(project.id); }}
-                          className="p-1.5 bg-slate-900/90 hover:bg-red-600 text-slate-300 hover:text-white rounded-lg transition-colors"
-                          title="Delete project"
-                        >
-                          <Trash2 size={13} />
-                        </button>
-                      </div>
-                    )}
-                    {isEditMode && (
-                      <div className="absolute top-2 left-2 z-20 p-1.5 text-slate-500">
-                        <GripVertical size={16} />
-                      </div>
-                    )}
+              {visibleProjects.map((project, visibleIdx) => {
+                const hasMedia = project.media && project.media.length > 0;
+                const isFileDragTarget = fileDragOverId === project.id;
+                const Icon = ICON_MAP[getCategoryIcon(project.category)] || Box;
 
-                    <ThumbnailImage project={project} iconName={getCategoryIcon(project.category)} />
+                return (
+                  <motion.div
+                    layout
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="group relative"
+                    draggable={isEditMode}
+                    onDragStart={() => isEditMode && onProjectDragStart(visibleIdx)}
+                    onDragOver={(e) => {
+                      if (isEditMode) {
+                        if (e.dataTransfer.types.includes("Files")) {
+                          onCardFileDragOver(e, project.id);
+                        } else {
+                          onProjectDragOver(e, visibleIdx);
+                        }
+                      }
+                    }}
+                    onDragLeave={() => setFileDragOverId(null)}
+                    onDrop={(e) => {
+                      if (isEditMode) {
+                        if (e.dataTransfer.files.length) {
+                          onCardFileDrop(e, project);
+                        } else {
+                          onProjectDrop(e, visibleIdx);
+                        }
+                      }
+                    }}
+                    onClick={() => {
+                      if (!isEditMode) setSelectedProject(project);
+                    }}
+                  >
+                    <TiltCard disabled={isEditMode} className="h-full">
+                      <div className={`
+                        h-full bg-slate-900/40 backdrop-blur-sm rounded-2xl overflow-hidden
+                        border transition-all duration-500
+                        flex flex-col
+                        ${isFileDragTarget
+                          ? "border-blue-400 bg-slate-900/80 shadow-lg shadow-blue-500/20"
+                          : isEditMode
+                          ? "border-blue-500/30 hover:border-blue-400/60 cursor-grab active:cursor-grabbing"
+                          : "border-slate-800/60 hover:border-blue-500/50 hover:bg-slate-900/60 hover:shadow-2xl hover:shadow-blue-500/10 cursor-pointer"}
+                      `}>
 
-                    <div className="p-6 flex flex-col flex-grow">
-                      <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
-                          {project.name}
-                        </h3>
-                        <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold px-2 py-1 bg-slate-800/50 rounded-md shrink-0 ml-2">
-                          {project.category}
-                        </span>
-                      </div>
+                        {/* Edit overlay controls */}
+                        {isEditMode && (
+                          <div className="absolute top-2 right-2 z-20 flex gap-1.5">
+                            <button
+                              onClick={(e) => { e.stopPropagation(); setEditingProject(project); }}
+                              className="p-1.5 bg-slate-900/90 hover:bg-blue-600 text-slate-300 hover:text-white rounded-lg transition-colors"
+                              title="Edit project"
+                            >
+                              <Pencil size={13} />
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); deleteProject(project.id); }}
+                              className="p-1.5 bg-slate-900/90 hover:bg-red-600 text-slate-300 hover:text-white rounded-lg transition-colors"
+                              title="Delete project"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          </div>
+                        )}
+                        {isEditMode && (
+                          <div className="absolute top-2 left-2 z-20 p-1.5 text-slate-500">
+                            <GripVertical size={16} />
+                          </div>
+                        )}
 
-                      <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 mb-6 group-hover:text-slate-300 transition-colors">
-                        {project.description}
-                      </p>
+                        {/* File drop zone overlay (edit mode) */}
+                        {isEditMode && (
+                          <div className={`
+                            mx-4 mt-4 rounded-xl border-2 border-dashed transition-all duration-200 flex items-center justify-center gap-2 text-xs
+                            ${isFileDragTarget
+                              ? "border-blue-400 bg-blue-500/10 text-blue-400 py-5"
+                              : "border-slate-700/50 text-slate-600 py-3 hover:border-slate-600"}
+                          `}>
+                            <Upload size={12} />
+                            {isFileDragTarget ? "Drop to add media" : "Drop images/videos here"}
+                            {hasMedia && (
+                              <span className="ml-1 flex items-center gap-1 text-slate-500">
+                                <ImageIcon size={11} /> {project.media!.length}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
-                      <div className="mt-auto pt-4 border-t border-slate-800/50 flex items-center justify-between">
-                        <div className="text-[10px] text-slate-600 font-medium truncate max-w-[150px]">
-                          {(() => { try { return new URL(project.url).hostname; } catch { return project.url; } })()}
+                        <div className="p-6 flex flex-col flex-grow">
+                          {/* Media badge (non-edit, has media) */}
+                          {!isEditMode && hasMedia && (
+                            <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-3">
+                              <ImageIcon size={11} />
+                              <span>{project.media!.length} media slide{project.media!.length !== 1 ? "s" : ""}</span>
+                            </div>
+                          )}
+
+                          <div className="flex items-start justify-between mb-3">
+                            <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
+                              {project.name}
+                            </h3>
+                            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold px-2 py-1 bg-slate-800/50 rounded-md shrink-0 ml-2">
+                              {project.category}
+                            </span>
+                          </div>
+
+                          <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 mb-6 group-hover:text-slate-300 transition-colors">
+                            {project.description}
+                          </p>
+
+                          <div className="mt-auto pt-4 border-t border-slate-800/50 flex items-center justify-between">
+                            <div className="text-[10px] text-slate-600 font-medium truncate max-w-[150px]">
+                              {(() => { try { return new URL(project.url).hostname; } catch { return project.url; } })()}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              {!isEditMode && (
+                                <span className="text-slate-600 text-xs">View details →</span>
+                              )}
+                              {project.url && (
+                                <a
+                                  href={project.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="text-blue-400 hover:text-blue-300 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                                >
+                                  <ExternalLink size={12} />
+                                </a>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-blue-400 hover:text-blue-300 text-xs font-semibold flex items-center gap-1.5 transition-colors"
-                        >
-                          View <ExternalLink size={12} />
-                        </a>
                       </div>
-                    </div>
-                  </div>
-                  </TiltCard>
-                </motion.div>
-              ))}
+                    </TiltCard>
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           </motion.div>
 
@@ -627,6 +663,14 @@ export default function MissionSection() {
           onClose={() => setShowJsonEditor(false)}
         />
       )}
+      <AnimatePresence>
+        {selectedProject && (
+          <AppDetailModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
