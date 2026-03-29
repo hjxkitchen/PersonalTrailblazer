@@ -81,12 +81,13 @@
     },
     {
       "id": "sky-walk-world",
-      "name": "Sky Walk World",
-      "description": "A 3d world game where you can import 3d glb models and walk around in a 3d world built with Three.js",
-      "url": "https://skywalkworld.netlify.app",
+      "name": "sky-walk-world",
+      "description": "**URL**: https://lovable.dev/projects/f7248d98-4c08-4e02-aa27-e8ff27051e3a",
+      "url": "https://github.com/ZahabTZ/sky-walk-world",
       "github": "",
-      "category": "Spatial Computing",
-      "visible": true
+      "category": "Productivity",
+      "visible": true,
+      "githubUrl": "https://github.com/ZahabTZ/sky-walk-world"
     },
     {
       "id": "star-select",
@@ -207,12 +208,13 @@
     },
     {
       "id": "opencv",
-      "name": "OpenCV",
-      "description": "Computer vision toolkit for various analysis tasks.",
-      "url": "https://opencv.netlify.app",
+      "name": "opencv",
+      "description": "",
+      "url": "https://github.com/HusseinJX/opencv",
       "github": "",
-      "category": "AI & Intelligence",
-      "visible": true
+      "category": "Productivity",
+      "visible": true,
+      "githubUrl": "https://github.com/HusseinJX/opencv"
     },
     {
       "id": "smart-contract",
@@ -225,21 +227,23 @@
     },
     {
       "id": "applauncher",
-      "name": "Applauncher",
-      "description": "Unified dashboard to launch various applications.",
-      "url": "https://applauncher.netlify.app",
+      "name": "applauncher",
+      "description": "This template should help get you started developing with Svelte in Vite.",
+      "url": "",
       "github": "",
       "category": "Productivity",
-      "visible": true
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "native-crm",
-      "name": "Native CRM",
-      "description": "Customer relationship management and sales tool.",
-      "url": "https://nativecrm.netlify.app",
+      "name": "native-crm",
+      "description": "This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).",
+      "url": "https://github.com/hjxkitchen/native-crm",
       "github": "",
-      "category": "Commerce & Business",
-      "visible": true
+      "category": "Productivity",
+      "visible": true,
+      "githubUrl": "https://github.com/hjxkitchen/native-crm"
     },
     {
       "id": "n8n-clone",
@@ -279,12 +283,13 @@
     },
     {
       "id": "multiagent",
-      "name": "Multiagent",
-      "description": "Orchestration system for multi-agent AI environments.",
-      "url": "https://multiagent.netlify.app",
+      "name": "multiagent",
+      "description": "> **A production-ready, modular architecture for multi-agent orchestration with LangChain, OpenAI, Supabase, MCP servers, and rigid workflows.**",
+      "url": "",
       "github": "",
-      "category": "AI & Intelligence",
-      "visible": true
+      "category": "Productivity",
+      "visible": true,
+      "githubUrl": ""
     },
     {
       "id": "agihack",
@@ -998,6 +1003,174 @@
       "description": "A comprehensive React Native social app connecting local vendors with communities through events, posts, and location-based discovery.",
       "url": "",
       "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "promptcomposer",
+      "name": "promptcomposer",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "devtools"
+    },
+    {
+      "id": "vscode-fork",
+      "name": "vscode-fork",
+      "description": "[![Feature Requests](https://img.shields.io/github/issues/microsoft/vscode/feature-request.svg)](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc) [![Bugs](https://img.shields.io/github/issues/microsoft/vscode/bug.svg)](https://github.com/microsoft/vscode/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Abug) [![Gitter](https://img.shields.io/badge/chat-on%20gitter-yellow.svg)](https://gitter.im/Microsoft/vscode)",
+      "url": "https://github.com/HusseinJX/vscode-fork",
+      "githubUrl": "https://github.com/HusseinJX/vscode-fork",
+      "category": "devtools"
+    },
+    {
+      "id": "rhythm-map-hub-social-human",
+      "name": "rhythm-map-hub-social-human",
+      "description": "**URL**: https://lovable.dev/projects/9ac41f9b-1e04-4993-b121-8ca3ce6fd1cd",
+      "url": "https://github.com/ZahabTZ/rhythm-map-hub-social-human",
+      "githubUrl": "https://github.com/ZahabTZ/rhythm-map-hub-social-human",
+      "category": "Productivity"
+    },
+    {
+      "id": "voip",
+      "name": "voip",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "actioncamvids",
+      "name": "actioncamvids",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "aiagent",
+      "name": "aiagent",
+      "description": "AI Agent microservice for business assistance built with FastAPI and LangChain.",
+      "url": "https://github.com/HusseinJX/aiagent",
+      "githubUrl": "https://github.com/HusseinJX/aiagent",
+      "category": "Productivity"
+    },
+    {
+      "id": "applaunch",
+      "name": "applaunch",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "basicagent",
+      "name": "basicagent",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "busimg",
+      "name": "busimg",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "crmupdater",
+      "name": "crmupdater",
+      "description": "A Python-based automation tool that pulls data from multiple sources (Zoho CRM, PostHog, Internal Analytics, Twitter RSS), generates intelligent email summaries, and sends personalized bulk emails to CRM contacts.",
+      "url": "https://github.com/HusseinJX/crmupdater",
+      "githubUrl": "https://github.com/HusseinJX/crmupdater",
+      "category": "Productivity"
+    },
+    {
+      "id": "jobapplier",
+      "name": "jobapplier",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "lightning-game",
+      "name": "lightning-game",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "localloop",
+      "name": "Localloop",
+      "description": "",
+      "url": "https://github.com/HusseinJX/Localloop",
+      "githubUrl": "https://github.com/HusseinJX/Localloop",
+      "category": "Productivity"
+    },
+    {
+      "id": "localsocial",
+      "name": "localsocial",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "mind-crm",
+      "name": "mind-crm",
+      "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "native-vendor",
+      "name": "native-vendor",
+      "description": "This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).",
+      "url": "https://github.com/hjxkitchen/native-vendor",
+      "githubUrl": "https://github.com/hjxkitchen/native-vendor",
+      "category": "Productivity"
+    },
+    {
+      "id": "next-socos",
+      "name": "next-socos",
+      "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+      "url": "https://github.com/hjxkitchen/next-socos",
+      "githubUrl": "https://github.com/hjxkitchen/next-socos",
+      "category": "Productivity"
+    },
+    {
+      "id": "openworld",
+      "name": "openworld",
+      "description": "",
+      "url": "https://github.com/HusseinJX/openworld",
+      "githubUrl": "https://github.com/HusseinJX/openworld",
+      "category": "Productivity"
+    },
+    {
+      "id": "partypromote",
+      "name": "partypromote",
+      "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+      "url": "https://github.com/HusseinJX/partypromote",
+      "githubUrl": "https://github.com/HusseinJX/partypromote",
+      "category": "Productivity"
+    },
+    {
+      "id": "pos",
+      "name": "pos",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "vista-voice-pos",
+      "name": "vista-voice-pos",
+      "description": "**URL**: https://lovable.dev/projects/05887a5d-196b-44cc-a5a1-7fd04f5d7925",
+      "url": "https://github.com/ZahabTZ/vista-voice-pos",
+      "githubUrl": "https://github.com/ZahabTZ/vista-voice-pos",
       "category": "Productivity"
     }
   ]
