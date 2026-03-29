@@ -460,7 +460,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/wall3d",
       "github": "",
-      "category": "visual",
+      "category": "Productivity",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/wall3d"
     },
@@ -603,11 +603,11 @@
       "id": "shelfscancatalog",
       "name": "ShelfScanCatalog",
       "description": "",
-      "url": "",
+      "url": "https://github.com/HusseinJX/ShelfScanCatalog",
       "github": "",
-      "category": "visual",
+      "category": "Productivity",
       "visible": true,
-      "githubUrl": ""
+      "githubUrl": "https://github.com/HusseinJX/ShelfScanCatalog"
     },
     {
       "id": "zahabenergy",
@@ -659,15 +659,15 @@
       "description": "Automated loan document intake and extraction for mortgage cases.",
       "url": "",
       "githubUrl": "",
-      "category": "flair"
+      "category": "Productivity"
     },
     {
       "id": "loanops-runner",
       "name": "loanops-runner",
       "description": "",
-      "url": "",
-      "githubUrl": "",
-      "category": "flair"
+      "url": "https://github.com/jeffreyzhanghc/loanops-runner",
+      "githubUrl": "https://github.com/jeffreyzhanghc/loanops-runner",
+      "category": "Productivity"
     },
     {
       "id": "alphafold",
@@ -1171,6 +1171,126 @@
       "description": "**URL**: https://lovable.dev/projects/05887a5d-196b-44cc-a5a1-7fd04f5d7925",
       "url": "https://github.com/ZahabTZ/vista-voice-pos",
       "githubUrl": "https://github.com/ZahabTZ/vista-voice-pos",
+      "category": "Productivity"
+    },
+    {
+      "id": "selfimproving",
+      "name": "selfimproving",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "rollups",
+      "name": "rollups",
+      "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+      "url": "",
+      "githubUrl": "",
+      "category": "Commerce & Business"
+    },
+    {
+      "id": "duplex",
+      "name": "duplex",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "localvideo",
+      "name": "localvideo",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "smartvoice",
+      "name": "smartvoice",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "voicecontrol",
+      "name": "voicecontrol",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "whatslocalagent",
+      "name": "whatslocalagent",
+      "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "zentient-web4-csos",
+      "name": "zentient-web4-csos",
+      "description": "",
+      "url": "https://github.com/alcabal-1/zentient-web4-csos",
+      "githubUrl": "https://github.com/alcabal-1/zentient-web4-csos",
+      "category": "Productivity"
+    },
+    {
+      "id": "autoresearcher",
+      "name": "autoresearcher",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "deployer",
+      "name": "deployer",
+      "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "feedback-agents",
+      "name": "feedback-agents",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "localvoice",
+      "name": "localvoice",
+      "description": "Three files created. Here's how everything fits together:",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "prelaunchagents",
+      "name": "prelaunchagents",
+      "description": "Simulate your product launch before it happens. Uses MiroShark to run a persona swarm simulation that reveals ICP segments, reaction patterns, pricing signals, and unexpected use cases — before you ship.",
+      "url": "https://github.com/HusseinJX/prelaunchagents",
+      "githubUrl": "https://github.com/HusseinJX/prelaunchagents",
+      "category": "Productivity"
+    },
+    {
+      "id": "rmbg",
+      "name": "rmbg",
+      "description": "",
+      "url": "",
+      "githubUrl": "",
+      "category": "Productivity"
+    },
+    {
+      "id": "sessionmanager",
+      "name": "sessionmanager",
+      "description": "A cross-platform Electron app that shows multiple terminal sessions in a card grid. Lives in the system tray / menubar. Click a card to expand to a full interactive terminal.",
+      "url": "https://github.com/HusseinJX/sessionmanager",
+      "githubUrl": "https://github.com/HusseinJX/sessionmanager",
       "category": "Productivity"
     }
   ]
