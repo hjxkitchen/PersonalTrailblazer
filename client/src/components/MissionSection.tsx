@@ -49,22 +49,16 @@ const ICON_MAP: Record<string, LucideIcon> = {
 
 /** Top-level portfolio order (matches category tab ids). */
 const CATEGORY_ORDER = [
-  "Agentic Frameworks & AI Automation",
-  "Voice, Telephony & Communication",
-  "Fintech, Real Estate & CRM",
-  "Spatial, 3D & XR",
-  "Local, Social & Commerce",
-  "Developer Tools & Infrastructure",
+  "AI & Agents",
+  "Commerce & Fintech",
+  "Spatial & 3D",
+  "Games & Interactive",
+  "Social & Community",
+  "Local & Travel",
+  "Dev & Infrastructure",
 ] as const;
 
-const SUBGROUP_ORDER: Record<string, string[]> = {
-  "Agentic Frameworks & AI Automation": ["Core Agents", "Workflow & Biz-Ops", "Search & Research"],
-  "Voice, Telephony & Communication": ["Voice AI", "Communication"],
-  "Fintech, Real Estate & CRM": ["LoanOps Ecosystem", "CRM & Leads", "Energy & Finance"],
-  "Spatial, 3D & XR": ["3D Environments", "XR & Vision", "Gaming"],
-  "Local, Social & Commerce": ["Local Services", "Retail & Logistics", "Events & Vibes"],
-  "Developer Tools & Infrastructure": ["Utilities", "Infrastructure"],
-};
+const SUBGROUP_ORDER: Record<string, string[]> = {};
 
 function cmpPortfolioOrder(a: ExtendedProject, b: ExtendedProject): number {
   const catRank = (c: string) => {
@@ -731,7 +725,7 @@ export default function MissionSection() {
           })()}
 
           {/* Category tabs */}
-          <div className="flex flex-wrap justify-center items-center gap-3 mb-16">
+          <div className="flex flex-nowrap overflow-x-auto justify-start md:justify-center items-center gap-2 mb-12 pb-2 scrollbar-none px-1">
             {data.categories.map((cat, idx) => {
               const Icon = ICON_MAP[cat.icon] || Layers;
               const isActive = activeCategory === cat.id;
@@ -747,7 +741,7 @@ export default function MissionSection() {
                   <button
                     onClick={() => setActiveCategory(cat.id)}
                     className={`
-                      relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium
+                      relative flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap
                       transition-all duration-500 group
                       ${isActive
                         ? "text-white"
@@ -1122,7 +1116,7 @@ export default function MissionSection() {
 
           {/* Projects grid */}
           {!listView && (
-          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             <AnimatePresence mode="popLayout">
               {sortedForGrid.flatMap((project, visibleIdx) => {
                 const prev = visibleIdx > 0 ? sortedForGrid[visibleIdx - 1] : undefined;
@@ -1143,16 +1137,23 @@ export default function MissionSection() {
                 const headerNodes: React.ReactNode[] = [];
                 if (showCatHeader) {
                   const cat = data.categories.find((c) => c.id === project.category);
+                  const CatIcon = ICON_MAP[cat?.icon || "Layers"] || Layers;
                   headerNodes.push(
-                    <motion.h2
+                    <motion.div
                       key={`cat-h-${project.category}-${visibleIdx}`}
                       layout
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`col-span-full text-xl sm:text-2xl font-bold text-white mb-1 ${visibleIdx === 0 ? "mt-0" : "mt-10"}`}
+                      className={`col-span-full flex items-center gap-3 ${visibleIdx === 0 ? "mt-0 mb-2" : "mt-12 mb-2"}`}
                     >
-                      {cat?.label ?? project.category}
-                    </motion.h2>
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-1.5 bg-blue-600/15 rounded-lg border border-blue-500/20">
+                          <CatIcon className="w-4 h-4 text-blue-400" />
+                        </div>
+                        <h2 className="text-xl font-bold text-white">{cat?.label ?? project.category}</h2>
+                      </div>
+                      <div className="flex-1 h-px bg-slate-800" />
+                    </motion.div>
                   );
                 }
                 if (showSgHeader) {
@@ -1281,26 +1282,51 @@ export default function MissionSection() {
                             </div>
                           )}
 
-                          <div className="flex items-start justify-between mb-3">
-                            <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
+                          <div className="flex items-start justify-between mb-3 gap-2">
+                            <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
                               {project.name}
                             </h3>
-                            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold px-2 py-1 bg-slate-800/50 rounded-md shrink-0 ml-2 max-w-[min(200px,45%)] truncate" title={project.subgroup ? `${project.subgroup} · ${project.category}` : project.category}>
-                              {project.subgroup ?? project.category}
-                            </span>
+                            <div className="flex items-center gap-1 shrink-0">
+                              {(project as any).source && (
+                                <span className={`text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded ${
+                                  (project as any).source === 'lovable'
+                                    ? 'bg-pink-500/15 text-pink-400 border border-pink-500/25'
+                                    : 'bg-orange-500/15 text-orange-400 border border-orange-500/25'
+                                }`}>
+                                  {(project as any).source}
+                                </span>
+                              )}
+                              <span className="text-[9px] uppercase tracking-wider text-slate-500 font-bold px-1.5 py-0.5 bg-slate-800/50 rounded border border-slate-700/40 truncate max-w-[100px]" title={project.category}>
+                                {project.category}
+                              </span>
+                            </div>
                           </div>
 
-                          <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 mb-6 group-hover:text-slate-300 transition-colors">
+                          <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 mb-5 group-hover:text-slate-300 transition-colors">
                             {project.description}
                           </p>
 
-                          <div className="mt-auto pt-4 border-t border-slate-800/50 flex items-center justify-between">
-                            <div className="text-[10px] text-slate-600 font-medium truncate max-w-[150px]">
-                              {(() => { try { return new URL(project.url).hostname; } catch { return project.url; } })()}
+                          <div className="mt-auto pt-3 border-t border-slate-800/50 flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
+                              {project.github && (
+                                <a
+                                  href={project.github}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="text-slate-500 hover:text-slate-300 transition-colors shrink-0"
+                                  title="GitHub"
+                                >
+                                  <Github size={13} />
+                                </a>
+                              )}
+                              <div className="text-[10px] text-slate-600 font-medium truncate">
+                                {(() => { try { return new URL(project.url).hostname; } catch { return project.url || ""; } })()}
+                              </div>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 shrink-0">
                               {!isEditMode && (
-                                <span className="text-slate-600 text-xs">View details →</span>
+                                <span className="text-slate-600 text-xs">Details →</span>
                               )}
                               {project.url && (
                                 <a
@@ -1308,7 +1334,7 @@ export default function MissionSection() {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   onClick={(e) => e.stopPropagation()}
-                                  className="text-blue-400 hover:text-blue-300 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                                  className="text-blue-400 hover:text-blue-300 text-xs font-semibold flex items-center gap-1 transition-colors"
                                 >
                                   <ExternalLink size={12} />
                                 </a>

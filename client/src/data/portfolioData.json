@@ -6,49 +6,39 @@
       "icon": "Layers"
     },
     {
-      "id": "AI & Intelligence",
-      "label": "AI & Intel",
+      "id": "AI & Agents",
+      "label": "AI & Agents",
       "icon": "Sparkles"
     },
     {
-      "id": "Spatial Computing",
-      "label": "Spatial & 3D",
-      "icon": "Box"
-    },
-    {
-      "id": "Commerce & Business",
+      "id": "Commerce & Fintech",
       "label": "Commerce",
       "icon": "Briefcase"
     },
     {
-      "id": "Infrastructure",
-      "label": "Infrastructure",
-      "icon": "Cpu"
+      "id": "Spatial & 3D",
+      "label": "Spatial & 3D",
+      "icon": "Box"
     },
     {
-      "id": "Interactive & Games",
+      "id": "Games & Interactive",
       "label": "Games",
       "icon": "Gamepad2"
     },
     {
-      "id": "Productivity",
-      "label": "Productivity",
-      "icon": "Briefcase"
-    },
-    {
-      "id": "Hackathon",
-      "label": "Hackathon",
-      "icon": "Rocket"
-    },
-    {
-      "id": "Hardware",
-      "label": "Hardware",
-      "icon": "Cpu"
-    },
-    {
-      "id": "Social",
+      "id": "Social & Community",
       "label": "Social",
       "icon": "Users"
+    },
+    {
+      "id": "Local & Travel",
+      "label": "Local & Travel",
+      "icon": "MapPin"
+    },
+    {
+      "id": "Dev & Infrastructure",
+      "label": "Dev & Infra",
+      "icon": "Cpu"
     }
   ],
   "projects": [
@@ -58,7 +48,7 @@
       "description": "A 3d ball game built with Three.js",
       "url": "https://3dballgame.netlify.app",
       "github": "",
-      "category": "Interactive & Games",
+      "category": "Games & Interactive",
       "visible": true
     },
     {
@@ -67,7 +57,7 @@
       "description": "A mindgraph built with Three.js",
       "url": "https://mindgraph.socos.ai",
       "github": "",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "visible": true
     },
     {
@@ -76,7 +66,7 @@
       "description": "A voice powered pos system for small businesses and retailers.",
       "url": "https://vistavoicepos.netlify.app",
       "github": "",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -85,7 +75,7 @@
       "description": "This software project is a web application built with Vite and React, featuring multiplayer capabilities, spatial voice chat, and video avatars, designed to enhance user interaction in a virtual environment.",
       "url": "https://skywalkworld.netlify.app",
       "github": "https://github.com/ZahabTZ/sky-walk-world",
-      "category": "Productivity",
+      "category": "Spatial & 3D",
       "visible": true,
       "githubUrl": "https://github.com/ZahabTZ/sky-walk-world",
       "source": "lovable"
@@ -96,7 +86,7 @@
       "description": "A multiplayer game built with Mediapipe and camera hand tracking.",
       "url": "https://starselect.netlify.app",
       "github": "",
-      "category": "Interactive & Games",
+      "category": "Games & Interactive",
       "visible": true
     },
     {
@@ -105,7 +95,7 @@
       "description": "Evaluate investment terms compared to standards and other terms.",
       "url": "https://investoshield.netlify.app",
       "github": "",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -114,7 +104,7 @@
       "description": "Define procurement criteria and generate technical specifications.",
       "url": "https://techpspecpro.ecom.ac",
       "github": "",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -123,7 +113,7 @@
       "description": "Scan shelves to generate a digital catalog of products.",
       "url": "https://shelfscan.netlify.app",
       "github": "https://github.com/ZahabTZ/ShelfScanCatalog",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true,
       "githubUrl": "https://github.com/ZahabTZ/ShelfScanCatalog",
       "source": "replit"
@@ -134,7 +124,7 @@
       "description": "Journaling tool to meet people with similar interests.",
       "url": "https://serendepity995.netlify.app",
       "github": "",
-      "category": "Social",
+      "category": "Social & Community",
       "visible": true
     },
     {
@@ -143,7 +133,7 @@
       "description": "Platform for learning business development and entrepreneurship.",
       "url": "https://busdev.socos.ai",
       "github": "https://github.com/ZahabTZ/busdev",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true,
       "source": "lovable"
     },
@@ -153,7 +143,7 @@
       "description": "Format to learn about different cultures and traditions.",
       "url": "https://worldcultureevent.lovable.app",
       "github": "",
-      "category": "Social",
+      "category": "Social & Community",
       "visible": true
     },
     {
@@ -162,7 +152,7 @@
       "description": "Onboard media and operational data for businesses.",
       "url": "https://busonboard.netlify.app",
       "github": "",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -171,7 +161,7 @@
       "description": "Create AR-enabled business cards for modern networking.",
       "url": "https://buscardar.netlify.app",
       "github": "",
-      "category": "Spatial Computing",
+      "category": "Spatial & 3D",
       "visible": true
     },
     {
@@ -180,7 +170,7 @@
       "description": "Spatial environment where multiple people can coexist.",
       "url": "https://social.socos.app",
       "github": "",
-      "category": "Spatial Computing",
+      "category": "Spatial & 3D",
       "visible": true
     },
     {
@@ -189,7 +179,7 @@
       "description": "Hyperlocal marketplace and business enablement tools.",
       "url": "https://socos.app",
       "github": "",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -198,7 +188,7 @@
       "description": "View and edit GPT chat histories with ease.",
       "url": "",
       "github": "",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "visible": true
     },
     {
@@ -207,7 +197,7 @@
       "description": "Advanced tool to generate high-quality prompts.",
       "url": "",
       "github": "",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "visible": true
     },
     {
@@ -216,7 +206,7 @@
       "description": "This software project utilizes computer vision and facial recognition technologies to analyze images and perform tasks related to face detection and recognition. It includes setup instructions and dependencies for proper execution in specific Python environments.",
       "url": "https://github.com/HusseinJX/opencv",
       "github": "https://github.com/HusseinJX/opencv",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/opencv"
     },
@@ -226,7 +216,7 @@
       "description": "Tool to create and deploy blockchain smart contracts.",
       "url": "https://smartcontractapp.netlify.app",
       "github": "https://github.com/HusseinJX/smartcontract",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/smartcontract"
     },
@@ -236,7 +226,7 @@
       "description": "This software project is a web application built with Svelte and Vite, designed to provide a streamlined interface for launching and managing applications. It includes a structured directory for assets, configuration files, and source code, facilitating development and deployment.",
       "url": "https://github.com/HusseinJX/applauncher",
       "github": "https://github.com/HusseinJX/applauncher",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/applauncher"
     },
@@ -246,7 +236,7 @@
       "description": "This software project is a native CRM application designed to manage customer relationships, vendor interactions, and delivery logistics, featuring user authentication, dashboards, and various administrative functionalities.",
       "url": "https://github.com/hjxkitchen/native-crm",
       "github": "https://github.com/hjxkitchen/native-crm",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "visible": true,
       "githubUrl": "https://github.com/hjxkitchen/native-crm"
     },
@@ -256,7 +246,7 @@
       "description": "Visual workflow automation and deployment tool.",
       "url": "",
       "github": "",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "visible": true
     },
     {
@@ -265,7 +255,7 @@
       "description": "Management system for chemical and CRISPR libraries.",
       "url": "",
       "github": "",
-      "category": "AI & Intelligence",
+      "category": "AI & Agents",
       "visible": true
     },
     {
@@ -274,7 +264,7 @@
       "description": "Virtual reality training and management platform.",
       "url": "",
       "github": "https://github.com/HusseinJX/vrsensai",
-      "category": "Interactive & Games",
+      "category": "Spatial & 3D",
       "visible": true
     },
     {
@@ -283,7 +273,7 @@
       "description": "Create, train, and manage machine learning models.",
       "url": "",
       "github": "",
-      "category": "AI & Intelligence",
+      "category": "AI & Agents",
       "visible": true
     },
     {
@@ -292,7 +282,7 @@
       "description": "This software project is a multi-agent application that consists of a backend and frontend, allowing for concurrent development and installation of dependencies across both parts of the system. It includes setup documentation and scripts to facilitate development and deployment.",
       "url": "",
       "github": "",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "visible": true,
       "githubUrl": ""
     },
@@ -302,7 +292,7 @@
       "description": "This software project appears to be a web application that utilizes Flask for backend functionality, allowing users to interact with various agents through a user interface, while also incorporating testing and vendor management features. It likely supports integration with external services via HTTP requests and includes error tracking with Sentry.",
       "url": "https://github.com/HusseinJX/agihack",
       "github": "https://github.com/HusseinJX/agihack",
-      "category": "hackathon",
+      "category": "AI & Agents",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/agihack"
     },
@@ -312,7 +302,7 @@
       "description": "Multi-agent system for real-time fraud detection.",
       "url": "",
       "github": "",
-      "category": "Hackathon",
+      "category": "AI & Agents",
       "visible": true
     },
     {
@@ -321,7 +311,7 @@
       "description": "Automated irrigation systems for efficient water usage.",
       "url": "",
       "github": "",
-      "category": "Infrastructure",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -330,7 +320,7 @@
       "description": "Tokenizing water access with mobile money integration.",
       "url": "",
       "github": "",
-      "category": "Infrastructure",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -339,7 +329,7 @@
       "description": "Messaging automation for large-scale communication.",
       "url": "",
       "github": "",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -348,7 +338,7 @@
       "description": "Integrated ERP and API portal for enterprise operations.",
       "url": "",
       "github": "",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -357,7 +347,7 @@
       "description": "Strategic consolidation tools for private equity.",
       "url": "",
       "github": "",
-      "category": "Commerce & Business",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -366,7 +356,7 @@
       "description": "Advanced semantic manipulation in NVIDIA Isaac Sim.",
       "url": "",
       "github": "",
-      "category": "AI & Intelligence",
+      "category": "Spatial & 3D",
       "visible": true
     },
     {
@@ -375,7 +365,7 @@
       "description": "Hardware retrofit with edge AI for facilities sensors.",
       "url": "",
       "github": "",
-      "category": "Hardware",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -384,7 +374,7 @@
       "description": "Robots for cleaning, stocking, and picking in retail.",
       "url": "",
       "github": "",
-      "category": "Hardware",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -393,7 +383,7 @@
       "description": "System for monitoring and managing solar energy flow.",
       "url": "",
       "github": "",
-      "category": "Infrastructure",
+      "category": "Commerce & Fintech",
       "visible": true
     },
     {
@@ -402,7 +392,7 @@
       "description": "Interactive virtual sphere environments.",
       "url": "",
       "github": "https://github.com/ZahabTZ/VirtualSphere",
-      "category": "Social",
+      "category": "Spatial & 3D",
       "visible": true,
       "source": "replit"
     },
@@ -412,7 +402,7 @@
       "description": "Delivery drivers gig economy platform",
       "url": "",
       "github": "https://github.com/ZahabTZ/DeliverySwarm",
-      "category": "Infrastructure",
+      "category": "Games & Interactive",
       "visible": true
     },
     {
@@ -421,7 +411,7 @@
       "description": "Plan your safari in Tanzania.",
       "url": "",
       "github": "https://github.com/ZahabTZ/TanzaniaTrekker",
-      "category": "Productivity",
+      "category": "Local & Travel",
       "visible": true,
       "source": "replit"
     },
@@ -431,7 +421,7 @@
       "description": "Conversational interface for complex data analysis.",
       "url": "",
       "github": "",
-      "category": "AI & Intelligence",
+      "category": "AI & Agents",
       "visible": true
     },
     {
@@ -440,7 +430,7 @@
       "description": "Streamlined coordination for enterprise meetings.",
       "url": "",
       "github": "",
-      "category": "Productivity",
+      "category": "Social & Community",
       "visible": true
     },
     {
@@ -449,7 +439,7 @@
       "description": "Predictive analytics and visualization platform.",
       "url": "",
       "github": "",
-      "category": "Interactive & Games",
+      "category": "AI & Agents",
       "visible": true
     },
     {
@@ -458,7 +448,7 @@
       "description": "Bio-feedback driven interactive horror experience.",
       "url": "",
       "github": "",
-      "category": "Interactive & Games",
+      "category": "Games & Interactive",
       "visible": true
     },
     {
@@ -467,7 +457,7 @@
       "description": "This software project is a 3D visualization tool that utilizes a GLB model and a web interface to render and interact with 3D environments, leveraging modern JavaScript frameworks and build tools. It includes configuration files for linting and building the project, as well as a README for documentation.",
       "url": "https://wall3d.netlify.app",
       "github": "https://github.com/HusseinJX/wall3d",
-      "category": "Productivity",
+      "category": "Spatial & 3D",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/wall3d"
     },
@@ -477,7 +467,7 @@
       "description": "Automated event promotion and management.",
       "url": "",
       "github": "",
-      "category": "Social",
+      "category": "Social & Community",
       "visible": true
     },
     {
@@ -486,7 +476,7 @@
       "description": "AI-integrated customer relationship management.",
       "url": "",
       "github": "",
-      "category": "Productivity",
+      "category": "Social & Community",
       "visible": true
     },
     {
@@ -495,7 +485,7 @@
       "description": "Gamified machine learning education platform.",
       "url": "",
       "github": "",
-      "category": "Interactive & Games",
+      "category": "Games & Interactive",
       "visible": true
     },
     {
@@ -504,7 +494,7 @@
       "description": "Generative art collection built with P5.js.",
       "url": "",
       "github": "",
-      "category": "Interactive & Games",
+      "category": "Games & Interactive",
       "visible": true
     },
     {
@@ -513,7 +503,7 @@
       "description": "Hand-tracked table tennis using Mediapipe.",
       "url": "",
       "github": "https://github.com/HusseinJX/mediapipe_tabletennis",
-      "category": "Interactive & Games",
+      "category": "Games & Interactive",
       "visible": true
     },
     {
@@ -522,7 +512,7 @@
       "description": "Overlay tool to annotate, tag, and save selected ChatGPT messages.",
       "url": "https://github.com/HusseinJX/gpthelp",
       "github": "https://github.com/HusseinJX/gpthelp",
-      "category": "tools",
+      "category": "AI & Agents",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/gpthelp"
     },
@@ -532,7 +522,7 @@
       "description": "This software project appears to be a tool for converting specifications into a usable format, likely for a speech-related application, with a structured directory for source files and scripts to facilitate its operation.",
       "url": "https://github.com/HusseinJX/seespeak",
       "github": "https://github.com/HusseinJX/seespeak",
-      "category": "tools",
+      "category": "Social & Community",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/seespeak"
     },
@@ -542,7 +532,7 @@
       "description": "The \"disruption-response-agent\" project is a full-stack application that facilitates the management and response to disruptions, featuring an API and web interface, along with database schema and mock data generation capabilities. It utilizes modern development tools and practices, including TypeScript, Turbo, and Docker for streamlined development and deployment.",
       "url": "https://github.com/HusseinJX/disruption-response-agent",
       "github": "https://github.com/HusseinJX/disruption-response-agent",
-      "category": "tools",
+      "category": "AI & Agents",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/disruption-response-agent"
     },
@@ -552,7 +542,7 @@
       "description": "This software project is a call testing tool that integrates with Twilio and OpenAI to simulate customer interactions, allowing users to test and evaluate voice call responses in a controlled environment. It features customizable settings for AI behavior and voice options, facilitating the development and testing of voice applications.",
       "url": "https://github.com/HusseinJX/calltester",
       "github": "https://github.com/HusseinJX/calltester",
-      "category": "tools",
+      "category": "Dev & Infrastructure",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/calltester"
     },
@@ -562,7 +552,7 @@
       "description": "TinderForStartups is a mobile application designed to connect entrepreneurs and startups with potential investors and collaborators, facilitating networking and partnership opportunities in the startup ecosystem. The project includes various components such as models, services, and views to support its functionality.",
       "url": "https://github.com/HusseinJX/tinderforstartups",
       "github": "https://github.com/HusseinJX/tinderforstartups",
-      "category": "/",
+      "category": "Social & Community",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/tinderforstartups"
     },
@@ -572,7 +562,7 @@
       "description": "This software project, named \"systemdesigner,\" is a web application built with Next.js that integrates various libraries for creating interactive design tools, leveraging AI capabilities, and providing a collaborative environment for users to visualize and manipulate data.",
       "url": "https://github.com/HusseinJX/systemdesigner",
       "github": "https://github.com/HusseinJX/systemdesigner",
-      "category": "/",
+      "category": "Dev & Infrastructure",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/systemdesigner"
     },
@@ -582,7 +572,7 @@
       "description": "App launcher and portfolio deployer",
       "url": "https://github.com/HusseinJX/appshelf",
       "github": "https://github.com/HusseinJX/appshelf",
-      "category": "tools",
+      "category": "Dev & Infrastructure",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/appshelf"
     },
@@ -592,7 +582,7 @@
       "description": "This software project is a web application that utilizes a React frontend and an Express backend, enabling users to interact with a database through a RESTful API while providing a responsive and dynamic user interface. It incorporates various libraries for UI components, state management, and form handling, along with tools for building and deploying the application.",
       "url": "https://github.com/ZahabTZ/JournAI-CRM",
       "github": "https://github.com/ZahabTZ/JournAI-CRM",
-      "category": "tools",
+      "category": "Social & Community",
       "visible": true,
       "githubUrl": "https://github.com/ZahabTZ/JournAI-CRM",
       "source": "replit"
@@ -603,7 +593,7 @@
       "description": "This software project is a FastAPI-based invoice management service that utilizes a SQLite database for storing product information and integrates with the Reducto AI API for enhanced functionality.",
       "url": "https://github.com/HusseinJX/invoicetostore",
       "github": "https://github.com/HusseinJX/invoicetostore",
-      "category": "tools",
+      "category": "Commerce & Fintech",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/invoicetostore"
     },
@@ -613,7 +603,7 @@
       "description": "This software project is a web application that utilizes a Node.js backend with Express and a React frontend, designed for managing and storing data with features like user authentication, file uploads to cloud storage, and a responsive user interface built with Tailwind CSS.",
       "url": "https://github.com/HusseinJX/ShelfScanCatalog",
       "github": "https://github.com/HusseinJX/ShelfScanCatalog",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/ShelfScanCatalog"
     },
@@ -623,7 +613,7 @@
       "description": "The software project is a web application built with React and Express that utilizes a modern tech stack for creating interactive user interfaces and managing server-side logic, including database interactions and session management. It features a responsive design and leverages various UI components for enhanced user experience.",
       "url": "https://zahabenergy.netlify.app",
       "github": "https://github.com/HusseinJX/ZahabEnergy",
-      "category": "old5",
+      "category": "Commerce & Fintech",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/ZahabEnergy"
     },
@@ -633,7 +623,7 @@
       "description": "ClipCards is a productivity application built with Electron that allows users to create and manage digital flashcards for efficient learning and information retention.",
       "url": "https://github.com/HusseinJX/clipcards",
       "github": "https://github.com/HusseinJX/clipcards",
-      "category": "tools",
+      "category": "AI & Agents",
       "visible": true,
       "githubUrl": "https://github.com/HusseinJX/clipcards"
     },
@@ -643,7 +633,7 @@
       "description": "A Next.js application with Stripe integration for payment processing.",
       "url": "https://github.com/Shipsafer/shipsafer",
       "githubUrl": "https://github.com/Shipsafer/shipsafer",
-      "category": "/",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/Shipsafer/shipsafer"
     },
     {
@@ -652,7 +642,7 @@
       "description": "This software project is a web application built with Express and React that facilitates user interactions through features like authentication, email services, and a database interface, while also providing a responsive UI with Tailwind CSS and Radix UI components. It supports development and production environments with Docker and includes functionalities for managing user sessions and integrating with third-party services like Stripe and SendGrid.",
       "url": "https://github.com/ZahabTZ/TanzaniaTourscape",
       "githubUrl": "https://github.com/ZahabTZ/TanzaniaTourscape",
-      "category": "old5",
+      "category": "Local & Travel",
       "github": "https://github.com/ZahabTZ/TanzaniaTourscape",
       "source": "replit"
     },
@@ -662,7 +652,7 @@
       "description": "The software project is a web application built with TypeScript and Express, designed to provide a RESTful API and a client-side interface, utilizing modern libraries and frameworks for enhanced user experience and functionality.",
       "url": "https://johnxen.com",
       "githubUrl": "https://github.com/hjxkitchen/PersonalTrailblazer",
-      "category": "old5",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/hjxkitchen/PersonalTrailblazer"
     },
     {
@@ -671,7 +661,7 @@
       "description": "This software project is a document parsing and extraction tool that utilizes various APIs and storage solutions to process and manage incoming data, including structured documents and events, while providing functionalities for validation and enrichment. It is designed to streamline workflows related to document handling and data extraction in a user-friendly manner.",
       "url": "https://github.com/HusseinJX/loanops",
       "githubUrl": "https://github.com/HusseinJX/loanops",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/HusseinJX/loanops"
     },
     {
@@ -680,7 +670,7 @@
       "description": "This software project is a web application built with FastAPI that facilitates communication through various channels, such as email and voice, while managing tasks and webhooks, and integrating with Google Cloud services. It also includes functionality for handling voice scripts and document collections.",
       "url": "https://github.com/jeffreyzhanghc/loanops-runner",
       "githubUrl": "https://github.com/jeffreyzhanghc/loanops-runner",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/jeffreyzhanghc/loanops-runner"
     },
     {
@@ -689,7 +679,7 @@
       "description": "This software project appears to be a web application built using Vite, likely focused on providing a user interface for a specific functionality, with configurations for linting and package management included. The presence of a README suggests documentation is available to explain its features and usage.",
       "url": "https://github.com/HusseinJX/alphafold",
       "githubUrl": "https://github.com/HusseinJX/alphafold",
-      "category": "AI & Intelligence",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/alphafold"
     },
     {
@@ -698,7 +688,7 @@
       "description": "This software project is a web application built with Vite, React, and TypeScript, utilizing various Radix UI components and Tailwind CSS for styling, aimed at providing a modern and responsive user interface.",
       "url": "https://arfeast.netlify.app",
       "githubUrl": "https://github.com/ZahabTZ/ar-feast-finder",
-      "category": "Commerce & Business",
+      "category": "Spatial & 3D",
       "github": "https://github.com/ZahabTZ/ar-feast-finder",
       "source": "lovable"
     },
@@ -708,7 +698,7 @@
       "description": "This software project is a web application that utilizes Docker for containerization and Vite as a build tool, providing a structured frontend environment with configuration files and source code for development.",
       "url": "https://github.com/HusseinJX/atlas",
       "githubUrl": "https://github.com/HusseinJX/atlas",
-      "category": "Social",
+      "category": "Social & Community",
       "github": "https://github.com/HusseinJX/atlas"
     },
     {
@@ -717,7 +707,7 @@
       "description": "This software project appears to be a multi-faceted application that includes components for managing GitHub integrations, dynamic image generation, and a feature flag system, along with a structured setup for development and production environments using Docker and various configuration files. It also includes a system designer and a separate module named \"vibestrong,\" suggesting a focus on modularity and extensibility in its architecture.",
       "url": "https://github.com/HusseinJX/design-safer",
       "githubUrl": "https://github.com/HusseinJX/design-safer",
-      "category": "/",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/design-safer"
     },
     {
@@ -726,7 +716,7 @@
       "description": "This software project is a web application built with Vite and React, utilizing TypeScript and various Radix UI components, designed for interactive user interfaces and integrated with Supabase for backend functionality.",
       "url": "https://github.com/ZahabTZ/dream-journal-ui",
       "githubUrl": "https://github.com/ZahabTZ/dream-journal-ui",
-      "category": "tools",
+      "category": "Social & Community",
       "github": "https://github.com/ZahabTZ/dream-journal-ui",
       "source": "lovable"
     },
@@ -736,7 +726,7 @@
       "description": "This software project is a web application built with React and TypeScript, utilizing Vite for development and build processes, and incorporates various UI components and libraries for enhanced user interaction and functionality. It features a structured directory for assets, components, and configuration files, aimed at creating a responsive and dynamic user experience.",
       "url": "https://github.com/ZahabTZ/dual-future-narratives",
       "githubUrl": "https://github.com/ZahabTZ/dual-future-narratives",
-      "category": "Social",
+      "category": "Social & Community",
       "github": "https://github.com/ZahabTZ/dual-future-narratives",
       "source": "lovable"
     },
@@ -746,7 +736,7 @@
       "description": "The software project is a React application that utilizes Vite for development and build processes, along with Tailwind CSS for styling, enabling a modern and efficient front-end development experience.",
       "url": "https://github.com/HusseinJX/flyout-app",
       "githubUrl": "https://github.com/HusseinJX/flyout-app",
-      "category": "hackathon",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/flyout-app"
     },
     {
@@ -755,7 +745,7 @@
       "description": "This software project is a web application that integrates various APIs to perform tasks such as data processing, outreach, and email management, utilizing tools like FastAPI and OpenAI for enhanced functionality. It includes modules for crawling data, generating content, and managing results, while also supporting configuration through environment variables.",
       "url": "https://github.com/HusseinJX/hackthestack",
       "githubUrl": "https://github.com/HusseinJX/hackthestack",
-      "category": "hackathon",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/hackthestack"
     },
     {
@@ -764,7 +754,7 @@
       "description": "Root package to run all applications.",
       "url": "https://github.com/HusseinJX/nextgencrm",
       "githubUrl": "https://github.com/HusseinJX/nextgencrm",
-      "category": "tools",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/HusseinJX/nextgencrm"
     },
     {
@@ -773,7 +763,7 @@
       "description": "Central connection hub and SaaS sandbox",
       "url": "",
       "githubUrl": "https://github.com/HusseinJX/nexus",
-      "category": "tools",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/nexus"
     },
     {
@@ -782,7 +772,7 @@
       "description": "This software project is a web application built using Next.js, designed to manage and display various components and libraries, with a focus on deployment through Netlify. It includes configuration files for environment settings, TypeScript, and PostCSS, facilitating a structured development environment.",
       "url": "https://sovereign-nexus.netlify.app",
       "githubUrl": "https://github.com/hjxkitchen/Sovereign",
-      "category": "tools",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/hjxkitchen/Sovereign"
     },
     {
@@ -791,7 +781,7 @@
       "description": "A simple Slack command bot.",
       "url": "https://github.com/HusseinJX/slackbot",
       "githubUrl": "https://github.com/HusseinJX/slackbot",
-      "category": "tools",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/slackbot"
     },
     {
@@ -800,7 +790,7 @@
       "description": "This software project is a Unity-based application that manages input actions, scenes, and various settings, while also providing a structured environment for asset management and user settings. It includes components for audio, graphics, and multiplayer management, facilitating the development of interactive experiences.",
       "url": "",
       "githubUrl": "",
-      "category": "Interactive & Games",
+      "category": "Spatial & 3D",
       "github": "https://github.com/HusseinJX/3dsensai"
     },
     {
@@ -809,7 +799,7 @@
       "description": "This software project is a web application that facilitates the creation and management of workflows, integrating various APIs for enhanced functionality, and providing a demo environment for users to explore its features.",
       "url": "https://github.com/HusseinJX/agents_commerce",
       "githubUrl": "https://github.com/HusseinJX/agents_commerce",
-      "category": "hackathon",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/agents_commerce"
     },
     {
@@ -818,7 +808,7 @@
       "description": "This software project is a multi-functional application that integrates audio recording, camera capture, and mouse control capabilities, enhanced with voice command functionality and AI features for seamless user interaction.",
       "url": "https://github.com/HusseinJX/airmouse",
       "githubUrl": "https://github.com/HusseinJX/airmouse",
-      "category": "tools",
+      "category": "Spatial & 3D",
       "github": "https://github.com/HusseinJX/airmouse"
     },
     {
@@ -827,7 +817,7 @@
       "description": "This software project is a web application that utilizes Docker for containerization and Vite as a build tool, providing a structured frontend environment with configuration files and source code for development. It includes example environment variables and a README for setup guidance.",
       "url": "https://github.com/HusseinJX/atlas",
       "githubUrl": "https://github.com/HusseinJX/atlas",
-      "category": "Social",
+      "category": "Social & Community",
       "github": "https://github.com/HusseinJX/atlas"
     },
     {
@@ -836,7 +826,7 @@
       "description": "This software project is a web application built with React and Express, designed to provide a robust platform for managing and interacting with data through a RESTful API, featuring a modern user interface and support for Progressive Web App (PWA) capabilities.",
       "url": "https://github.com/ZahabTZ/DailyMindGraph",
       "githubUrl": "https://github.com/ZahabTZ/DailyMindGraph",
-      "category": "AI & Intelligence",
+      "category": "AI & Agents",
       "github": "https://github.com/ZahabTZ/DailyMindGraph",
       "source": "replit"
     },
@@ -846,7 +836,7 @@
       "description": "The software project organizes and manages files within a directory structure, allowing users to efficiently navigate, access, and manipulate their data. It enhances file management by providing a clear hierarchy and easy retrieval of information.",
       "url": "",
       "githubUrl": "",
-      "category": "hackathon"
+      "category": "AI & Agents"
     },
     {
       "id": "devsecops",
@@ -854,7 +844,7 @@
       "description": "The software project organizes and manages files within a directory structure, allowing users to efficiently navigate, access, and manipulate their data. It enhances file management by providing a clear hierarchy and easy retrieval of information.",
       "url": "",
       "githubUrl": "",
-      "category": "/"
+      "category": "Dev & Infrastructure"
     },
     {
       "id": "erpflow",
@@ -862,7 +852,7 @@
       "description": "This software project is a React-based web application that utilizes Vite for development and build processes, featuring components for managing and visualizing data flows, likely in an operational or enterprise context.",
       "url": "https://github.com/hjxkitchen/erpflow",
       "githubUrl": "https://github.com/hjxkitchen/erpflow",
-      "category": "Infrastructure",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/hjxkitchen/erpflow"
     },
     {
@@ -871,7 +861,7 @@
       "description": "This software project is a Unity-based game development environment that includes various assets, settings, and configurations for rendering, navigation, and user interface, facilitating the creation and management of interactive experiences.",
       "url": "",
       "githubUrl": "",
-      "category": "Interactive & Games",
+      "category": "Games & Interactive",
       "github": "https://github.com/HusseinJX/fpshoot"
     },
     {
@@ -880,7 +870,7 @@
       "description": "This software project is a machine learning pipeline that facilitates the fetching, preprocessing, training, and inference of models using various datasets, while providing comprehensive documentation and examples for users to get started quickly.",
       "url": "https://github.com/HusseinJX/linearmodel",
       "githubUrl": "https://github.com/HusseinJX/linearmodel",
-      "category": "AI & Intelligence",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/linearmodel"
     },
     {
@@ -889,7 +879,7 @@
       "description": "This software project appears to be a containerized application that utilizes Docker for deployment, likely providing a user interface and server functionality, as suggested by the presence of directories for a launcher, tray application, and public assets. The accompanying documentation and installation scripts indicate a focus on ease of setup and user guidance.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity"
+      "category": "Local & Travel"
     },
     {
       "id": "mastramultiagent",
@@ -897,7 +887,7 @@
       "description": "The software project organizes and manages files within a structured directory system, allowing users to easily navigate, access, and maintain their data efficiently. It enhances file management by providing intuitive categorization and search functionalities.",
       "url": "https://github.com/HusseinJX/mastramultiagent",
       "githubUrl": "https://github.com/HusseinJX/mastramultiagent",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/mastramultiagent"
     },
     {
@@ -906,7 +896,7 @@
       "description": "This software project is a web application that utilizes MediaPipe for hand tracking and Three.js for 3D rendering, allowing users to interact with a digital environment through hand gestures. It is built using Vite as a development tool for efficient building and previewing.",
       "url": "https://github.com/HusseinJX/medipipett",
       "githubUrl": "https://github.com/HusseinJX/medipipett",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/medipipett"
     },
     {
@@ -915,7 +905,7 @@
       "description": "This software project is a Unity-based game that includes a structured directory for assets, configuration files, and documentation, facilitating development and deployment. It also incorporates a web component with HTML and JavaScript files, likely for a web-based version or interface of the game.",
       "url": "https://github.com/HusseinJX/mlmodelgame",
       "githubUrl": "https://github.com/HusseinJX/mlmodelgame",
-      "category": "Productivity",
+      "category": "Games & Interactive",
       "github": "https://github.com/HusseinJX/mlmodelgame"
     },
     {
@@ -924,7 +914,7 @@
       "description": "This software project is a web application built with Express and React that facilitates user interactions through a responsive interface, leveraging a PostgreSQL database for data management and various UI components for enhanced user experience.",
       "url": "https://github.com/ZahabTZ/OperationsOrchestrator",
       "githubUrl": "https://github.com/ZahabTZ/OperationsOrchestrator",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/ZahabTZ/OperationsOrchestrator",
       "source": "replit"
     },
@@ -934,7 +924,7 @@
       "description": "This software project appears to be an interactive web application that utilizes the p5.js library for creative coding, likely featuring multiple sketches or visualizations as indicated by the presence of multiple sketch files. The project includes an HTML file for structure and a main JavaScript file for functionality.",
       "url": "https://p5net.netlify.app",
       "githubUrl": "https://github.com/HusseinJX/p5",
-      "category": "Productivity",
+      "category": "Games & Interactive",
       "github": "https://github.com/HusseinJX/p5"
     },
     {
@@ -943,7 +933,7 @@
       "description": "Multi-agent fraud detection system with x402 payment protocol and MongoDB Atlas integration.",
       "url": "https://github.com/ZahabTZ/playful-insights",
       "githubUrl": "https://github.com/ZahabTZ/playful-insights",
-      "category": "Productivity",
+      "category": "Games & Interactive",
       "github": "https://github.com/ZahabTZ/playful-insights",
       "source": "lovable"
     },
@@ -953,7 +943,7 @@
       "description": "This software project is a web application that integrates payment and delivery services, utilizing Stripe for transactions and various AI features for enhanced user experience, while also providing a robust backend for managing business operations and user authentication.",
       "url": "https://github.com/HusseinJX/prolocaliq",
       "githubUrl": "https://github.com/HusseinJX/prolocaliq",
-      "category": "Productivity",
+      "category": "Local & Travel",
       "github": "https://github.com/HusseinJX/prolocaliq",
       "source": "replit"
     },
@@ -963,7 +953,7 @@
       "description": "This software project is a Unity-based game or application that organizes various assets such as audio, materials, prefabs, scenes, and visual effects into a structured directory, facilitating efficient development and management of game content. It includes settings and logs to support project configuration and debugging.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity"
+      "category": "Spatial & 3D"
     },
     {
       "id": "sensaifps",
@@ -971,7 +961,7 @@
       "description": "This software project is a Unity-based application that includes various assets, settings, and configurations for developing virtual reality experiences, utilizing features like XR and TextMesh Pro for enhanced graphics and user interaction. It also contains sample scenes and project settings to streamline the development process.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity",
+      "category": "Games & Interactive",
       "github": "https://github.com/HusseinJX/sensaifps"
     },
     {
@@ -980,7 +970,7 @@
       "description": "This software project is a smart contract deployment and interaction tool that utilizes Hardhat for compiling and deploying Ethereum-based contracts, along with scripts for transaction management and a frontend interface for user interaction.",
       "url": "https://github.com/HusseinJX/smartcontract",
       "githubUrl": "https://github.com/HusseinJX/smartcontract",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/HusseinJX/smartcontract"
     },
     {
@@ -989,7 +979,7 @@
       "description": "Solaros is a software project that utilizes a monorepo structure to manage multiple applications and shared packages, with a backend service powered by Node.js and a PostgreSQL database, along with Redis for caching. It provides development, build, and start scripts to streamline the workflow for backend development.",
       "url": "https://github.com/HusseinJX/solaros",
       "githubUrl": "https://github.com/HusseinJX/solaros",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/solaros"
     },
     {
@@ -998,7 +988,7 @@
       "description": "This software project is a web application that processes and displays sales data from a CSV file, allowing users to interact with the information through a user-friendly interface. It consists of a backend server and a frontend HTML page for data visualization.",
       "url": "https://github.com/HusseinJX/supplychainbasic",
       "githubUrl": "https://github.com/HusseinJX/supplychainbasic",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/HusseinJX/supplychainbasic"
     },
     {
@@ -1007,7 +997,7 @@
       "description": "This software project is a Svelte-based chat viewer application that allows users to visualize and manage chat conversations, featuring components for annotation, tagging, and a sidebar for navigation.",
       "url": "https://github.com/HusseinJX/chatgpt-export-chat-viewer",
       "githubUrl": "https://github.com/HusseinJX/chatgpt-export-chat-viewer",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/chatgpt-export-chat-viewer"
     },
     {
@@ -1016,7 +1006,7 @@
       "description": "This software project is a React application built with Vite and TypeScript, utilizing various Radix UI components and Tailwind CSS for styling, aimed at providing a modern and responsive user interface.",
       "url": "https://github.com/ZahabTZ/vibe-curator",
       "githubUrl": "https://github.com/ZahabTZ/vibe-curator",
-      "category": "Productivity",
+      "category": "Social & Community",
       "github": "https://github.com/ZahabTZ/vibe-curator",
       "source": "lovable"
     },
@@ -1026,7 +1016,7 @@
       "description": "This software project is a web application that utilizes Vite for development and build processes, incorporating MediaPipe's vision tasks to enhance visual processing capabilities.",
       "url": "https://github.com/HusseinJX/vibecodenight",
       "githubUrl": "https://github.com/HusseinJX/vibecodenight",
-      "category": "Productivity",
+      "category": "Social & Community",
       "github": "https://github.com/HusseinJX/vibecodenight"
     },
     {
@@ -1035,7 +1025,7 @@
       "description": "This software project appears to be a Unity-based application focused on virtual reality (VR) development, featuring various assets, settings, and resources for creating immersive experiences, including support for XR (extended reality) and template presets. It includes directories for scenes, editor tools, and project settings, indicating a structured approach to managing VR content and functionality.",
       "url": "https://github.com/HusseinJX/vrsensai",
       "githubUrl": "https://github.com/HusseinJX/vrsensai",
-      "category": "Productivity",
+      "category": "Spatial & 3D",
       "github": "https://github.com/HusseinJX/vrsensai"
     },
     {
@@ -1044,7 +1034,7 @@
       "description": "This software project is a React application built with TypeScript and Vite, utilizing various Radix UI components and Tailwind CSS for styling, aimed at providing a modern and responsive user interface.",
       "url": "https://github.com/ZahabTZ/what-local-launch",
       "githubUrl": "https://github.com/ZahabTZ/what-local-launch",
-      "category": "Productivity",
+      "category": "Local & Travel",
       "github": "https://github.com/ZahabTZ/what-local-launch",
       "source": "lovable"
     },
@@ -1054,7 +1044,7 @@
       "description": "This software project is a mobile application clone of Whatnot, designed for e-commerce and live streaming, utilizing technologies like React Native, Expo, and Firebase for authentication, storage, and real-time interactions. It features components for user authentication, product browsing, and live streaming functionalities.",
       "url": "https://github.com/HusseinJX/whatnotclone",
       "githubUrl": "https://github.com/HusseinJX/whatnotclone",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/HusseinJX/whatnotclone"
     },
     {
@@ -1063,7 +1053,7 @@
       "description": "Full-stack application with Express backend and Expo frontend.",
       "url": "https://github.com/HusseinJX/whatslocalnative",
       "githubUrl": "https://github.com/HusseinJX/whatslocalnative",
-      "category": "Productivity",
+      "category": "Local & Travel",
       "github": "https://github.com/HusseinJX/whatslocalnative"
     },
     {
@@ -1072,7 +1062,7 @@
       "description": "This software project is a web application that utilizes modern front-end technologies, including TypeScript and Tailwind CSS, to create a responsive user interface, while employing tools like Vite for development and Jest for testing. It is structured to facilitate easy management of source files and configuration settings.",
       "url": "https://github.com/HusseinJX/promptcomposer",
       "githubUrl": "https://github.com/HusseinJX/promptcomposer",
-      "category": "/",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/promptcomposer"
     },
     {
@@ -1081,7 +1071,7 @@
       "description": "This software project is a development environment that provides a customizable code editor with support for various programming languages and extensions, enabling developers to write, debug, and manage their code efficiently.",
       "url": "https://github.com/HusseinJX/vscode-fork",
       "githubUrl": "https://github.com/HusseinJX/vscode-fork",
-      "category": "/",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/vscode-fork"
     },
     {
@@ -1090,7 +1080,7 @@
       "description": "This software project is a web application built with Vite and React, utilizing TypeScript and various libraries for authentication and UI components, designed to facilitate interactions with the Solana blockchain and provide a user-friendly interface for managing wallet connections and transactions.",
       "url": "https://github.com/ZahabTZ/rhythm-map-hub-social-human",
       "githubUrl": "https://github.com/ZahabTZ/rhythm-map-hub-social-human",
-      "category": "Productivity",
+      "category": "Social & Community",
       "github": "https://github.com/ZahabTZ/rhythm-map-hub-social-human",
       "source": "lovable"
     },
@@ -1100,7 +1090,7 @@
       "description": "This software project is a VoIP application that utilizes Deepgram's speech recognition and Twilio's communication services to enable real-time voice interactions through a web interface. It features a Fastify server for handling requests and serving static files.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity"
+      "category": "Social & Community"
     },
     {
       "id": "actioncamvids",
@@ -1108,7 +1098,7 @@
       "description": "This software project organizes and manages video files captured by a DJI drone, providing a structured directory for easy access and retrieval of footage based on timestamps. It facilitates efficient handling of multimedia content for users involved in video production or analysis.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity"
+      "category": "Social & Community"
     },
     {
       "id": "aiagent",
@@ -1116,7 +1106,7 @@
       "description": "This software project is an integration platform that utilizes FastAPI and various libraries to facilitate communication between different services and tools, enabling seamless data processing and automation workflows. It includes components for agent-based interactions and integrations with external services like n8n and Supabase.",
       "url": "https://github.com/HusseinJX/aiagent",
       "githubUrl": "https://github.com/HusseinJX/aiagent",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/aiagent"
     },
     {
@@ -1125,7 +1115,7 @@
       "description": "This software project is a local application launcher that utilizes a web-based interface built with Svelte, allowing users to easily manage and launch applications from their local environment. It includes configuration files for building and running the application, as well as documentation for user guidance.",
       "url": "https://github.com/HusseinJX/applaunch",
       "githubUrl": "https://github.com/HusseinJX/applaunch",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/applaunch"
     },
     {
@@ -1134,7 +1124,7 @@
       "description": "This software project is a modular application that integrates various services and workflows, utilizing language processing and user interface components to facilitate interactions and data management. It leverages external libraries for enhanced functionality, including OpenAI's language models and database interactions.",
       "url": "https://github.com/HusseinJX/basicagent",
       "githubUrl": "https://github.com/HusseinJX/basicagent",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/basicagent"
     },
     {
@@ -1143,7 +1133,7 @@
       "description": "This software project organizes and manages a collection of images categorized by themes or events, allowing users to easily access and view various artworks or photographs.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/HusseinJX/busimg"
     },
     {
@@ -1152,7 +1142,7 @@
       "description": "This software project is a campaign management tool that integrates various services such as Zoho CRM, Twitter RSS feeds, and analytics platforms to automate and schedule marketing campaigns, aggregate data, and generate summaries for reporting. It also includes email functionality for sending campaign updates and notifications.",
       "url": "https://github.com/HusseinJX/crmupdater",
       "githubUrl": "https://github.com/HusseinJX/crmupdater",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/crmupdater"
     },
     {
@@ -1161,7 +1151,7 @@
       "description": "This software project is a web application that utilizes OpenAI's API to generate and tailor resumes, manage user profiles, and perform job searches, all while providing a structured environment for data handling and output generation.",
       "url": "https://github.com/HusseinJX/jobapplier",
       "githubUrl": "https://github.com/HusseinJX/jobapplier",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/HusseinJX/jobapplier"
     },
     {
@@ -1170,7 +1160,7 @@
       "description": "The software project organizes and manages files within a directory structure, allowing users to efficiently navigate, access, and manipulate their data. It enhances file management by providing a clear hierarchy and easy retrieval of information.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity"
+      "category": "Games & Interactive"
     },
     {
       "id": "localloop",
@@ -1178,7 +1168,7 @@
       "description": "This software project is designed to manage and facilitate user authentication and data interactions through a structured API, leveraging Supabase for backend services. It includes documentation for project planning, data models, and business types to streamline development and collaboration.",
       "url": "https://github.com/HusseinJX/Localloop",
       "githubUrl": "https://github.com/HusseinJX/Localloop",
-      "category": "Productivity",
+      "category": "Local & Travel",
       "github": "https://github.com/HusseinJX/Localloop"
     },
     {
@@ -1187,7 +1177,7 @@
       "description": "The software project organizes and manages files within a directory structure, allowing users to efficiently navigate, access, and manipulate their data. It enhances file management by providing a clear hierarchy and easy retrieval of information.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity"
+      "category": "Social & Community"
     },
     {
       "id": "mind-crm",
@@ -1195,7 +1185,7 @@
       "description": "The \"mind-crm\" project is a web application built with React and TypeScript that serves as a customer relationship management (CRM) tool, utilizing Vite for development and build processes. It features a modular structure with components, assets, and state management, aimed at enhancing user experience and efficiency in managing customer interactions.",
       "url": "https://github.com/HusseinJX/mind-crm",
       "githubUrl": "https://github.com/HusseinJX/mind-crm",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/HusseinJX/mind-crm"
     },
     {
@@ -1204,7 +1194,7 @@
       "description": "The software project is a mobile application built with React Native and Expo, designed to manage vendor-related tasks such as user authentication, product management, and community interactions, while providing a user-friendly interface and various functionalities like chat and inventory management.",
       "url": "https://github.com/hjxkitchen/native-vendor",
       "githubUrl": "https://github.com/hjxkitchen/native-vendor",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/hjxkitchen/native-vendor"
     },
     {
@@ -1213,7 +1203,7 @@
       "description": "This software project is a web application that provides user authentication, subscription management, and payment processing functionalities, leveraging technologies like Next.js, Supabase, and Stripe. It includes components for user login, subscription handling, and task management, along with a structured directory for API and authentication services.",
       "url": "https://github.com/hjxkitchen/next-socos",
       "githubUrl": "https://github.com/hjxkitchen/next-socos",
-      "category": "Productivity",
+      "category": "Social & Community",
       "github": "https://github.com/hjxkitchen/next-socos"
     },
     {
@@ -1222,7 +1212,7 @@
       "description": "This software project is a web application that utilizes HTML and JavaScript to provide interactive content and functionality, likely featuring multiple pages as indicated by the presence of index.html and index2.html. The assets folder suggests the inclusion of additional resources, such as images or styles, to enhance the user experience.",
       "url": "https://github.com/HusseinJX/openworld",
       "githubUrl": "https://github.com/HusseinJX/openworld",
-      "category": "Productivity",
+      "category": "Spatial & 3D",
       "github": "https://github.com/HusseinJX/openworld"
     },
     {
@@ -1231,7 +1221,7 @@
       "description": "The software project \"partypromote\" is a web application built with React that facilitates event promotion and management, utilizing a backend service for data handling and integration with Supabase for database functionalities.",
       "url": "https://github.com/HusseinJX/partypromote",
       "githubUrl": "https://github.com/HusseinJX/partypromote",
-      "category": "Productivity",
+      "category": "Social & Community",
       "github": "https://github.com/HusseinJX/partypromote"
     },
     {
@@ -1240,7 +1230,7 @@
       "description": "This software project organizes and manages multimedia files, specifically audio and video formats, by maintaining a structured directory for easy access and retrieval.",
       "url": "",
       "githubUrl": "",
-      "category": "Productivity"
+      "category": "Commerce & Fintech"
     },
     {
       "id": "vista-voice-pos",
@@ -1248,7 +1238,7 @@
       "description": "This software project is a React application built with Vite and TypeScript, featuring a modern user interface with various UI components and hooks, and is designed to support progressive web app (PWA) capabilities.",
       "url": "https://github.com/ZahabTZ/vista-voice-pos",
       "githubUrl": "https://github.com/ZahabTZ/vista-voice-pos",
-      "category": "Productivity",
+      "category": "Commerce & Fintech",
       "github": "https://github.com/ZahabTZ/vista-voice-pos",
       "source": "lovable"
     },
@@ -1258,7 +1248,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/selfimproving",
       "githubUrl": "https://github.com/HusseinJX/selfimproving",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/selfimproving"
     },
     {
@@ -1268,7 +1258,7 @@
       "url": "https://rollup-os.netlify.app",
       "github": "https://github.com/HusseinJX/rollups",
       "githubUrl": "https://github.com/HusseinJX/rollups",
-      "category": "Commerce & Business"
+      "category": "Commerce & Fintech"
     },
     {
       "id": "duplex",
@@ -1276,7 +1266,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/duplex",
       "githubUrl": "https://github.com/HusseinJX/duplex",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/duplex"
     },
     {
@@ -1285,7 +1275,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/localvideo",
       "githubUrl": "https://github.com/HusseinJX/localvideo",
-      "category": "Productivity",
+      "category": "Local & Travel",
       "github": "https://github.com/HusseinJX/localvideo"
     },
     {
@@ -1294,7 +1284,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/smartvoice",
       "githubUrl": "https://github.com/HusseinJX/smartvoice",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/smartvoice"
     },
     {
@@ -1303,7 +1293,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/voicecontrol",
       "githubUrl": "https://github.com/HusseinJX/voicecontrol",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/voicecontrol"
     },
     {
@@ -1312,7 +1302,7 @@
       "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
       "url": "https://github.com/HusseinJX/whatslocalagent",
       "githubUrl": "https://github.com/HusseinJX/whatslocalagent",
-      "category": "Productivity",
+      "category": "Local & Travel",
       "github": "https://github.com/HusseinJX/whatslocalagent"
     },
     {
@@ -1321,7 +1311,7 @@
       "description": "",
       "url": "https://github.com/alcabal-1/zentient-web4-csos",
       "githubUrl": "https://github.com/alcabal-1/zentient-web4-csos",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/alcabal-1/zentient-web4-csos"
     },
     {
@@ -1330,7 +1320,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/autoresearcher",
       "githubUrl": "https://github.com/HusseinJX/autoresearcher",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/autoresearcher"
     },
     {
@@ -1339,7 +1329,7 @@
       "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
       "url": "https://github.com/HusseinJX/deployer",
       "githubUrl": "https://github.com/HusseinJX/deployer",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/deployer"
     },
     {
@@ -1348,7 +1338,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/feedback-agents",
       "githubUrl": "https://github.com/HusseinJX/feedback-agents",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/feedback-agents"
     },
     {
@@ -1357,7 +1347,7 @@
       "description": "Three files created. Here's how everything fits together:",
       "url": "https://github.com/HusseinJX/localvoice",
       "githubUrl": "https://github.com/HusseinJX/localvoice",
-      "category": "Productivity",
+      "category": "Local & Travel",
       "github": "https://github.com/HusseinJX/localvoice"
     },
     {
@@ -1366,7 +1356,7 @@
       "description": "Simulate your product launch before it happens. Uses MiroShark to run a persona swarm simulation that reveals ICP segments, reaction patterns, pricing signals, and unexpected use cases — before you ship.",
       "url": "https://github.com/HusseinJX/prelaunchagents",
       "githubUrl": "https://github.com/HusseinJX/prelaunchagents",
-      "category": "Productivity",
+      "category": "AI & Agents",
       "github": "https://github.com/HusseinJX/prelaunchagents"
     },
     {
@@ -1375,7 +1365,7 @@
       "description": "",
       "url": "https://github.com/HusseinJX/rmbg",
       "githubUrl": "https://github.com/HusseinJX/rmbg",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/rmbg"
     },
     {
@@ -1384,7 +1374,7 @@
       "description": "A cross-platform Electron app that shows multiple terminal sessions in a card grid. Lives in the system tray / menubar. Click a card to expand to a full interactive terminal.",
       "url": "https://github.com/HusseinJX/sessionmanager",
       "githubUrl": "https://github.com/HusseinJX/sessionmanager",
-      "category": "Productivity",
+      "category": "Dev & Infrastructure",
       "github": "https://github.com/HusseinJX/sessionmanager"
     },
     {
@@ -1393,7 +1383,7 @@
       "description": "",
       "url": "https://techprocure.netlify.app",
       "github": "https://github.com/ZahabTZ/TechProcureAI",
-      "category": "Other",
+      "category": "Commerce & Fintech",
       "visible": true,
       "source": "replit"
     },
@@ -1403,7 +1393,7 @@
       "description": "",
       "url": "https://replit.com/@johnxen520/BusinessNetworkHub",
       "github": "https://github.com/ZahabTZ/BusinessNetworkHub",
-      "category": "Other",
+      "category": "Commerce & Fintech",
       "visible": true,
       "source": "replit"
     },
@@ -1413,7 +1403,7 @@
       "description": "",
       "url": "https://replit.com/@johnxen520/SwiftCourier",
       "github": "https://github.com/ZahabTZ/SwiftCourier",
-      "category": "Other",
+      "category": "Commerce & Fintech",
       "visible": true,
       "source": "replit"
     },
@@ -1423,7 +1413,7 @@
       "description": "",
       "url": "https://replit.com/@johnxen520/TanzaniaTrekker-1",
       "github": "https://github.com/ZahabTZ/TanzaniaTrekker-1",
-      "category": "Other",
+      "category": "Local & Travel",
       "visible": true,
       "source": "replit"
     },
@@ -1433,7 +1423,7 @@
       "description": "",
       "url": "https://replit.com/@johnxen520/TanzaniaTours",
       "github": "https://github.com/HusseinJX/TanzaniaTours",
-      "category": "Other",
+      "category": "Local & Travel",
       "visible": true,
       "source": "replit"
     },
@@ -1443,7 +1433,7 @@
       "description": "",
       "url": "https://lovable.dev/projects/12bd88af-0349-4dd0-b118-f8a2788b882e",
       "github": "https://github.com/ZahabTZ/ai-sales-nexus",
-      "category": "Other",
+      "category": "Commerce & Fintech",
       "visible": true,
       "source": "lovable"
     },
@@ -1453,7 +1443,7 @@
       "description": "",
       "url": "https://lovable.dev/projects/a7029c5e-8454-42bf-a4bd-679d9cee20b6",
       "github": "https://github.com/ZahabTZ/prediction-pal",
-      "category": "Other",
+      "category": "AI & Agents",
       "visible": true,
       "source": "lovable"
     },
@@ -1463,7 +1453,7 @@
       "description": "",
       "url": "https://lovable.dev/projects/4059fa02-ca11-4d88-b27f-aaad4394a8ab",
       "github": "https://github.com/ZahabTZ/ocean-watch",
-      "category": "Other",
+      "category": "Social & Community",
       "visible": true,
       "source": "lovable"
     },
@@ -1473,7 +1463,7 @@
       "description": "",
       "url": "https://lovable.dev/projects/3a15d54a-e620-47a5-8bf6-39b959f7c39b",
       "github": "https://github.com/ZahabTZ/serendepity",
-      "category": "Other",
+      "category": "Social & Community",
       "visible": true,
       "source": "lovable"
     },
@@ -1483,7 +1473,7 @@
       "description": "",
       "url": "https://lovable.dev/projects/642edab5-1a01-4058-83d3-1d1c92ddf0e6",
       "github": "https://github.com/ZahabTZ/earthly-echoes-33",
-      "category": "Other",
+      "category": "Social & Community",
       "visible": true,
       "source": "lovable"
     },
@@ -1493,7 +1483,7 @@
       "description": "",
       "url": "https://lovable.dev/projects/9ac41f9b-1e04-4993-b121-8ca3ce6fd1cd",
       "github": "https://github.com/ZahabTZ/rhythm-map-hub",
-      "category": "Other",
+      "category": "Social & Community",
       "visible": true,
       "source": "lovable"
     },
@@ -1503,7 +1493,7 @@
       "description": "",
       "url": "https://lovable.dev/projects/4c0342f6-a55f-4682-8419-18b62ea23fd7",
       "github": "https://github.com/ZahabTZ/rhythm-map-hub-matching-people",
-      "category": "Other",
+      "category": "Social & Community",
       "visible": true,
       "source": "lovable"
     },
@@ -1513,7 +1503,7 @@
       "description": "",
       "url": "https://wildearthsafaris.netlify.app",
       "github": "",
-      "category": "Other",
+      "category": "Local & Travel",
       "visible": true
     }
   ]
