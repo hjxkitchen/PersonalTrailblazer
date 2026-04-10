@@ -140,7 +140,7 @@
       "name": "BusDev",
       "description": "Platform for learning business development and entrepreneurship.",
       "url": "https://busdev.socos.ai",
-      "github": "",
+      "github": "https://github.com/ZahabTZ/busdev",
       "category": "Commerce & Business",
       "visible": true
     },
@@ -398,7 +398,7 @@
       "name": "Virtual Sphere",
       "description": "Interactive virtual sphere environments.",
       "url": "https://virtualsphere.netlify.app",
-      "github": "",
+      "github": "https://github.com/ZahabTZ/VirtualSphere",
       "category": "Social",
       "visible": true
     },
@@ -407,7 +407,7 @@
       "name": "Delivery Swarm",
       "description": "Delivery drivers gig economy platform",
       "url": "https://deliveryswarm.netlify.app",
-      "github": "",
+      "github": "https://github.com/ZahabTZ/DeliverySwarm",
       "category": "Infrastructure",
       "visible": true
     },
@@ -416,7 +416,7 @@
       "name": "Tanzania Trekker",
       "description": "Plan your safari in Tanzania.",
       "url": "https://tanzaniatrekker.netlify.app",
-      "github": "",
+      "github": "https://github.com/ZahabTZ/TanzaniaTrekker",
       "category": "Productivity",
       "visible": true
     },
@@ -507,7 +507,7 @@
       "name": "Mediapipe Table Tennis",
       "description": "Hand-tracked table tennis using Mediapipe.",
       "url": "https://mediapipe-tabletennis.netlify.app",
-      "github": "",
+      "github": "https://github.com/HusseinJX/mediapipe_tabletennis",
       "category": "Interactive & Games",
       "visible": true
     },
