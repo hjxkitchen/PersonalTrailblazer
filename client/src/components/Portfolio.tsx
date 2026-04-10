@@ -9,7 +9,7 @@ import ClickBurst from "./ClickBurst";
 import { usePortfolio } from "../lib/stores/usePortfolio";
 import type { PortfolioView } from "../lib/stores/usePortfolio";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { Pencil, X, LayoutGrid, Sparkles, Globe } from "lucide-react";
+import { Pencil, X, LayoutGrid, Sparkles, Globe, Github } from "lucide-react";
 import { motion } from "framer-motion";
 
 const VIEW_TABS: { view: PortfolioView; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
@@ -48,12 +48,17 @@ function TabBar({ view, setView }: { view: PortfolioView; setView: (v: Portfolio
 }
 
 export default function Portfolio() {
-  const { view, setView, isEditMode, setEditMode } = usePortfolio();
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const { view, setView, isEditMode, setEditMode, showGitHub, setShowGitHub } = usePortfolio();
+  const [pendingAction, setPendingAction] = useState<"edit" | "github" | null>(null);
 
   const handleEditClick = () => {
     if (isEditMode) setEditMode(false);
-    else setShowPasswordModal(true);
+    else setPendingAction("edit");
+  };
+
+  const handleGitHubClick = () => {
+    if (showGitHub) setShowGitHub(false);
+    else setPendingAction("github");
   };
 
   const isSpatial = view === "spatial";
@@ -98,6 +103,16 @@ export default function Portfolio() {
             <span className="text-white font-semibold text-sm hidden sm:block">John Xen</span>
             <div className="flex-1" />
             <TabBar view={view} setView={setView} />
+            <button
+              onClick={handleGitHubClick}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors text-xs font-medium ml-1 ${
+                showGitHub
+                  ? "bg-slate-600 text-white hover:bg-slate-500"
+                  : "bg-slate-700 hover:bg-slate-600 text-slate-300"
+              }`}
+            >
+              <Github size={12} />
+            </button>
             <button
               onClick={handleEditClick}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors text-xs font-medium ml-1 ${
@@ -155,6 +170,16 @@ export default function Portfolio() {
                 </a>
                 <TabBar view={view} setView={setView} />
                 <button
+                  onClick={handleGitHubClick}
+                  className={`flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-lg transition-colors text-sm font-medium ${
+                    showGitHub
+                      ? "bg-slate-600 text-white hover:bg-slate-500"
+                      : "bg-slate-700 hover:bg-slate-600 text-slate-300"
+                  }`}
+                >
+                  <Github size={14} />
+                </button>
+                <button
                   onClick={handleEditClick}
                   className={`flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-lg transition-colors text-sm font-medium ${
                     isEditMode
@@ -187,10 +212,14 @@ export default function Portfolio() {
         </div>
       )}
 
-      {showPasswordModal && (
+      {pendingAction && (
         <PasswordModal
-          onSuccess={() => { setEditMode(true); setShowPasswordModal(false); }}
-          onClose={() => setShowPasswordModal(false)}
+          onSuccess={() => {
+            if (pendingAction === "edit") setEditMode(true);
+            else if (pendingAction === "github") setShowGitHub(true);
+            setPendingAction(null);
+          }}
+          onClose={() => setPendingAction(null)}
         />
       )}
     </div>

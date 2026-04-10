@@ -252,7 +252,7 @@ function CategoryEditModal({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function MissionSection() {
-  const { isEditMode } = usePortfolio();
+  const { isEditMode, showGitHub } = usePortfolio();
   const [data, setData] = useState(() => loadData());
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProject, setSelectedProject] = useState<ExtendedProject | null>(null);
@@ -1304,7 +1304,7 @@ export default function MissionSection() {
                             return (
                               <div className="mt-auto pt-3 border-t border-slate-800/50 flex items-center justify-between gap-2">
                                 <div className="flex items-center gap-2 min-w-0">
-                                  {project.github && (
+                                  {project.github && showGitHub && (
                                     <a
                                       href={project.github}
                                       target="_blank"
@@ -1408,6 +1408,7 @@ export default function MissionSection() {
             project={selectedProject}
             onClose={() => setSelectedProject(null)}
             isEditMode={isEditMode}
+            showGitHub={showGitHub}
           />
         )}
       </AnimatePresence>

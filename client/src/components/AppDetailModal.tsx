@@ -217,9 +217,10 @@ interface Props {
   project: ExtendedProject;
   onClose: () => void;
   isEditMode?: boolean;
+  showGitHub?: boolean;
 }
 
-export default function AppDetailModal({ project, onClose, isEditMode = false }: Props) {
+export default function AppDetailModal({ project, onClose, isEditMode = false, showGitHub = false }: Props) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
@@ -356,7 +357,7 @@ export default function AppDetailModal({ project, onClose, isEditMode = false }:
 
                 // Tier 4 — video/screenshots only
                 if (explicitType === "video") {
-                  return githubUrl ? (
+                  return (githubUrl && showGitHub) ? (
                     <a
                       href={githubUrl}
                       target="_blank"
@@ -383,15 +384,17 @@ export default function AppDetailModal({ project, onClose, isEditMode = false }:
                         <Play size={15} />
                         Run Demo
                       </a>
-                      <a
-                        href={effectiveUrl!}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 transition-all active:scale-95"
-                      >
-                        <Github size={15} />
-                        Code
-                      </a>
+                      {showGitHub && (
+                        <a
+                          href={effectiveUrl!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 transition-all active:scale-95"
+                        >
+                          <Github size={15} />
+                          Code
+                        </a>
+                      )}
                     </>
                   );
                 }
@@ -411,7 +414,7 @@ export default function AppDetailModal({ project, onClose, isEditMode = false }:
                         Visit Project
                       </a>
                     )}
-                    {githubUrl && (
+                    {githubUrl && showGitHub && (
                       <a
                         href={githubUrl}
                         target="_blank"
@@ -482,7 +485,7 @@ export default function AppDetailModal({ project, onClose, isEditMode = false }:
             <InfoRow label="Category" value={project.category} />
             {project.subgroup && <InfoRow label="Subgroup" value={project.subgroup} />}
             {urlHost && <InfoRow label="Website" value={urlHost} href={effectiveUrl!} />}
-            {githubPath && <InfoRow label="GitHub" value={githubPath} href={resolvedGithub!} />}
+            {githubPath && showGitHub && <InfoRow label="GitHub" value={githubPath} href={resolvedGithub!} />}
             <InfoRow label="Developer" value="John Xen" />
           </div>
 

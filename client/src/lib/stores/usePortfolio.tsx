@@ -7,11 +7,13 @@ interface PortfolioState {
   currentMilestone: Milestone | null;
   view: PortfolioView;
   isEditMode: boolean;
+  showGitHub: boolean;
 
   // Actions
   setCurrentMilestone: (milestone: Milestone | null) => void;
   setView: (view: PortfolioView) => void;
   setEditMode: (value: boolean) => void;
+  setShowGitHub: (value: boolean) => void;
 
   // Legacy compat (used by existing code)
   showTraditionalPortfolio: boolean;
@@ -23,6 +25,7 @@ export const usePortfolio = create<PortfolioState>((set) => ({
   view: "extended",
   showTraditionalPortfolio: true,
   isEditMode: false,
+  showGitHub: false,
 
   setCurrentMilestone: (milestone) => set({ currentMilestone: milestone }),
 
@@ -40,4 +43,5 @@ export const usePortfolio = create<PortfolioState>((set) => ({
     }),
 
   setEditMode: (value) => set({ isEditMode: value }),
+  setShowGitHub: (value) => set({ showGitHub: value }),
 }));
