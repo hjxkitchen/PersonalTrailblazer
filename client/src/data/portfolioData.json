@@ -56,7 +56,7 @@
       "id": "3d-ball-game",
       "name": "3d ball game",
       "description": "A 3d ball game built with Three.js",
-      "url": "",
+      "url": "https://3dballgame.netlify.app",
       "github": "",
       "category": "Interactive & Games",
       "visible": true
@@ -74,7 +74,7 @@
       "id": "voice-pos",
       "name": "Voice Pos",
       "description": "A voice powered pos system for small businesses and retailers.",
-      "url": "",
+      "url": "https://vistavoicepos.netlify.app",
       "github": "",
       "category": "Commerce & Business",
       "visible": true
@@ -83,7 +83,7 @@
       "id": "sky-walk-world",
       "name": "sky-walk-world",
       "description": "This software project is a web application built with Vite and React, featuring multiplayer capabilities, spatial voice chat, and video avatars, designed to enhance user interaction in a virtual environment.",
-      "url": "https://github.com/ZahabTZ/sky-walk-world",
+      "url": "https://skywalkworld.netlify.app",
       "github": "https://github.com/ZahabTZ/sky-walk-world",
       "category": "Productivity",
       "visible": true,
@@ -94,7 +94,7 @@
       "id": "star-select",
       "name": "Star Select",
       "description": "A multiplayer game built with Mediapipe and camera hand tracking.",
-      "url": "",
+      "url": "https://starselect.netlify.app",
       "github": "",
       "category": "Interactive & Games",
       "visible": true
@@ -103,7 +103,7 @@
       "id": "fund-guard",
       "name": "Fund Guard",
       "description": "Evaluate investment terms compared to standards and other terms.",
-      "url": "https://fundguard.ecom.ac",
+      "url": "https://investoshield.netlify.app",
       "github": "",
       "category": "Commerce & Business",
       "visible": true
@@ -121,7 +121,7 @@
       "id": "shelfscan-catalog",
       "name": "ShelfScan Catalog",
       "description": "Scan shelves to generate a digital catalog of products.",
-      "url": "https://shelf-scan-catalog-hjx52.replit.app",
+      "url": "https://shelfscan.netlify.app",
       "github": "https://github.com/ZahabTZ/ShelfScanCatalog",
       "category": "Commerce & Business",
       "visible": true,
@@ -132,7 +132,7 @@
       "id": "serendipity",
       "name": "Serendipity",
       "description": "Journaling tool to meet people with similar interests.",
-      "url": "",
+      "url": "https://serendepity995.netlify.app",
       "github": "",
       "category": "Social",
       "visible": true
@@ -160,7 +160,7 @@
       "id": "bus-onboard",
       "name": "Bus Onboard",
       "description": "Onboard media and operational data for businesses.",
-      "url": "",
+      "url": "https://busonboard.netlify.app",
       "github": "",
       "category": "Commerce & Business",
       "visible": true
@@ -169,7 +169,7 @@
       "id": "business-card-ar",
       "name": "Business Card AR",
       "description": "Create AR-enabled business cards for modern networking.",
-      "url": "",
+      "url": "https://buscardar.netlify.app",
       "github": "",
       "category": "Spatial Computing",
       "visible": true
@@ -224,7 +224,7 @@
       "id": "smart-contract",
       "name": "Smart Contract",
       "description": "Tool to create and deploy blockchain smart contracts.",
-      "url": "",
+      "url": "https://smartcontractapp.netlify.app",
       "github": "https://github.com/HusseinJX/smartcontract",
       "category": "Commerce & Business",
       "visible": true,
@@ -465,7 +465,7 @@
       "id": "wall3d",
       "name": "wall3d",
       "description": "This software project is a 3D visualization tool that utilizes a GLB model and a web interface to render and interact with 3D environments, leveraging modern JavaScript frameworks and build tools. It includes configuration files for linting and building the project, as well as a README for documentation.",
-      "url": "https://github.com/HusseinJX/wall3d",
+      "url": "https://wall3d.netlify.app",
       "github": "https://github.com/HusseinJX/wall3d",
       "category": "Productivity",
       "visible": true,
@@ -621,7 +621,7 @@
       "id": "zahabenergy",
       "name": "ZahabEnergy",
       "description": "The software project is a web application built with React and Express that utilizes a modern tech stack for creating interactive user interfaces and managing server-side logic, including database interactions and session management. It features a responsive design and leverages various UI components for enhanced user experience.",
-      "url": "https://github.com/HusseinJX/ZahabEnergy",
+      "url": "https://zahabenergy.netlify.app",
       "github": "https://github.com/HusseinJX/ZahabEnergy",
       "category": "old5",
       "visible": true,
@@ -660,7 +660,7 @@
       "id": "personaltrailblazer",
       "name": "PersonalTrailblazer",
       "description": "The software project is a web application built with TypeScript and Express, designed to provide a RESTful API and a client-side interface, utilizing modern libraries and frameworks for enhanced user experience and functionality.",
-      "url": "https://github.com/hjxkitchen/PersonalTrailblazer",
+      "url": "https://johnxen.com",
       "githubUrl": "https://github.com/hjxkitchen/PersonalTrailblazer",
       "category": "old5",
       "github": "https://github.com/hjxkitchen/PersonalTrailblazer"
@@ -696,7 +696,7 @@
       "id": "ar-feast-finder",
       "name": "ar-feast-finder",
       "description": "This software project is a web application built with Vite, React, and TypeScript, utilizing various Radix UI components and Tailwind CSS for styling, aimed at providing a modern and responsive user interface.",
-      "url": "https://github.com/ZahabTZ/ar-feast-finder",
+      "url": "https://arfeast.netlify.app",
       "githubUrl": "https://github.com/ZahabTZ/ar-feast-finder",
       "category": "Commerce & Business",
       "github": "https://github.com/ZahabTZ/ar-feast-finder",
@@ -771,7 +771,7 @@
       "id": "nexus",
       "name": "nexus",
       "description": "Central connection hub and SaaS sandbox",
-      "url": "https://github.com/HusseinJX/nexus",
+      "url": "",
       "githubUrl": "https://github.com/HusseinJX/nexus",
       "category": "tools",
       "github": "https://github.com/HusseinJX/nexus"
@@ -780,7 +780,7 @@
       "id": "sovereign",
       "name": "Sovereign",
       "description": "This software project is a web application built using Next.js, designed to manage and display various components and libraries, with a focus on deployment through Netlify. It includes configuration files for environment settings, TypeScript, and PostCSS, facilitating a structured development environment.",
-      "url": "https://github.com/hjxkitchen/Sovereign",
+      "url": "https://sovereign-nexus.netlify.app",
       "githubUrl": "https://github.com/hjxkitchen/Sovereign",
       "category": "tools",
       "github": "https://github.com/hjxkitchen/Sovereign"
@@ -932,7 +932,7 @@
       "id": "p5",
       "name": "p5",
       "description": "This software project appears to be an interactive web application that utilizes the p5.js library for creative coding, likely featuring multiple sketches or visualizations as indicated by the presence of multiple sketch files. The project includes an HTML file for structure and a main JavaScript file for functionality.",
-      "url": "https://github.com/HusseinJX/p5",
+      "url": "https://p5net.netlify.app",
       "githubUrl": "https://github.com/HusseinJX/p5",
       "category": "Productivity",
       "github": "https://github.com/HusseinJX/p5"
@@ -1391,7 +1391,7 @@
       "id": "tech-procure-ai",
       "name": "Tech Procure AI",
       "description": "",
-      "url": "https://replit.com/@johnxen520/TechProcureAI",
+      "url": "https://techprocure.netlify.app",
       "github": "https://github.com/ZahabTZ/TechProcureAI",
       "category": "Other",
       "visible": true,
@@ -1506,6 +1506,15 @@
       "category": "Other",
       "visible": true,
       "source": "lovable"
+    },
+    {
+      "id": "wild-earth-safaris",
+      "name": "Wild Earth Safaris",
+      "description": "",
+      "url": "https://wildearthsafaris.netlify.app",
+      "github": "",
+      "category": "Other",
+      "visible": true
     }
   ]
 }
