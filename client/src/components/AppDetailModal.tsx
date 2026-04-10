@@ -269,7 +269,19 @@ export default function AppDetailModal({ project, onClose }: Props) {
                   {project.name}
                 </h1>
                 <p className="text-[13px] text-blue-400 font-medium mt-0.5">John Xen</p>
-                <div className="flex items-center gap-2 mt-1.5">
+                <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                  {project.subgroup && (
+                    <span
+                      className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md"
+                      style={{
+                        background: `linear-gradient(135deg, ${from}18, ${to}18)`,
+                        color: "#94a3b8",
+                        border: `1px solid ${from}33`,
+                      }}
+                    >
+                      {project.subgroup}
+                    </span>
+                  )}
                   <span
                     className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md"
                     style={{
@@ -377,6 +389,7 @@ export default function AppDetailModal({ project, onClose }: Props) {
           <div className="px-6 pt-5 pb-10">
             <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Information</p>
             <InfoRow label="Category" value={project.category} />
+            {project.subgroup && <InfoRow label="Subgroup" value={project.subgroup} />}
             {urlHost && <InfoRow label="Website" value={urlHost} href={project.url} />}
             {githubPath && <InfoRow label="GitHub" value={githubPath} href={project.github} />}
             <InfoRow label="Developer" value="John Xen" />

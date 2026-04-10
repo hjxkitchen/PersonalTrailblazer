@@ -32,6 +32,9 @@ import {
   Check,
   Search,
   X,
+  Phone,
+  Landmark,
+  MapPin,
 } from "lucide-react";
 import defaultData from "../data/portfolioData.json";
 import ExtendedProjectEditModal, { ExtendedProject } from "./ExtendedProjectEditModal";
@@ -41,8 +44,46 @@ import { usePortfolio } from "../lib/stores/usePortfolio";
 
 // ─── Icon map ────────────────────────────────────────────────────────────────
 const ICON_MAP: Record<string, LucideIcon> = {
-  Sparkles, Box, Briefcase, Cpu, Gamepad2, Rocket, Users, Layers,
+  Sparkles, Box, Briefcase, Cpu, Gamepad2, Rocket, Users, Layers, Phone, Landmark, MapPin,
 };
+
+/** Top-level portfolio order (matches category tab ids). */
+const CATEGORY_ORDER = [
+  "Agentic Frameworks & AI Automation",
+  "Voice, Telephony & Communication",
+  "Fintech, Real Estate & CRM",
+  "Spatial, 3D & XR",
+  "Local, Social & Commerce",
+  "Developer Tools & Infrastructure",
+] as const;
+
+const SUBGROUP_ORDER: Record<string, string[]> = {
+  "Agentic Frameworks & AI Automation": ["Core Agents", "Workflow & Biz-Ops", "Search & Research"],
+  "Voice, Telephony & Communication": ["Voice AI", "Communication"],
+  "Fintech, Real Estate & CRM": ["LoanOps Ecosystem", "CRM & Leads", "Energy & Finance"],
+  "Spatial, 3D & XR": ["3D Environments", "XR & Vision", "Gaming"],
+  "Local, Social & Commerce": ["Local Services", "Retail & Logistics", "Events & Vibes"],
+  "Developer Tools & Infrastructure": ["Utilities", "Infrastructure"],
+};
+
+function cmpPortfolioOrder(a: ExtendedProject, b: ExtendedProject): number {
+  const catRank = (c: string) => {
+    const i = CATEGORY_ORDER.indexOf(c as (typeof CATEGORY_ORDER)[number]);
+    return i === -1 ? 999 : i;
+  };
+  const subRank = (cat: string, s?: string) => {
+    if (!s) return 999;
+    const order = SUBGROUP_ORDER[cat];
+    if (!order) return 500;
+    const i = order.indexOf(s);
+    return i === -1 ? 500 : i;
+  };
+  const c = catRank(a.category) - catRank(b.category);
+  if (c !== 0) return c;
+  const s = subRank(a.category, a.subgroup) - subRank(b.category, b.subgroup);
+  if (s !== 0) return s;
+  return a.name.localeCompare(b.name);
+}
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface Category {
@@ -189,7 +230,7 @@ function CategoryEditModal({
             <input
               value={form.id}
               onChange={(e) => setForm((f) => ({ ...f, id: e.target.value }))}
-              placeholder="e.g. AI & Intelligence"
+              placeholder="e.g. Agentic Frameworks & AI Automation"
               className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white outline-none focus:border-blue-500 text-sm"
             />
           </div>
@@ -430,6 +471,7 @@ export default function MissionSection() {
       p.name.toLowerCase().includes(searchLower) ||
       p.description?.toLowerCase().includes(searchLower) ||
       p.category.toLowerCase().includes(searchLower) ||
+      p.subgroup?.toLowerCase().includes(searchLower) ||
       p.technologies?.some((t) => t.toLowerCase().includes(searchLower))
     );
   };
@@ -443,10 +485,12 @@ export default function MissionSection() {
     return visFiltered.filter(matchesSearch);
   })();
 
+  const sortedForGrid = [...visibleProjects].sort(cmpPortfolioOrder);
+
   const sortedProjects = [...visibleProjects].sort((a, b) => {
     let cmp = 0;
     if (sortCol === "name") cmp = a.name.localeCompare(b.name);
-    else if (sortCol === "category") cmp = a.category.localeCompare(b.category);
+    else if (sortCol === "category") cmp = cmpPortfolioOrder(a, b);
     else if (sortCol === "url") cmp = (a.url ? 1 : 0) - (b.url ? 1 : 0);
     else if (sortCol === "github") cmp = (a.github ? 1 : 0) - (b.github ? 1 : 0);
     else if (sortCol === "media") cmp = (a.media?.length ?? 0) - (b.media?.length ?? 0);
@@ -461,7 +505,7 @@ export default function MissionSection() {
     base.sort((a, b) => {
       let cmp = 0;
       if (sortCol === "name") cmp = a.name.localeCompare(b.name);
-      else if (sortCol === "category") cmp = a.category.localeCompare(b.category);
+      else if (sortCol === "category") cmp = cmpPortfolioOrder(a, b);
       else if (sortCol === "url") cmp = (a.url ? 1 : 0) - (b.url ? 1 : 0);
       else if (sortCol === "github") cmp = (a.github ? 1 : 0) - (b.github ? 1 : 0);
       else if (sortCol === "media") cmp = (a.media?.length ?? 0) - (b.media?.length ?? 0);
@@ -494,8 +538,8 @@ export default function MissionSection() {
     if (from === null || to === null || from === to) return;
 
     const allProjects = [...data.projects];
-    const fromId = visibleProjects[from].id;
-    const toId = visibleProjects[to].id;
+    const fromId = sortedForGrid[from].id;
+    const toId = sortedForGrid[to].id;
     const fromGlobal = allProjects.findIndex((p) => p.id === fromId);
     const toGlobal = allProjects.findIndex((p) => p.id === toId);
     const [moved] = allProjects.splice(fromGlobal, 1);
@@ -904,8 +948,8 @@ export default function MissionSection() {
                             <div className="px-2 py-1.5 min-w-0">
                               <input className={inputCls} value={rowDraft.name ?? ""} onChange={(e) => setRowDraft((d) => ({ ...d, name: e.target.value }))} placeholder="Name" />
                             </div>
-                            {/* Category */}
-                            <div className="px-2 py-1.5 min-w-0">
+                            {/* Category + subgroup */}
+                            <div className="px-2 py-1.5 min-w-0 space-y-1">
                               <select
                                 className={inputCls}
                                 value={rowDraft.category ?? ""}
@@ -915,6 +959,12 @@ export default function MissionSection() {
                                   <option key={c.id} value={c.id}>{c.label}</option>
                                 ))}
                               </select>
+                              <input
+                                className={inputCls}
+                                value={rowDraft.subgroup ?? ""}
+                                onChange={(e) => setRowDraft((d) => ({ ...d, subgroup: e.target.value || undefined }))}
+                                placeholder="Subgroup"
+                              />
                             </div>
                             {/* Description */}
                             <div className="px-2 py-1.5 min-w-0">
@@ -976,8 +1026,8 @@ export default function MissionSection() {
 
                           {/* Category */}
                           <div className="px-3 py-2 min-w-0 overflow-hidden">
-                            <span className="inline-block text-[10px] uppercase tracking-wider font-semibold text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700/60 max-w-full truncate">
-                              {project.category}
+                            <span className="inline-block text-[10px] uppercase tracking-wider font-semibold text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700/60 max-w-full truncate" title={project.category}>
+                              {project.subgroup ? `${project.subgroup} · ${project.category}` : project.category}
                             </span>
                           </div>
 
@@ -1074,13 +1124,52 @@ export default function MissionSection() {
           {!listView && (
           <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             <AnimatePresence mode="popLayout">
-              {visibleProjects.map((project, visibleIdx) => {
+              {sortedForGrid.flatMap((project, visibleIdx) => {
+                const prev = visibleIdx > 0 ? sortedForGrid[visibleIdx - 1] : undefined;
+                const showCatHeader =
+                  activeCategory === "All" &&
+                  (visibleIdx === 0 || prev!.category !== project.category);
+                const showSgHeader =
+                  !!project.subgroup &&
+                  (visibleIdx === 0 ||
+                    !prev ||
+                    prev.category !== project.category ||
+                    prev.subgroup !== project.subgroup);
+
                 const hasMedia = project.media && project.media.length > 0;
                 const isFileDragTarget = fileDragOverId === project.id;
-                const Icon = ICON_MAP[getCategoryIcon(project.category)] || Box;
                 const isHiddenCard = project.visible === false;
 
-                return (
+                const headerNodes: React.ReactNode[] = [];
+                if (showCatHeader) {
+                  const cat = data.categories.find((c) => c.id === project.category);
+                  headerNodes.push(
+                    <motion.h2
+                      key={`cat-h-${project.category}-${visibleIdx}`}
+                      layout
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`col-span-full text-xl sm:text-2xl font-bold text-white mb-1 ${visibleIdx === 0 ? "mt-0" : "mt-10"}`}
+                    >
+                      {cat?.label ?? project.category}
+                    </motion.h2>
+                  );
+                }
+                if (showSgHeader) {
+                  headerNodes.push(
+                    <motion.h3
+                      key={`sg-h-${project.category}-${project.subgroup}-${visibleIdx}`}
+                      layout
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="col-span-full text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4"
+                    >
+                      {project.subgroup}
+                    </motion.h3>
+                  );
+                }
+
+                const card = (
                   <motion.div
                     layout
                     key={project.id}
@@ -1196,8 +1285,8 @@ export default function MissionSection() {
                             <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
                               {project.name}
                             </h3>
-                            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold px-2 py-1 bg-slate-800/50 rounded-md shrink-0 ml-2">
-                              {project.category}
+                            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold px-2 py-1 bg-slate-800/50 rounded-md shrink-0 ml-2 max-w-[min(200px,45%)] truncate" title={project.subgroup ? `${project.subgroup} · ${project.category}` : project.category}>
+                              {project.subgroup ?? project.category}
                             </span>
                           </div>
 
@@ -1231,6 +1320,8 @@ export default function MissionSection() {
                     </TiltCard>
                   </motion.div>
                 );
+
+                return [...headerNodes, card];
               })}
             </AnimatePresence>
           </motion.div>

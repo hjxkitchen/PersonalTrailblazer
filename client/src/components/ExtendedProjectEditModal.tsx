@@ -10,6 +10,8 @@ export interface ExtendedProject {
   url: string;
   github?: string;
   category: string;
+  /** Section within the top-level category (e.g. Core Agents, Voice AI). */
+  subgroup?: string;
   media?: string[];
   visible?: boolean; // undefined/true = visible; false = hidden
 }
@@ -275,6 +277,16 @@ export default function ExtendedProjectEditModal({ project, categories, onSave, 
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
+          </div>
+
+          <div>
+            <label className="block text-xs text-slate-400 mb-1.5 uppercase tracking-wider">Subgroup (optional)</label>
+            <input
+              value={form.subgroup ?? ""}
+              onChange={(e) => setForm((f) => ({ ...f, subgroup: e.target.value || undefined }))}
+              placeholder="e.g. Core Agents, Voice AI"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 text-sm"
+            />
           </div>
 
           {/* Technologies */}

@@ -657,8 +657,8 @@
       "id": "loanops",
       "name": "loanops",
       "description": "This software project is a document parsing and extraction tool that utilizes various APIs and storage solutions to process and manage incoming data, including structured documents and events, while providing functionalities for validation and enrichment. It is designed to streamline workflows related to document handling and data extraction in a user-friendly manner.",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/loanops",
+      "githubUrl": "https://github.com/HusseinJX/loanops",
       "category": "Productivity"
     },
     {
@@ -1177,56 +1177,56 @@
       "id": "selfimproving",
       "name": "selfimproving",
       "description": "",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/selfimproving",
+      "githubUrl": "https://github.com/HusseinJX/selfimproving",
       "category": "Productivity"
     },
     {
       "id": "rollups",
       "name": "rollups",
       "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/rollups",
+      "githubUrl": "https://github.com/HusseinJX/rollups",
       "category": "Commerce & Business"
     },
     {
       "id": "duplex",
       "name": "duplex",
       "description": "",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/duplex",
+      "githubUrl": "https://github.com/HusseinJX/duplex",
       "category": "Productivity"
     },
     {
       "id": "localvideo",
       "name": "localvideo",
       "description": "",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/localvideo",
+      "githubUrl": "https://github.com/HusseinJX/localvideo",
       "category": "Productivity"
     },
     {
       "id": "smartvoice",
       "name": "smartvoice",
       "description": "",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/smartvoice",
+      "githubUrl": "https://github.com/HusseinJX/smartvoice",
       "category": "Productivity"
     },
     {
       "id": "voicecontrol",
       "name": "voicecontrol",
       "description": "",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/voicecontrol",
+      "githubUrl": "https://github.com/HusseinJX/voicecontrol",
       "category": "Productivity"
     },
     {
       "id": "whatslocalagent",
       "name": "whatslocalagent",
       "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/whatslocalagent",
+      "githubUrl": "https://github.com/HusseinJX/whatslocalagent",
       "category": "Productivity"
     },
     {
@@ -1241,38 +1241,38 @@
       "id": "autoresearcher",
       "name": "autoresearcher",
       "description": "",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/autoresearcher",
+      "githubUrl": "https://github.com/HusseinJX/autoresearcher",
       "category": "Productivity"
     },
     {
       "id": "deployer",
       "name": "deployer",
       "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/deployer",
+      "githubUrl": "https://github.com/HusseinJX/deployer",
       "category": "Productivity"
     },
     {
       "id": "feedback-agents",
       "name": "feedback-agents",
       "description": "",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/feedback-agents",
+      "githubUrl": "https://github.com/HusseinJX/feedback-agents",
       "category": "Productivity"
     },
     {
       "id": "localvoice",
       "name": "localvoice",
       "description": "Three files created. Here's how everything fits together:",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/localvoice",
+      "githubUrl": "https://github.com/HusseinJX/localvoice",
       "category": "Productivity"
     },
     {
       "id": "prelaunchagents",
       "name": "prelaunchagents",
-      "description": "Simulate your product launch before it happens. Uses MiroShark to run a persona swarm simulation that reveals ICP segments, reaction patterns, pricing signals, and unexpected use cases — before you ship.",
+      "description": "Simulate your product launch before it happens. Uses MiroShark to run a persona swarm simulation that reveals ICP segments, reaction patterns, pricing signals, and unexpected use cases \u2014 before you ship.",
       "url": "https://github.com/HusseinJX/prelaunchagents",
       "githubUrl": "https://github.com/HusseinJX/prelaunchagents",
       "category": "Productivity"
@@ -1281,8 +1281,8 @@
       "id": "rmbg",
       "name": "rmbg",
       "description": "",
-      "url": "",
-      "githubUrl": "",
+      "url": "https://github.com/HusseinJX/rmbg",
+      "githubUrl": "https://github.com/HusseinJX/rmbg",
       "category": "Productivity"
     },
     {
