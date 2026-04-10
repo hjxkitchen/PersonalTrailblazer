@@ -603,11 +603,11 @@
       "id": "shelfscancatalog",
       "name": "ShelfScanCatalog",
       "description": "This software project is a web application that utilizes a Node.js backend with Express and a React frontend, designed for managing and storing data with features like user authentication, file uploads to cloud storage, and a responsive user interface built with Tailwind CSS.",
-      "url": "https://github.com/ZahabTZ/ShelfScanCatalog",
+      "url": "https://github.com/HusseinJX/ShelfScanCatalog",
       "github": "",
       "category": "Productivity",
       "visible": true,
-      "githubUrl": "https://github.com/ZahabTZ/ShelfScanCatalog"
+      "githubUrl": "https://github.com/HusseinJX/ShelfScanCatalog"
     },
     {
       "id": "zahabenergy",
@@ -1185,7 +1185,8 @@
       "id": "rollups",
       "name": "rollups",
       "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
-      "url": "https://github.com/HusseinJX/rollups",
+      "url": "https://rollup-os.netlify.app",
+      "github": "https://github.com/HusseinJX/rollups",
       "githubUrl": "https://github.com/HusseinJX/rollups",
       "category": "Commerce & Business"
     },
