@@ -56,7 +56,7 @@
       "id": "3d-ball-game",
       "name": "3d ball game",
       "description": "A 3d ball game built with Three.js",
-      "url": "https://3dballgame.netlify.app",
+      "url": "",
       "github": "",
       "category": "Interactive & Games",
       "visible": true
@@ -74,7 +74,7 @@
       "id": "voice-pos",
       "name": "Voice Pos",
       "description": "A voice powered pos system for small businesses and retailers.",
-      "url": "https://vistavoicepos.netlify.app",
+      "url": "",
       "github": "",
       "category": "Commerce & Business",
       "visible": true
@@ -94,7 +94,7 @@
       "id": "star-select",
       "name": "Star Select",
       "description": "A multiplayer game built with Mediapipe and camera hand tracking.",
-      "url": "https://starselect.netlify.app",
+      "url": "",
       "github": "",
       "category": "Interactive & Games",
       "visible": true
@@ -132,7 +132,7 @@
       "id": "serendipity",
       "name": "Serendipity",
       "description": "Journaling tool to meet people with similar interests.",
-      "url": "https://serendepity995.netlify.app",
+      "url": "",
       "github": "",
       "category": "Social",
       "visible": true
@@ -160,7 +160,7 @@
       "id": "bus-onboard",
       "name": "Bus Onboard",
       "description": "Onboard media and operational data for businesses.",
-      "url": "https://busonboard.netlify.app",
+      "url": "",
       "github": "",
       "category": "Commerce & Business",
       "visible": true
@@ -169,7 +169,7 @@
       "id": "business-card-ar",
       "name": "Business Card AR",
       "description": "Create AR-enabled business cards for modern networking.",
-      "url": "https://businesscardar.netlify.app",
+      "url": "",
       "github": "",
       "category": "Spatial Computing",
       "visible": true
@@ -196,7 +196,7 @@
       "id": "gpt-chat-viewer",
       "name": "Gpt Chat Viewer",
       "description": "View and edit GPT chat histories with ease.",
-      "url": "https://gptchatviewer.netlify.app",
+      "url": "",
       "github": "",
       "category": "Productivity",
       "visible": true
@@ -205,7 +205,7 @@
       "id": "prompt-generator",
       "name": "Prompt Generator",
       "description": "Advanced tool to generate high-quality prompts.",
-      "url": "https://promptgenerator.netlify.app",
+      "url": "",
       "github": "",
       "category": "Productivity",
       "visible": true
@@ -224,7 +224,7 @@
       "id": "smart-contract",
       "name": "Smart Contract",
       "description": "Tool to create and deploy blockchain smart contracts.",
-      "url": "https://smartcontract.netlify.app",
+      "url": "",
       "github": "https://github.com/HusseinJX/smartcontract",
       "category": "Commerce & Business",
       "visible": true,
@@ -254,7 +254,7 @@
       "id": "n8n-clone",
       "name": "N8n Clone",
       "description": "Visual workflow automation and deployment tool.",
-      "url": "https://n8nclone.netlify.app",
+      "url": "",
       "github": "",
       "category": "Productivity",
       "visible": true
@@ -263,7 +263,7 @@
       "id": "alpha-crispr-chemical-library",
       "name": "Alpha Crispr Chemical Library",
       "description": "Management system for chemical and CRISPR libraries.",
-      "url": "https://alphacrisprchemicallibrary.netlify.app",
+      "url": "",
       "github": "",
       "category": "AI & Intelligence",
       "visible": true
@@ -272,7 +272,7 @@
       "id": "vr-sensai",
       "name": "Vr Sensai",
       "description": "Virtual reality training and management platform.",
-      "url": "https://vr.netlify.app",
+      "url": "",
       "github": "https://github.com/HusseinJX/vrsensai",
       "category": "Interactive & Games",
       "visible": true
@@ -281,7 +281,7 @@
       "id": "ml-models",
       "name": "Ml Models",
       "description": "Create, train, and manage machine learning models.",
-      "url": "https://mlmodel.netlify.app",
+      "url": "",
       "github": "",
       "category": "AI & Intelligence",
       "visible": true
@@ -310,7 +310,7 @@
       "id": "fraud-detection-multiagent",
       "name": "Fraud Detection Multiagent",
       "description": "Multi-agent system for real-time fraud detection.",
-      "url": "https://frauddetectionmultiagent.netlify.app",
+      "url": "",
       "github": "",
       "category": "Hackathon",
       "visible": true
@@ -319,7 +319,7 @@
       "id": "smart-irrigation",
       "name": "Smart Irrigation",
       "description": "Automated irrigation systems for efficient water usage.",
-      "url": "https://smartirrigation.netlify.app",
+      "url": "",
       "github": "",
       "category": "Infrastructure",
       "visible": true
@@ -328,7 +328,7 @@
       "id": "water-token-dispense-mobile-money",
       "name": "Water Token Dispense Mobile Money",
       "description": "Tokenizing water access with mobile money integration.",
-      "url": "https://watertokendispensemobilemoney.netlify.app",
+      "url": "",
       "github": "",
       "category": "Infrastructure",
       "visible": true
@@ -337,7 +337,7 @@
       "id": "bulk-sms-automation",
       "name": "Bulk Sms Automation",
       "description": "Messaging automation for large-scale communication.",
-      "url": "https://bulksmsautomationwithautomateapp.netlify.app",
+      "url": "",
       "github": "",
       "category": "Commerce & Business",
       "visible": true
@@ -346,7 +346,7 @@
       "id": "stepwise-erp-and-apip",
       "name": "Stepwise Erp and Apip",
       "description": "Integrated ERP and API portal for enterprise operations.",
-      "url": "https://stepwiseerpandapip.netlify.app",
+      "url": "",
       "github": "",
       "category": "Commerce & Business",
       "visible": true
@@ -355,7 +355,7 @@
       "id": "hc-pe-consolidation",
       "name": "Hc Pe Consolidation",
       "description": "Strategic consolidation tools for private equity.",
-      "url": "https://hcpeconsolidationstrategic.netlify.app",
+      "url": "",
       "github": "",
       "category": "Commerce & Business",
       "visible": true
@@ -364,7 +364,7 @@
       "id": "isaac-sim-semantic-manipulation",
       "name": "Isaac Sim Semantic Manipulation",
       "description": "Advanced semantic manipulation in NVIDIA Isaac Sim.",
-      "url": "https://isaacsimandsima3dsemanticmanipulation.netlify.app",
+      "url": "",
       "github": "",
       "category": "AI & Intelligence",
       "visible": true
@@ -373,7 +373,7 @@
       "id": "iot-blockchain-supply-chain",
       "name": "IoT Blockchain Supply Chain",
       "description": "Hardware retrofit with edge AI for facilities sensors.",
-      "url": "https://blockchainsupplychainhardwareretrofitfacilitiessensorswedgeai.netlify.app",
+      "url": "",
       "github": "",
       "category": "Hardware",
       "visible": true
@@ -382,7 +382,7 @@
       "id": "autonomous-retail-robots",
       "name": "Autonomous Retail Robots",
       "description": "Robots for cleaning, stocking, and picking in retail.",
-      "url": "https://pickerrobot.netlify.app",
+      "url": "",
       "github": "",
       "category": "Hardware",
       "visible": true
@@ -391,7 +391,7 @@
       "id": "solar-flow",
       "name": "Solar Flow",
       "description": "System for monitoring and managing solar energy flow.",
-      "url": "https://solarflow.netlify.app",
+      "url": "",
       "github": "",
       "category": "Infrastructure",
       "visible": true
@@ -400,7 +400,7 @@
       "id": "virtual-sphere",
       "name": "Virtual Sphere",
       "description": "Interactive virtual sphere environments.",
-      "url": "https://virtualsphere.netlify.app",
+      "url": "",
       "github": "https://github.com/ZahabTZ/VirtualSphere",
       "category": "Social",
       "visible": true,
@@ -410,7 +410,7 @@
       "id": "delivery-swarm",
       "name": "Delivery Swarm",
       "description": "Delivery drivers gig economy platform",
-      "url": "https://deliveryswarm.netlify.app",
+      "url": "",
       "github": "https://github.com/ZahabTZ/DeliverySwarm",
       "category": "Infrastructure",
       "visible": true
@@ -419,7 +419,7 @@
       "id": "tanzania-trekker",
       "name": "Tanzania Trekker",
       "description": "Plan your safari in Tanzania.",
-      "url": "https://tanzaniatrekker.netlify.app",
+      "url": "",
       "github": "https://github.com/ZahabTZ/TanzaniaTrekker",
       "category": "Productivity",
       "visible": true,
@@ -429,7 +429,7 @@
       "id": "data-dialog",
       "name": "Data Dialog",
       "description": "Conversational interface for complex data analysis.",
-      "url": "https://datadialog.netlify.app",
+      "url": "",
       "github": "",
       "category": "AI & Intelligence",
       "visible": true
@@ -438,7 +438,7 @@
       "id": "meeting-manager",
       "name": "Meeting Manager",
       "description": "Streamlined coordination for enterprise meetings.",
-      "url": "https://meetingmanager.netlify.app",
+      "url": "",
       "github": "",
       "category": "Productivity",
       "visible": true
@@ -447,7 +447,7 @@
       "id": "sightline",
       "name": "Sightline",
       "description": "Predictive analytics and visualization platform.",
-      "url": "https://sightline.netlify.app",
+      "url": "",
       "github": "",
       "category": "Interactive & Games",
       "visible": true
@@ -456,7 +456,7 @@
       "id": "neurotech-horror",
       "name": "Neurotech Horror",
       "description": "Bio-feedback driven interactive horror experience.",
-      "url": "https://neurotechhorrorgame.netlify.app",
+      "url": "",
       "github": "",
       "category": "Interactive & Games",
       "visible": true
@@ -475,7 +475,7 @@
       "id": "party-promoter",
       "name": "Party Promoter",
       "description": "Automated event promotion and management.",
-      "url": "https://partypromoter.netlify.app",
+      "url": "",
       "github": "",
       "category": "Social",
       "visible": true
@@ -484,7 +484,7 @@
       "id": "mindcrm-journai",
       "name": "MindCRM / Journai",
       "description": "AI-integrated customer relationship management.",
-      "url": "https://mindcrmjournaicrm.netlify.app",
+      "url": "",
       "github": "",
       "category": "Productivity",
       "visible": true
@@ -493,7 +493,7 @@
       "id": "mlgame",
       "name": "Mlgame",
       "description": "Gamified machine learning education platform.",
-      "url": "https://mlgame.netlify.app",
+      "url": "",
       "github": "",
       "category": "Interactive & Games",
       "visible": true
@@ -502,7 +502,7 @@
       "id": "p5-art",
       "name": "P5 Art",
       "description": "Generative art collection built with P5.js.",
-      "url": "https://p5art.netlify.app",
+      "url": "",
       "github": "",
       "category": "Interactive & Games",
       "visible": true
@@ -511,7 +511,7 @@
       "id": "mediapipe-table-tennis",
       "name": "Mediapipe Table Tennis",
       "description": "Hand-tracked table tennis using Mediapipe.",
-      "url": "https://mediapipe-tabletennis.netlify.app",
+      "url": "",
       "github": "https://github.com/HusseinJX/mediapipe_tabletennis",
       "category": "Interactive & Games",
       "visible": true
