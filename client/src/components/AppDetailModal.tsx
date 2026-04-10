@@ -1,7 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { X, ExternalLink, Github, Globe, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ExternalLink, Github, Globe, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import type { ExtendedProject } from "./ExtendedProjectEditModal";
+
+function getGitHubPath(url: string): string | null {
+  try {
+    const u = new URL(url);
+    if (u.hostname !== "github.com") return null;
+    const parts = u.pathname.replace(/^\//, "").replace(/\/$/, "").split("/");
+    if (parts.length >= 2 && parts[0] && parts[1]) return `${parts[0]}/${parts[1]}`;
+  } catch {}
+  return null;
+}
+
+function getStackBlitzUrl(githubUrl: string): string | null {
+  const path = getGitHubPath(githubUrl);
+  return path ? `https://stackblitz.com/github/${path}` : null;
+}
 
 // ─── App icon gradient ────────────────────────────────────────────────────────
 const GRADIENTS: [string, string][] = [
@@ -193,13 +208,18 @@ function InfoRow({ label, value, href }: { label: string; value: string; href?: 
   );
 }
 
+function isSourceUrl(url: string): boolean {
+  return url.includes("lovable.dev") || url.includes("replit.com");
+}
+
 // ─── Main modal ───────────────────────────────────────────────────────────────
 interface Props {
   project: ExtendedProject;
   onClose: () => void;
+  isEditMode?: boolean;
 }
 
-export default function AppDetailModal({ project, onClose }: Props) {
+export default function AppDetailModal({ project, onClose, isEditMode = false }: Props) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
@@ -209,12 +229,19 @@ export default function AppDetailModal({ project, onClose }: Props) {
   const hasMedia = (project.media?.length ?? 0) > 0;
   const hasTech = (project.technologies?.length ?? 0) > 0;
 
-  const urlHost = project.url
-    ? (() => { try { return new URL(project.url).hostname; } catch { return project.url; } })()
+  const isUrlGitHub = project.url ? !!getGitHubPath(project.url) : false;
+
+  // Hide lovable/replit URLs in non-edit mode
+  const effectiveUrl = project.url && (!isSourceUrl(project.url) || isEditMode) ? project.url : null;
+
+  const urlHost = effectiveUrl && !isUrlGitHub
+    ? (() => { try { return new URL(effectiveUrl).hostname; } catch { return effectiveUrl; } })()
     : null;
 
-  const githubPath = project.github
-    ? (() => { try { const u = new URL(project.github); return u.pathname.replace(/^\//, "").replace(/\/$/, "") || u.hostname; } catch { return project.github; } })()
+  // Prefer explicit github field; fall back to url if it's a GitHub URL
+  const resolvedGithub = project.github || (isUrlGitHub ? effectiveUrl : null);
+  const githubPath = resolvedGithub
+    ? (() => { try { const u = new URL(resolvedGithub); return u.pathname.replace(/^\//, "").replace(/\/$/, "") || u.hostname; } catch { return resolvedGithub; } })()
     : null;
 
   const [from, to] = getGradient(project.name);
@@ -311,29 +338,93 @@ export default function AppDetailModal({ project, onClose }: Props) {
 
             {/* Action buttons */}
             <div className="flex gap-2.5 mt-5">
-              {project.url && (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-bold text-white transition-all hover:brightness-110 active:scale-95"
-                  style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
-                >
-                  <Globe size={15} />
-                  Visit Project
-                </a>
-              )}
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 transition-all active:scale-95 ${project.url ? "px-5" : "flex-1"}`}
-                >
-                  <Github size={15} />
-                  {project.url ? "GitHub" : "View on GitHub"}
-                </a>
-              )}
+              {(() => {
+                const explicitType = project.demoType;
+                const isGitHub = effectiveUrl ? !!getGitHubPath(effectiveUrl) : false;
+                const stackBlitzUrl = effectiveUrl ? getStackBlitzUrl(effectiveUrl) : null;
+                const githubUrl = project.github || (isGitHub ? effectiveUrl : null);
+
+                // Tier 3 — E2B sandbox (categorized, not yet implemented)
+                if (explicitType === "e2b") {
+                  return (
+                    <div className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold text-slate-500 bg-slate-800/60 border border-slate-700/60 cursor-not-allowed select-none">
+                      <span className="text-[10px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/25">Soon</span>
+                      Python / Backend Sandbox
+                    </div>
+                  );
+                }
+
+                // Tier 4 — video/screenshots only
+                if (explicitType === "video") {
+                  return githubUrl ? (
+                    <a
+                      href={githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 transition-all active:scale-95"
+                    >
+                      <Github size={15} />
+                      View on GitHub
+                    </a>
+                  ) : null;
+                }
+
+                if (stackBlitzUrl) {
+                  // GitHub URL → offer StackBlitz demo + code link
+                  return (
+                    <>
+                      <a
+                        href={stackBlitzUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-bold text-white transition-all hover:brightness-110 active:scale-95"
+                        style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
+                      >
+                        <Play size={15} />
+                        Run Demo
+                      </a>
+                      <a
+                        href={effectiveUrl!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 transition-all active:scale-95"
+                      >
+                        <Github size={15} />
+                        Code
+                      </a>
+                    </>
+                  );
+                }
+
+                // Live URL
+                return (
+                  <>
+                    {effectiveUrl && (
+                      <a
+                        href={effectiveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-bold text-white transition-all hover:brightness-110 active:scale-95"
+                        style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
+                      >
+                        <Globe size={15} />
+                        Visit Project
+                      </a>
+                    )}
+                    {githubUrl && (
+                      <a
+                        href={githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 transition-all active:scale-95 ${effectiveUrl ? "px-5" : "flex-1"}`}
+                      >
+                        <Github size={15} />
+                        {effectiveUrl ? "GitHub" : "View on GitHub"}
+                      </a>
+                    )}
+                  </>
+                );
+              })()}
             </div>
           </div>
 
@@ -390,8 +481,8 @@ export default function AppDetailModal({ project, onClose }: Props) {
             <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Information</p>
             <InfoRow label="Category" value={project.category} />
             {project.subgroup && <InfoRow label="Subgroup" value={project.subgroup} />}
-            {urlHost && <InfoRow label="Website" value={urlHost} href={project.url} />}
-            {githubPath && <InfoRow label="GitHub" value={githubPath} href={project.github} />}
+            {urlHost && <InfoRow label="Website" value={urlHost} href={effectiveUrl!} />}
+            {githubPath && <InfoRow label="GitHub" value={githubPath} href={resolvedGithub!} />}
             <InfoRow label="Developer" value="John Xen" />
           </div>
 

@@ -1286,61 +1286,68 @@ export default function MissionSection() {
                             <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
                               {project.name}
                             </h3>
-                            <div className="flex items-center gap-1 shrink-0">
-                              {(project as any).source && (
-                                <span className={`text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded ${
-                                  (project as any).source === 'lovable'
-                                    ? 'bg-pink-500/15 text-pink-400 border border-pink-500/25'
-                                    : 'bg-orange-500/15 text-orange-400 border border-orange-500/25'
-                                }`}>
-                                  {(project as any).source}
-                                </span>
-                              )}
-                              <span className="text-[9px] uppercase tracking-wider text-slate-500 font-bold px-1.5 py-0.5 bg-slate-800/50 rounded border border-slate-700/40 truncate max-w-[100px]" title={project.category}>
-                                {project.category}
-                              </span>
-                            </div>
+                            <span className="text-[9px] uppercase tracking-wider text-slate-500 font-bold px-1.5 py-0.5 bg-slate-800/50 rounded border border-slate-700/40 truncate max-w-[100px] shrink-0" title={project.category}>
+                              {project.category}
+                            </span>
                           </div>
 
                           <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 mb-5 group-hover:text-slate-300 transition-colors">
                             {project.description}
                           </p>
 
-                          <div className="mt-auto pt-3 border-t border-slate-800/50 flex items-center justify-between gap-2">
-                            <div className="flex items-center gap-2 min-w-0">
-                              {project.github && (
-                                <a
-                                  href={project.github}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="text-slate-500 hover:text-slate-300 transition-colors shrink-0"
-                                  title="GitHub"
-                                >
-                                  <Github size={13} />
-                                </a>
-                              )}
-                              <div className="text-[10px] text-slate-600 font-medium truncate">
-                                {(() => { try { return new URL(project.url).hostname; } catch { return project.url || ""; } })()}
+                          {(() => {
+                            const src = (project as any).source;
+                            const isSourceUrl = project.url && (project.url.includes('lovable.dev') || project.url.includes('replit.com'));
+                            const showUrl = project.url && (isEditMode || !isSourceUrl);
+                            const hostname = showUrl ? (() => { try { return new URL(project.url).hostname; } catch { return project.url || ""; } })() : null;
+                            const showSource = isEditMode && src;
+                            return (
+                              <div className="mt-auto pt-3 border-t border-slate-800/50 flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-2 min-w-0">
+                                  {project.github && (
+                                    <a
+                                      href={project.github}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="text-slate-500 hover:text-slate-300 transition-colors shrink-0"
+                                      title="GitHub"
+                                    >
+                                      <Github size={13} />
+                                    </a>
+                                  )}
+                                  {showSource && (
+                                    <span className={`text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded shrink-0 ${
+                                      src === 'lovable'
+                                        ? 'bg-pink-500/15 text-pink-400 border border-pink-500/25'
+                                        : 'bg-orange-500/15 text-orange-400 border border-orange-500/25'
+                                    }`}>
+                                      {src}
+                                    </span>
+                                  )}
+                                  {hostname && (
+                                    <div className="text-[10px] text-slate-600 font-medium truncate">{hostname}</div>
+                                  )}
+                                </div>
+                                <div className="flex items-center gap-2 shrink-0">
+                                  {!isEditMode && (
+                                    <span className="text-slate-600 text-xs">Details →</span>
+                                  )}
+                                  {showUrl && (
+                                    <a
+                                      href={project.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="text-blue-400 hover:text-blue-300 text-xs font-semibold flex items-center gap-1 transition-colors"
+                                    >
+                                      <ExternalLink size={12} />
+                                    </a>
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                            <div className="flex items-center gap-2 shrink-0">
-                              {!isEditMode && (
-                                <span className="text-slate-600 text-xs">Details →</span>
-                              )}
-                              {project.url && (
-                                <a
-                                  href={project.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="text-blue-400 hover:text-blue-300 text-xs font-semibold flex items-center gap-1 transition-colors"
-                                >
-                                  <ExternalLink size={12} />
-                                </a>
-                              )}
-                            </div>
-                          </div>
+                            );
+                          })()}
                         </div>
                       </div>
                     </TiltCard>
@@ -1400,6 +1407,7 @@ export default function MissionSection() {
           <AppDetailModal
             project={selectedProject}
             onClose={() => setSelectedProject(null)}
+            isEditMode={isEditMode}
           />
         )}
       </AnimatePresence>
