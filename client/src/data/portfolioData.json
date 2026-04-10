@@ -87,7 +87,8 @@
       "github": "https://github.com/ZahabTZ/sky-walk-world",
       "category": "Productivity",
       "visible": true,
-      "githubUrl": "https://github.com/ZahabTZ/sky-walk-world"
+      "githubUrl": "https://github.com/ZahabTZ/sky-walk-world",
+      "source": "lovable"
     },
     {
       "id": "star-select",
@@ -124,7 +125,8 @@
       "github": "https://github.com/ZahabTZ/ShelfScanCatalog",
       "category": "Commerce & Business",
       "visible": true,
-      "githubUrl": "https://github.com/ZahabTZ/ShelfScanCatalog"
+      "githubUrl": "https://github.com/ZahabTZ/ShelfScanCatalog",
+      "source": "replit"
     },
     {
       "id": "serendipity",
@@ -142,7 +144,8 @@
       "url": "https://busdev.socos.ai",
       "github": "https://github.com/ZahabTZ/busdev",
       "category": "Commerce & Business",
-      "visible": true
+      "visible": true,
+      "source": "lovable"
     },
     {
       "id": "world-culture-events",
@@ -400,7 +403,8 @@
       "url": "https://virtualsphere.netlify.app",
       "github": "https://github.com/ZahabTZ/VirtualSphere",
       "category": "Social",
-      "visible": true
+      "visible": true,
+      "source": "replit"
     },
     {
       "id": "delivery-swarm",
@@ -418,7 +422,8 @@
       "url": "https://tanzaniatrekker.netlify.app",
       "github": "https://github.com/ZahabTZ/TanzaniaTrekker",
       "category": "Productivity",
-      "visible": true
+      "visible": true,
+      "source": "replit"
     },
     {
       "id": "data-dialog",
@@ -589,7 +594,8 @@
       "github": "https://github.com/ZahabTZ/JournAI-CRM",
       "category": "tools",
       "visible": true,
-      "githubUrl": "https://github.com/ZahabTZ/JournAI-CRM"
+      "githubUrl": "https://github.com/ZahabTZ/JournAI-CRM",
+      "source": "replit"
     },
     {
       "id": "invoicetostore",
@@ -647,7 +653,8 @@
       "url": "https://github.com/ZahabTZ/TanzaniaTourscape",
       "githubUrl": "https://github.com/ZahabTZ/TanzaniaTourscape",
       "category": "old5",
-      "github": "https://github.com/ZahabTZ/TanzaniaTourscape"
+      "github": "https://github.com/ZahabTZ/TanzaniaTourscape",
+      "source": "replit"
     },
     {
       "id": "personaltrailblazer",
@@ -692,7 +699,8 @@
       "url": "https://github.com/ZahabTZ/ar-feast-finder",
       "githubUrl": "https://github.com/ZahabTZ/ar-feast-finder",
       "category": "Commerce & Business",
-      "github": "https://github.com/ZahabTZ/ar-feast-finder"
+      "github": "https://github.com/ZahabTZ/ar-feast-finder",
+      "source": "lovable"
     },
     {
       "id": "artevent",
@@ -719,7 +727,8 @@
       "url": "https://github.com/ZahabTZ/dream-journal-ui",
       "githubUrl": "https://github.com/ZahabTZ/dream-journal-ui",
       "category": "tools",
-      "github": "https://github.com/ZahabTZ/dream-journal-ui"
+      "github": "https://github.com/ZahabTZ/dream-journal-ui",
+      "source": "lovable"
     },
     {
       "id": "dual-future-narratives",
@@ -728,7 +737,8 @@
       "url": "https://github.com/ZahabTZ/dual-future-narratives",
       "githubUrl": "https://github.com/ZahabTZ/dual-future-narratives",
       "category": "Social",
-      "github": "https://github.com/ZahabTZ/dual-future-narratives"
+      "github": "https://github.com/ZahabTZ/dual-future-narratives",
+      "source": "lovable"
     },
     {
       "id": "flyout-app",
@@ -827,7 +837,8 @@
       "url": "https://github.com/ZahabTZ/DailyMindGraph",
       "githubUrl": "https://github.com/ZahabTZ/DailyMindGraph",
       "category": "AI & Intelligence",
-      "github": "https://github.com/ZahabTZ/DailyMindGraph"
+      "github": "https://github.com/ZahabTZ/DailyMindGraph",
+      "source": "replit"
     },
     {
       "id": "deepmind-hack",
@@ -914,7 +925,8 @@
       "url": "https://github.com/ZahabTZ/OperationsOrchestrator",
       "githubUrl": "https://github.com/ZahabTZ/OperationsOrchestrator",
       "category": "Productivity",
-      "github": "https://github.com/ZahabTZ/OperationsOrchestrator"
+      "github": "https://github.com/ZahabTZ/OperationsOrchestrator",
+      "source": "replit"
     },
     {
       "id": "p5",
@@ -932,7 +944,8 @@
       "url": "https://github.com/ZahabTZ/playful-insights",
       "githubUrl": "https://github.com/ZahabTZ/playful-insights",
       "category": "Productivity",
-      "github": "https://github.com/ZahabTZ/playful-insights"
+      "github": "https://github.com/ZahabTZ/playful-insights",
+      "source": "lovable"
     },
     {
       "id": "prolocaliq",
@@ -941,7 +954,8 @@
       "url": "https://github.com/HusseinJX/prolocaliq",
       "githubUrl": "https://github.com/HusseinJX/prolocaliq",
       "category": "Productivity",
-      "github": "https://github.com/HusseinJX/prolocaliq"
+      "github": "https://github.com/HusseinJX/prolocaliq",
+      "source": "replit"
     },
     {
       "id": "sensai",
@@ -1003,7 +1017,8 @@
       "url": "https://github.com/ZahabTZ/vibe-curator",
       "githubUrl": "https://github.com/ZahabTZ/vibe-curator",
       "category": "Productivity",
-      "github": "https://github.com/ZahabTZ/vibe-curator"
+      "github": "https://github.com/ZahabTZ/vibe-curator",
+      "source": "lovable"
     },
     {
       "id": "vibecodenight",
@@ -1030,7 +1045,8 @@
       "url": "https://github.com/ZahabTZ/what-local-launch",
       "githubUrl": "https://github.com/ZahabTZ/what-local-launch",
       "category": "Productivity",
-      "github": "https://github.com/ZahabTZ/what-local-launch"
+      "github": "https://github.com/ZahabTZ/what-local-launch",
+      "source": "lovable"
     },
     {
       "id": "whatnotclone",
@@ -1075,7 +1091,8 @@
       "url": "https://github.com/ZahabTZ/rhythm-map-hub-social-human",
       "githubUrl": "https://github.com/ZahabTZ/rhythm-map-hub-social-human",
       "category": "Productivity",
-      "github": "https://github.com/ZahabTZ/rhythm-map-hub-social-human"
+      "github": "https://github.com/ZahabTZ/rhythm-map-hub-social-human",
+      "source": "lovable"
     },
     {
       "id": "voip",
@@ -1232,7 +1249,8 @@
       "url": "https://github.com/ZahabTZ/vista-voice-pos",
       "githubUrl": "https://github.com/ZahabTZ/vista-voice-pos",
       "category": "Productivity",
-      "github": "https://github.com/ZahabTZ/vista-voice-pos"
+      "github": "https://github.com/ZahabTZ/vista-voice-pos",
+      "source": "lovable"
     },
     {
       "id": "selfimproving",
@@ -1368,6 +1386,126 @@
       "githubUrl": "https://github.com/HusseinJX/sessionmanager",
       "category": "Productivity",
       "github": "https://github.com/HusseinJX/sessionmanager"
+    },
+    {
+      "id": "tech-procure-ai",
+      "name": "Tech Procure AI",
+      "description": "",
+      "url": "https://replit.com/@johnxen520/TechProcureAI",
+      "github": "https://github.com/ZahabTZ/TechProcureAI",
+      "category": "Other",
+      "visible": true,
+      "source": "replit"
+    },
+    {
+      "id": "business-network-hub",
+      "name": "Business Network Hub",
+      "description": "",
+      "url": "https://replit.com/@johnxen520/BusinessNetworkHub",
+      "github": "https://github.com/ZahabTZ/BusinessNetworkHub",
+      "category": "Other",
+      "visible": true,
+      "source": "replit"
+    },
+    {
+      "id": "swift-courier",
+      "name": "Swift Courier",
+      "description": "",
+      "url": "https://replit.com/@johnxen520/SwiftCourier",
+      "github": "https://github.com/ZahabTZ/SwiftCourier",
+      "category": "Other",
+      "visible": true,
+      "source": "replit"
+    },
+    {
+      "id": "tanzania-trekker-1",
+      "name": "Tanzania Trekker-1",
+      "description": "",
+      "url": "https://replit.com/@johnxen520/TanzaniaTrekker-1",
+      "github": "https://github.com/ZahabTZ/TanzaniaTrekker-1",
+      "category": "Other",
+      "visible": true,
+      "source": "replit"
+    },
+    {
+      "id": "tanzania-tours",
+      "name": "Tanzania Tours",
+      "description": "",
+      "url": "https://replit.com/@johnxen520/TanzaniaTours",
+      "github": "https://github.com/HusseinJX/TanzaniaTours",
+      "category": "Other",
+      "visible": true,
+      "source": "replit"
+    },
+    {
+      "id": "ai-sales-nexus",
+      "name": "AI Sales Nexus",
+      "description": "",
+      "url": "https://lovable.dev/projects/12bd88af-0349-4dd0-b118-f8a2788b882e",
+      "github": "https://github.com/ZahabTZ/ai-sales-nexus",
+      "category": "Other",
+      "visible": true,
+      "source": "lovable"
+    },
+    {
+      "id": "prediction-pal",
+      "name": "Prediction Pal",
+      "description": "",
+      "url": "https://lovable.dev/projects/a7029c5e-8454-42bf-a4bd-679d9cee20b6",
+      "github": "https://github.com/ZahabTZ/prediction-pal",
+      "category": "Other",
+      "visible": true,
+      "source": "lovable"
+    },
+    {
+      "id": "ocean-watch",
+      "name": "Ocean Watch",
+      "description": "",
+      "url": "https://lovable.dev/projects/4059fa02-ca11-4d88-b27f-aaad4394a8ab",
+      "github": "https://github.com/ZahabTZ/ocean-watch",
+      "category": "Other",
+      "visible": true,
+      "source": "lovable"
+    },
+    {
+      "id": "my-echoes",
+      "name": "My Echoes",
+      "description": "",
+      "url": "https://lovable.dev/projects/3a15d54a-e620-47a5-8bf6-39b959f7c39b",
+      "github": "https://github.com/ZahabTZ/serendepity",
+      "category": "Other",
+      "visible": true,
+      "source": "lovable"
+    },
+    {
+      "id": "earthly-echoes-33",
+      "name": "Earthly Echoes (33)",
+      "description": "",
+      "url": "https://lovable.dev/projects/642edab5-1a01-4058-83d3-1d1c92ddf0e6",
+      "github": "https://github.com/ZahabTZ/earthly-echoes-33",
+      "category": "Other",
+      "visible": true,
+      "source": "lovable"
+    },
+    {
+      "id": "rhythm-map-hub",
+      "name": "rhythm-map-hub",
+      "description": "",
+      "url": "https://lovable.dev/projects/9ac41f9b-1e04-4993-b121-8ca3ce6fd1cd",
+      "github": "https://github.com/ZahabTZ/rhythm-map-hub",
+      "category": "Other",
+      "visible": true,
+      "source": "lovable"
+    },
+    {
+      "id": "rhythm-map-hub-matching-people",
+      "name": "rhythm-map-hub-matching-people",
+      "description": "",
+      "url": "https://lovable.dev/projects/4c0342f6-a55f-4682-8419-18b62ea23fd7",
+      "github": "https://github.com/ZahabTZ/rhythm-map-hub-matching-people",
+      "category": "Other",
+      "visible": true,
+      "source": "lovable"
     }
   ]
 }
