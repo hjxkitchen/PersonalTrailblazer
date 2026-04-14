@@ -61,20 +61,34 @@ function Reveal({
   );
 }
 
+// ─── Thumbnail ────────────────────────────────────────────────────────────────
+const THUMBNAIL_MAP: Record<string, string> = {
+  "Socos": "socos.jpg",
+  "Agora": "agora.jpg",
+  "Zahab Energy": "zahab-energy.jpg",
+  "B2B Marketplace & Commerce Orchestration": "b2b-marketplace.jpg",
+  "Wild Earth Safaris": "wild-earth-safaris.jpg",
+  "Mechatronics & Automation Systems": "mechatronics.jpg",
+};
+
+function getThumbnailPath(title: string): string {
+  if (THUMBNAIL_MAP[title]) return `/thumbnails/${THUMBNAIL_MAP[title]}`;
+  const slug = title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "");
+  return `/thumbnails/${slug}.jpg`;
+}
+
 // ─── Inline project card ──────────────────────────────────────────────────────
 function ManifestoCard({
   project,
   isEditMode,
   onEdit,
   onDelete,
-  side = "right",
   dragProps,
 }: {
   project: MainProject;
   isEditMode: boolean;
   onEdit: () => void;
   onDelete: () => void;
-  side?: "left" | "right" | "center";
   dragProps?: {
     draggable: boolean;
     onDragStart: () => void;
@@ -82,46 +96,70 @@ function ManifestoCard({
     onDrop: () => void;
   };
 }) {
-  const alignClass =
-    side === "right"
-      ? "ml-auto"
-      : side === "left"
-      ? "mr-auto"
-      : "mx-auto";
+  const [expanded, setExpanded] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: side === "right" ? 24 : side === "left" ? -24 : 0, y: 12 }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`relative my-10 md:my-14 w-full md:w-[62%] ${alignClass} ${isEditMode ? "cursor-grab" : ""}`}
+      className={`relative my-10 md:my-14 w-full ${isEditMode ? "cursor-grab" : ""}`}
       {...dragProps}
     >
-      <div className={`
-        relative rounded-2xl overflow-hidden border
-        bg-slate-900/70 backdrop-blur-sm
-        ${isEditMode ? "border-blue-500/40" : "border-slate-700/50"}
-        shadow-xl shadow-black/30
-        group
-      `}>
+      <div
+        className={`
+          relative rounded-2xl overflow-hidden border
+          bg-slate-900/70 backdrop-blur-sm
+          ${isEditMode ? "border-blue-500/40" : "border-slate-700/50 hover:border-slate-600"}
+          shadow-xl shadow-black/30 transition-colors duration-300
+        `}
+      >
         {/* Top accent bar */}
         <div className="h-[2px] w-full bg-gradient-to-r from-blue-500/60 via-purple-500/40 to-transparent" />
 
-        <div className="p-6">
+        {/* Expandable thumbnail */}
+        <motion.div
+          animate={{ maxHeight: expanded ? 280 : 0, opacity: expanded ? 1 : 0 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          style={{ overflow: "hidden" }}
+        >
+          <div className="relative h-64 bg-slate-950">
+            {!imgError ? (
+              <img
+                src={getThumbnailPath(project.title)}
+                alt={project.title}
+                className="w-full h-full object-cover"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10">
+                <div className="text-slate-700 text-4xl font-black opacity-20">{project.title[0]}</div>
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+          </div>
+        </motion.div>
+
+        {/* Card body — always visible, clickable to expand */}
+        <div
+          className={`p-6 ${!isEditMode ? "cursor-pointer" : ""}`}
+          onClick={() => !isEditMode && setExpanded((v) => !v)}
+        >
           {/* Edit controls */}
           {isEditMode && (
             <div className="flex items-center justify-between mb-3">
               <GripVertical size={16} className="text-slate-600" />
               <div className="flex gap-2">
                 <button
-                  onClick={onEdit}
+                  onClick={(e) => { e.stopPropagation(); onEdit(); }}
                   className="flex items-center gap-1 px-2 py-1 bg-slate-800 hover:bg-blue-600 text-slate-400 hover:text-white rounded-md text-xs transition-colors"
                 >
                   <Pencil size={11} /> Edit
                 </button>
                 <button
-                  onClick={onDelete}
+                  onClick={(e) => { e.stopPropagation(); onDelete(); }}
                   className="flex items-center gap-1 px-2 py-1 bg-slate-800 hover:bg-red-600 text-slate-400 hover:text-white rounded-md text-xs transition-colors"
                 >
                   <Trash2 size={11} /> Delete
@@ -133,9 +171,20 @@ function ManifestoCard({
           {/* Header */}
           <div className="flex items-start justify-between gap-3 mb-3">
             <h3 className="text-lg font-bold text-white leading-tight">{project.title}</h3>
-            <span className={`shrink-0 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border ${getStatusColor(project.status)}`}>
-              {project.status}
-            </span>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border ${getStatusColor(project.status)}`}>
+                {project.status}
+              </span>
+              {!isEditMode && (
+                <motion.span
+                  animate={{ rotate: expanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-slate-500 text-xs"
+                >
+                  ↓
+                </motion.span>
+              )}
+            </div>
           </div>
 
           {/* Description */}
@@ -351,7 +400,7 @@ export default function ProjectsSection() {
       )}
 
       {/* ── MANIFESTO ── */}
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
 
         {/* ── HERO ── */}
         <motion.div
@@ -397,7 +446,6 @@ export default function ProjectsSection() {
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("mechatronics")!)}
             onDelete={() => deleteProject("mechatronics")}
-            side="right"
             dragProps={dragProps(projectIdx("mechatronics"))}
           />
         )}
@@ -432,7 +480,7 @@ export default function ProjectsSection() {
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("wild-earth-safaris")!)}
             onDelete={() => deleteProject("wild-earth-safaris")}
-            side="left"
+
             dragProps={dragProps(projectIdx("wild-earth-safaris"))}
           />
         )}
@@ -468,7 +516,7 @@ export default function ProjectsSection() {
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("zahab-energy")!)}
             onDelete={() => deleteProject("zahab-energy")}
-            side="right"
+
             dragProps={dragProps(projectIdx("zahab-energy"))}
           />
         )}
@@ -500,7 +548,7 @@ export default function ProjectsSection() {
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("b2b-marketplace")!)}
             onDelete={() => deleteProject("b2b-marketplace")}
-            side="left"
+
             dragProps={dragProps(projectIdx("b2b-marketplace"))}
           />
         )}
@@ -532,7 +580,7 @@ export default function ProjectsSection() {
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("socos")!)}
             onDelete={() => deleteProject("socos")}
-            side="right"
+
             dragProps={dragProps(projectIdx("socos"))}
           />
         )}
@@ -569,7 +617,7 @@ export default function ProjectsSection() {
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("agora")!)}
             onDelete={() => deleteProject("agora")}
-            side="left"
+
             dragProps={dragProps(projectIdx("agora"))}
           />
         )}
@@ -622,7 +670,7 @@ export default function ProjectsSection() {
                 isEditMode={isEditMode}
                 onEdit={() => setEditingProject(p)}
                 onDelete={() => deleteProject(p.id)}
-                side={i % 2 === 0 ? "right" : "left"}
+
                 dragProps={dragProps(data.projects.indexOf(p))}
               />
             ))}
