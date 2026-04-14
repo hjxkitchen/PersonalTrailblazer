@@ -271,7 +271,7 @@ const FEATURED_APPS = [
     name: "OperationalOrchestrator",
     label: "Resources & Supply Chain",
     tagline: "End-to-end operational intelligence",
-    url: "https://operationalorchestrator.netlify.app",
+    url: "https://operationsorchestrator.netlify.app",
     gradient: "from-cyan-500/20 via-teal-500/10 to-emerald-500/20",
     glow: "shadow-cyan-500/20",
     border: "border-cyan-500/30 hover:border-cyan-400/60",
