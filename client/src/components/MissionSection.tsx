@@ -393,7 +393,7 @@ const FEATURED_PROJECTS = [
     name: "BusDev",
     label: "Business Development",
     tagline: "Platform for learning business development and entrepreneurship",
-    url: "https://busdev.socos.ai",
+    url: "https://busdev-app.netlify.app",
     github: "https://github.com/ZahabTZ/busdev",
     gradient: "from-amber-500/20 via-orange-500/10 to-yellow-500/20",
     border: "border-amber-500/30 hover:border-amber-400/60",
