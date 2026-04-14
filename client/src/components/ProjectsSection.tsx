@@ -414,7 +414,7 @@ export default function ProjectsSection() {
   const projectIdx = (id: string) => data.projects.findIndex((p) => p.id === id);
 
   // Projects not mapped to specific manifesto slots — render at end
-  const PINNED_IDS = ["mechatronics", "wild-earth-safaris", "zahab-energy", "b2b-marketplace", "whatslocal", "agora"];
+  const PINNED_IDS = ["wild-earth-safaris", "zahab-energy", "b2b-marketplace", "whatslocal", "agora"];
   const floatingProjects = data.projects.filter((p) => !PINNED_IDS.includes(p.id));
 
   return (
@@ -466,29 +466,34 @@ export default function ProjectsSection() {
         <Chapter roman="I" title="Where It Begins" />
 
         <P>
-          It started with machines. Before software, before startups — there were lathes,
-          CNC mills, six-axis robots, and the deep satisfaction of understanding how
-          physical systems move, fail, and endure. I studied mechatronics because I
-          believed then what I still believe now: the world's most important problems
-          are not abstract. They are material. They have weight, friction, and heat.
+          It begins with hunger. Not metaphorical hunger — the real kind.
+          For most of human history, every waking hour was organized around
+          a single question: where is the next meal? We were nomads, following
+          herds, reading seasons, moving with the land. Intelligent, adaptive,
+          resourceful — but not yet building anything meant to last.
         </P>
 
         <P delay={0.05}>
-          That engineering lens never left. It became the way I see every system I
-          build — not as software, but as infrastructure. As something that has to
-          hold, under real-world load, for real people, in real places.
+          Then, roughly twelve thousand years ago, something changed. Humans
+          stopped following resources and started controlling them. Seeds planted
+          deliberately. Animals kept, not just hunted. Surpluses stored across seasons.
+          It was the first resource revolution — and it changed everything.
+          Agriculture did not just solve hunger. It created time. And with time
+          came everything else: specialization, trade, settlement, writing, law,
+          cities, empire. Civilization is what happens when humans stop reacting
+          to the world and start designing it.
         </P>
 
-        {project("mechatronics") && (
-          <ManifestoCard
-            project={project("mechatronics")!}
-            isEditMode={isEditMode}
-            noExpand
-            onEdit={() => setEditingProject(project("mechatronics")!)}
-            onDelete={() => deleteProject("mechatronics")}
-            dragProps={dragProps(projectIdx("mechatronics"))}
-          />
-        )}
+        <PullQuote>
+          The agricultural revolution was not a farming story. It was a systems story —
+          the first time humans deliberately engineered the conditions of their own survival.
+        </PullQuote>
+
+        <P delay={0.1}>
+          That instinct — to look at a system, understand its constraints, and redesign
+          it from first principles — is the thread that runs through everything built here.
+          The tools have changed. The scale has changed. The instinct has not.
+        </P>
 
         <Divider />
 
