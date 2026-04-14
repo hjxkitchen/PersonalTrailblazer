@@ -887,10 +887,11 @@ export default function MissionSection() {
     return sortDir === "asc" ? cmp : -cmp;
   });
 
-  // List view pulls directly from data.projects so hidden items are never lost,
-  // regardless of which category tab is active or edit-mode state.
+  // List view — respects the active category pill tab plus its own additional filters.
   const listFilteredProjects = (() => {
     let base = [...data.projects];
+    // Apply the same category pill tab as the grid view
+    if (activeCategory !== "All") base = base.filter((p) => p.category === activeCategory);
     base.sort((a, b) => {
       let cmp = 0;
       if (sortCol === "name") cmp = a.name.localeCompare(b.name);
@@ -1432,7 +1433,7 @@ export default function MissionSection() {
 
                           {/* GitHub */}
                           <div className="px-3 py-2 min-w-0 overflow-hidden">
-                            {githubDisplay && showGitHub ? (
+                            {githubDisplay && (isEditMode || showGitHub) ? (
                               <a
                                 href={project.github}
                                 target="_blank"
@@ -1451,7 +1452,7 @@ export default function MissionSection() {
 
                           {/* URL */}
                           <div className="px-3 py-2 min-w-0 overflow-hidden">
-                            {hostname ? (
+                            {hostname && (isEditMode || showGitHub) ? (
                               <a
                                 href={project.url}
                                 target="_blank"
@@ -1697,14 +1698,13 @@ export default function MissionSection() {
 
                           {(() => {
                             const src = (project as any).source;
-                            const isSourceUrl = project.url && (project.url.includes('lovable.dev') || project.url.includes('replit.com'));
-                            const showUrl = project.url && (isEditMode || !isSourceUrl);
+                            const showUrl = project.url && (isEditMode || showGitHub);
                             const hostname = showUrl ? (() => { try { return new URL(project.url).hostname; } catch { return project.url || ""; } })() : null;
                             const showSource = isEditMode && src;
                             return (
                               <div className="mt-auto pt-3 border-t border-slate-800/50 flex items-center justify-between gap-2">
                                 <div className="flex items-center gap-2 min-w-0">
-                                  {project.github && showGitHub && (
+                                  {project.github && (isEditMode || showGitHub) && (
                                     <a
                                       href={project.github}
                                       target="_blank"

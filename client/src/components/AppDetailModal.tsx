@@ -402,7 +402,7 @@ export default function AppDetailModal({ project, onClose, isEditMode = false, s
                 // Live URL
                 return (
                   <>
-                    {effectiveUrl && (
+                    {effectiveUrl && (isEditMode || showGitHub) && (
                       <a
                         href={effectiveUrl}
                         target="_blank"
@@ -484,7 +484,7 @@ export default function AppDetailModal({ project, onClose, isEditMode = false, s
             <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Information</p>
             <InfoRow label="Category" value={project.category} />
             {project.subgroup && <InfoRow label="Subgroup" value={project.subgroup} />}
-            {urlHost && <InfoRow label="Website" value={urlHost} href={effectiveUrl!} />}
+            {urlHost && (isEditMode || showGitHub) && <InfoRow label="Website" value={urlHost} href={effectiveUrl!} />}
             {githubPath && showGitHub && <InfoRow label="GitHub" value={githubPath} href={resolvedGithub!} />}
             <InfoRow label="Developer" value="John Xen" />
           </div>

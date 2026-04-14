@@ -65,7 +65,11 @@ const LS_KEY = "portfolio-spatial-canvas";
 function loadData(): CanvasData {
   try {
     const raw = localStorage.getItem(LS_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Always reset viewport to default — consistent starting position
+      return { ...parsed, viewport: (defaultData as CanvasData).viewport };
+    }
   } catch {}
   return defaultData as CanvasData;
 }
@@ -612,6 +616,155 @@ function DrawPreviewEl({ p }: { p: DrawPreview }) {
 export default function SpatialCanvas() {
   const { isEditMode } = usePortfolio();
   const containerRef = useRef<HTMLDivElement>(null);
+  const starCanvasRef = useRef<HTMLCanvasElement>(null);
+
+  // ── Starfield ──────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const canvas = starCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d")!;
+
+    const N = 800;
+    const FOV = 300;
+    const BASE_SPEED = 0.05;
+    const BOOST_SPEED = 1.8;
+    const BOOST_DURATION = 1800; // ms
+
+    const sx = new Float32Array(N);
+    const sy = new Float32Array(N);
+    const sz = new Float32Array(N);
+    const px = new Float32Array(N); // previous projected x
+    const py = new Float32Array(N); // previous projected y
+
+    let W = canvas.offsetWidth;
+    let H = canvas.offsetHeight;
+    let cx = W / 2;
+    let cy = H / 2;
+    let targetCx = cx;
+    let targetCy = cy;
+
+    let speed = BASE_SPEED;
+    let boostEnd = 0;
+
+    function resize() {
+      W = canvas!.offsetWidth;
+      H = canvas!.offsetHeight;
+      canvas!.width = W;
+      canvas!.height = H;
+      cx = W / 2;
+      cy = H / 2;
+      targetCx = cx;
+      targetCy = cy;
+    }
+
+    function initStar(i: number, zOverride?: number) {
+      const depth = zOverride ?? (Math.random() * 0.2 + 0.8);
+      const range = (Math.max(W, H) / 2 / FOV + 1.5) * depth;
+      sx[i] = (Math.random() * 2 - 1) * range;
+      sy[i] = (Math.random() * 2 - 1) * range;
+      sz[i] = depth;
+      // initialise prev position so no streak on first frame
+      px[i] = (sx[i] / sz[i]) * FOV + cx;
+      py[i] = (sy[i] / sz[i]) * FOV + cy;
+    }
+
+    // Seed evenly distributed z values so all brightness levels exist from frame 1
+    for (let i = 0; i < N; i++) {
+      const depth = (i + Math.random()) / N;
+      const range = (Math.max(W, H) / 2 / FOV + 1.5) * depth;
+      sx[i] = (Math.random() * 2 - 1) * range;
+      sy[i] = (Math.random() * 2 - 1) * range;
+      sz[i] = depth;
+      px[i] = (sx[i] / sz[i]) * FOV + cx;
+      py[i] = (sy[i] / sz[i]) * FOV + cy;
+    }
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas.parentElement!);
+    resize();
+
+    let lastTime = performance.now();
+    let rafId = 0;
+
+    function frame(now: number) {
+      rafId = requestAnimationFrame(frame);
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+
+      // Speed boost easing
+      if (now < boostEnd) {
+        const t = (boostEnd - now) / BOOST_DURATION;
+        speed = BASE_SPEED + (BOOST_SPEED - BASE_SPEED) * t * t;
+      } else {
+        speed = BASE_SPEED;
+      }
+
+      // Lerp vanishing point toward mouse
+      cx += (targetCx - cx) * 0.05;
+      cy += (targetCy - cy) * 0.05;
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = "screen";
+
+      for (let i = 0; i < N; i++) {
+        sz[i] -= speed * dt;
+
+        if (sz[i] <= 0) { initStar(i); continue; }
+
+        const screenX = (sx[i] / sz[i]) * FOV + cx;
+        const screenY = (sy[i] / sz[i]) * FOV + cy;
+
+        if (screenX < -20 || screenX > W + 20 || screenY < -20 || screenY > H + 20) {
+          initStar(i);
+          continue;
+        }
+
+        const brightness = 1 - sz[i];
+        const alpha = Math.max(0, Math.min(1, brightness));
+        const dotSize = Math.max(0.4, brightness * 2.5);
+
+        // Streak
+        if (alpha > 0.05) {
+          ctx.beginPath();
+          ctx.moveTo(px[i], py[i]);
+          ctx.lineTo(screenX, screenY);
+          ctx.strokeStyle = `rgba(255,255,255,${alpha * 0.6})`;
+          ctx.lineWidth = dotSize * 0.6;
+          ctx.stroke();
+        }
+
+        // Dot tip
+        ctx.beginPath();
+        ctx.arc(screenX, screenY, dotSize, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.fill();
+
+        px[i] = screenX;
+        py[i] = screenY;
+      }
+    }
+
+    function onMouseMove(e: MouseEvent) {
+      const rect = canvas!.getBoundingClientRect();
+      targetCx = e.clientX - rect.left;
+      targetCy = e.clientY - rect.top;
+    }
+
+    function onClick() {
+      boostEnd = performance.now() + BOOST_DURATION;
+    }
+
+    canvas.parentElement!.addEventListener("mousemove", onMouseMove);
+    canvas.parentElement!.addEventListener("click", onClick);
+    rafId = requestAnimationFrame(frame);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      ro.disconnect();
+      canvas.parentElement?.removeEventListener("mousemove", onMouseMove);
+      canvas.parentElement?.removeEventListener("click", onClick);
+    };
+  }, []);
 
   // Canvas data (persisted)
   const [data, setData] = useState<CanvasData>(() => loadData());
@@ -627,10 +780,12 @@ export default function SpatialCanvas() {
   const [drawPreview, setDrawPreview] = useState<DrawPreview | null>(null);
 
   // Follow mode — canvas pans to follow the mouse
-  const [followMode, setFollowMode] = useState(false);
+  const [followMode, setFollowMode] = useState(true);
+  const followModeRef = useRef(true);
   const followBaseVp = useRef<Viewport | null>(null);
   const followMousePos = useRef<{ x: number; y: number } | null>(null);
   const followRaf = useRef<number | null>(null);
+  useEffect(() => { followModeRef.current = followMode; }, [followMode]);
 
   const [modal, setModal] = useState<{ type: ElementType; element?: SpatialElement } | null>(null);
   const [showJsonEditor, setShowJsonEditor] = useState(false);
@@ -724,20 +879,33 @@ export default function SpatialCanvas() {
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      const factor = e.ctrlKey
-        ? e.deltaY > 0 ? 0.95 : 1.05
-        : e.deltaY > 0 ? 0.91 : 1.1;
+      const delta = e.deltaY * (e.ctrlKey ? 0.002 : 0.001);
+      const factor = 1 - Math.sign(delta) * Math.min(Math.abs(delta), 0.05);
       const vp = viewportRef.current;
       const newZoom = Math.max(0.1, Math.min(4, vp.zoom * factor));
       if (newZoom === vp.zoom) return;
       const rect = el.getBoundingClientRect();
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
-      updateViewport(() => ({
+      const nextVp = {
         zoom: newZoom,
         x: cx - (cx - vp.x) * (newZoom / vp.zoom),
         y: cy - (cy - vp.y) * (newZoom / vp.zoom),
-      }));
+      };
+      // Re-anchor follow base so follow mode's tick target equals the post-zoom position.
+      // tick computes: targetX = base.x - dx * sensitivity, so we back-solve base.x
+      if (followModeRef.current) {
+        const rect2 = el.getBoundingClientRect();
+        const sensitivity = 1.6;
+        const mdx = followMousePos.current ? followMousePos.current.x - (rect2.left + rect2.width / 2) : 0;
+        const mdy = followMousePos.current ? followMousePos.current.y - (rect2.top + rect2.height / 2) : 0;
+        followBaseVp.current = {
+          zoom: nextVp.zoom,
+          x: nextVp.x + mdx * sensitivity,
+          y: nextVp.y + mdy * sensitivity,
+        };
+      }
+      updateViewport(() => nextVp);
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
@@ -926,6 +1094,11 @@ export default function SpatialCanvas() {
     if (!followMode) return;
     const container = containerRef.current;
     if (!container) return;
+
+    // Auto-activate on mount: seed base viewport if toggle was never called
+    if (!followBaseVp.current) {
+      followBaseVp.current = viewportRef.current;
+    }
 
     const onMouseMove = (e: MouseEvent) => {
       followMousePos.current = { x: e.clientX, y: e.clientY };
@@ -1138,11 +1311,6 @@ export default function SpatialCanvas() {
     ? primaryEl.y * viewport.zoom + viewport.y + containerTop
     : 0;
 
-  // ── Dot grid background ──
-  const dotSpacing = Math.max(16, 32 * viewport.zoom);
-  const bgX = ((viewport.x % dotSpacing) + dotSpacing) % dotSpacing;
-  const bgY = ((viewport.y % dotSpacing) + dotSpacing) % dotSpacing;
-
   // Cursor: crosshair when drawing, grabbing when panning, grab otherwise
   const canvasCursor = drawMode ? "crosshair" : "grab";
 
@@ -1151,15 +1319,17 @@ export default function SpatialCanvas() {
       {/* Canvas container */}
       <div
         ref={containerRef}
-        className="absolute inset-0 overflow-hidden bg-[#020617] select-none"
-        style={{
-          cursor: canvasCursor,
-          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.065) 1px, transparent 1px)",
-          backgroundSize: `${dotSpacing}px ${dotSpacing}px`,
-          backgroundPosition: `${bgX}px ${bgY}px`,
-        }}
+        className="absolute inset-0 overflow-hidden bg-[#000008] select-none"
+        style={{ cursor: canvasCursor }}
         onMouseDown={handleBgMouseDown}
       >
+        {/* Starfield */}
+        <canvas
+          ref={starCanvasRef}
+          className="absolute inset-0 pointer-events-none z-[1]"
+          style={{ width: "100%", height: "100%", mixBlendMode: "screen" }}
+        />
+
         {/* Vignette */}
         <div className="absolute inset-0 pointer-events-none z-[3]" style={{ boxShadow: "inset 0 0 140px rgba(2,6,23,0.8)" }} />
 
@@ -1373,7 +1543,7 @@ export default function SpatialCanvas() {
       <button
         onClick={toggleFollowMode}
         title={followMode ? "Exit follow mode" : "Follow mode — canvas follows your mouse"}
-        className={`fixed top-4 right-20 z-[1002] flex items-center gap-2 px-3 py-2 rounded-full text-xs font-medium shadow-lg backdrop-blur-sm transition-all duration-200 ${
+        className={`fixed top-[40%] left-[40%] z-[1002] flex items-center gap-2 px-3 py-2 rounded-full text-xs font-medium shadow-lg backdrop-blur-sm transition-all duration-200 ${
           followMode
             ? "bg-blue-600 text-white ring-2 ring-blue-400/50 shadow-blue-900/50"
             : "bg-slate-900/90 border border-slate-700 text-slate-400 hover:text-white hover:border-slate-500"
