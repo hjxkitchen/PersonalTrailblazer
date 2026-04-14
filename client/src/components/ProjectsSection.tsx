@@ -63,7 +63,7 @@ function Reveal({
 
 // ─── Thumbnail ────────────────────────────────────────────────────────────────
 const THUMBNAIL_MAP: Record<string, string> = {
-  "Socos": "socos.jpg",
+  "WhatsLocal": "whatslocal.jpg",
   "Agora": "agora.jpg",
   "Zahab Energy": "zahab-energy.jpg",
   "B2B Marketplace & Commerce Orchestration": "b2b-marketplace.jpg",
@@ -414,7 +414,7 @@ export default function ProjectsSection() {
   const projectIdx = (id: string) => data.projects.findIndex((p) => p.id === id);
 
   // Projects not mapped to specific manifesto slots — render at end
-  const PINNED_IDS = ["mechatronics", "wild-earth-safaris", "zahab-energy", "b2b-marketplace", "socos", "agora"];
+  const PINNED_IDS = ["mechatronics", "wild-earth-safaris", "zahab-energy", "b2b-marketplace", "whatslocal", "agora"];
   const floatingProjects = data.projects.filter((p) => !PINNED_IDS.includes(p.id));
 
   return (
@@ -607,18 +607,18 @@ export default function ProjectsSection() {
         </P>
 
         <P delay={0.05}>
-          Socos is the social layer of this ecosystem. Hyperlocal by design — because
+          WhatsLocal is the social layer of this ecosystem. Hyperlocal by design — because
           the most important commerce happens between people who share a neighborhood,
           a market, a culture. It is not trying to be everything for everyone. It is
           trying to be exactly right for the communities it serves, with the tools
           creators and businesses actually need to grow.
         </P>
 
-        {project("socos") && (
+        {project("whatslocal") && (
           <ManifestoCard
-            project={project("socos")!}
+            project={project("whatslocal")!}
             isEditMode={isEditMode}
-            onEdit={() => setEditingProject(project("socos")!)}
+            onEdit={() => setEditingProject(project("whatslocal")!)}
             onDelete={() => deleteProject("socos")}
 
             dragProps={dragProps(projectIdx("socos"))}

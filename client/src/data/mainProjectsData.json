@@ -1,11 +1,12 @@
 {
   "projects": [
     {
-      "id": "socos",
-      "title": "Socos",
+      "id": "whatslocal",
+      "title": "WhatsLocal",
       "description": "Hyperlocal social platform with brand-driven trade, e-commerce, and tools for the next generation of social businesses, creators, and influencers.",
       "technologies": ["AI/ML", "Marketplace", "ERP", "Blockchain"],
-      "status": "In Development"
+      "status": "In Development",
+      "link": "spacagevision.world"
     },
     {
       "id": "zahab-energy",
@@ -36,7 +37,8 @@
       "title": "B2B Marketplace & Commerce Orchestration",
       "description": "Platform for complex B2B marketplace operations and supply chain coordination with IoT, AI optimization, and smart contracts.",
       "technologies": ["IoT", "AI/ML", "Blockchain", "Supply Chain"],
-      "status": "Concept / In Development"
+      "status": "Concept / In Development",
+      "link": "operationsorchestrator.netlify.app"
     },
     {
       "id": "mechatronics",
