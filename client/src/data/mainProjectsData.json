@@ -26,7 +26,7 @@
     },
     {
       "id": "agora",
-      "title": "Agora",
+      "title": "DiscourseZ",
       "description": "AI-powered platform for regional governance, social discourse, humanitarian-organized projects, voting, and structured local & global civic engagement.",
       "technologies": ["AI/ML", "Blockchain", "Civic Tech"],
       "status": "Concept / MVP",
@@ -45,7 +45,8 @@
       "title": "Mechatronics & Automation Systems",
       "description": "Hands-on engineering work with CAD/CAM, 6-axis CNC machines, robotics, and industrial automation systems during early studies and internship experience.",
       "technologies": ["Mechatronics", "CAD/CAM", "CNC", "Industrial Automation"],
-      "status": "Completed"
+      "status": "Completed",
+      "hidden": true
     }
   ],
   "interests": [

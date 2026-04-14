@@ -64,7 +64,7 @@ function Reveal({
 // ─── Thumbnail ────────────────────────────────────────────────────────────────
 const THUMBNAIL_MAP: Record<string, string> = {
   "WhatsLocal": "whatslocal.jpg",
-  "Agora": "agora.jpg",
+  "DiscourseZ": "agora.jpg",
   "Zahab Energy": "zahab-energy.jpg",
   "B2B Marketplace & Commerce Orchestration": "b2b-marketplace.jpg",
   "Wild Earth Safaris": "wild-earth-safaris.jpg",
@@ -415,7 +415,7 @@ export default function ProjectsSection() {
 
   // Projects not mapped to specific manifesto slots — render at end
   const PINNED_IDS = ["wild-earth-safaris", "zahab-energy", "b2b-marketplace", "whatslocal", "agora"];
-  const floatingProjects = data.projects.filter((p) => !PINNED_IDS.includes(p.id));
+  const floatingProjects = data.projects.filter((p) => !PINNED_IDS.includes(p.id) && !(p as any).hidden);
 
   return (
     <section className="mb-24">
@@ -462,8 +462,8 @@ export default function ProjectsSection() {
           </p>
         </motion.div>
 
-        {/* ── I. ORIGINS ── */}
-        <Chapter roman="I" title="Where It Begins" />
+        {/* ── I. WHERE IT BEGINS: RESOURCES ── */}
+        <Chapter roman="I" title="Where It Begins: Resources" />
 
         <P>
           It begins with hunger. Not metaphorical hunger — the real kind.
@@ -490,36 +490,13 @@ export default function ProjectsSection() {
         </PullQuote>
 
         <P delay={0.1}>
-          That instinct — to look at a system, understand its constraints, and redesign
-          it from first principles — is the thread that runs through everything built here.
-          The tools have changed. The scale has changed. The instinct has not.
+          The same question that drove the first civilizations drives the most important
+          markets today: who controls the resources, and who benefits from moving them.
+          Supply chains built on WhatsApp threads. Procurement running on handshakes and
+          spreadsheets. The B2B layer — where most of the world's real economic activity
+          lives — is still largely unmapped, unoptimized, and underserved. We are building
+          the orchestration layer that makes complex resource trade legible, automated, and fair.
         </P>
-
-        <Divider />
-
-        {/* ── II. THE RESOURCES ── */}
-        <Chapter roman="II" title="The Resources" />
-
-        <P>
-          Every civilization begins the same way: with the question of resources.
-          Who has them. Who needs them. How they move from one to the other.
-          Before markets, before money, before law — there was trade. And trade
-          has always been the engine that turns raw material into collective wealth.
-        </P>
-
-        <P delay={0.05}>
-          The problem is that the systems mediating that trade have not kept pace
-          with the scale of the opportunity. Supply chains built on WhatsApp threads.
-          Procurement driven by handshakes and spreadsheets. The B2B layer — where
-          most of the world's real economic activity lives — is still largely
-          unmapped, unoptimized, and underserved. We are building the orchestration
-          layer that makes complex resource trade legible, automated, and fair.
-        </P>
-
-        <PullQuote>
-          Before the apps, before the platforms — there was the question of who
-          controls the resources, and who benefits from moving them.
-        </PullQuote>
 
         {project("b2b-marketplace") && (
           <ManifestoCard
