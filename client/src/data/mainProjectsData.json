@@ -6,7 +6,7 @@
       "description": "Hyperlocal social platform with brand-driven trade, e-commerce, and tools for the next generation of social businesses, creators, and influencers.",
       "technologies": ["AI/ML", "Marketplace", "ERP", "Blockchain"],
       "status": "In Development",
-      "link": "spacagevision.world"
+      "link": "whatslocal.ai"
     },
     {
       "id": "zahab-energy",
@@ -22,7 +22,7 @@
       "description": "Lifestyle-focused curated tourism experiences with local guides, safaris, and cultural activities.",
       "technologies": ["Travel Tech", "AI Recommendations"],
       "status": "Active",
-      "link": "wildearthsafaris.com"
+      "link": "tanzania-tourscape.netlify.app"
     },
     {
       "id": "agora",
@@ -30,7 +30,7 @@
       "description": "AI-powered platform for regional governance, social discourse, humanitarian-organized projects, voting, and structured local & global civic engagement.",
       "technologies": ["AI/ML", "Blockchain", "Civic Tech"],
       "status": "Concept / MVP",
-      "link": "agora.ecom.ac"
+      "link": "spaceagevision.world"
     },
     {
       "id": "b2b-marketplace",

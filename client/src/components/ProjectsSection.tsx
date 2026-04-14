@@ -492,62 +492,64 @@ export default function ProjectsSection() {
 
         <Divider />
 
-        {/* ── II. THE LAND ── */}
-        <Chapter roman="II" title="The Continent" />
-
-        <PullQuote>
-          Africa is not a problem to be solved. It is the most extraordinary
-          opportunity in human history — and it deserves technology built for it,
-          not repurposed from somewhere else.
-        </PullQuote>
+        {/* ── II. THE RESOURCES ── */}
+        <Chapter roman="II" title="The Resources" />
 
         <P>
-          I grew up shaped by East Africa. By the scale of its landscapes, the
-          warmth of its people, the complexity of its economies, and the gap between
-          what is and what could be. That gap is not a tragedy. It is an invitation.
+          Every civilization begins the same way: with the question of resources.
+          Who has them. Who needs them. How they move from one to the other.
+          Before markets, before money, before law — there was trade. And trade
+          has always been the engine that turns raw material into collective wealth.
         </P>
 
         <P delay={0.05}>
-          Tourism is not just an industry here — it is a cultural bridge. When someone
-          stands at the edge of the Serengeti, they are not just a consumer. They are a
-          witness. Wild Earth Safaris was built around that idea: that travel, done
-          right, generates trust, exchange, and understanding between worlds.
+          The problem is that the systems mediating that trade have not kept pace
+          with the scale of the opportunity. Supply chains built on WhatsApp threads.
+          Procurement driven by handshakes and spreadsheets. The B2B layer — where
+          most of the world's real economic activity lives — is still largely
+          unmapped, unoptimized, and underserved. We are building the orchestration
+          layer that makes complex resource trade legible, automated, and fair.
         </P>
 
-        {project("wild-earth-safaris") && (
-          <ManifestoCard
-            project={project("wild-earth-safaris")!}
-            isEditMode={isEditMode}
-            onEdit={() => setEditingProject(project("wild-earth-safaris")!)}
-            onDelete={() => deleteProject("wild-earth-safaris")}
+        <PullQuote>
+          Before the apps, before the platforms — there was the question of who
+          controls the resources, and who benefits from moving them.
+        </PullQuote>
 
-            dragProps={dragProps(projectIdx("wild-earth-safaris"))}
+        {project("b2b-marketplace") && (
+          <ManifestoCard
+            project={project("b2b-marketplace")!}
+            isEditMode={isEditMode}
+            onEdit={() => setEditingProject(project("b2b-marketplace")!)}
+            onDelete={() => deleteProject("b2b-marketplace")}
+            dragProps={dragProps(projectIdx("b2b-marketplace"))}
           />
         )}
 
         <Divider />
 
-        {/* ── III. THE GRID ── */}
-        <Chapter roman="III" title="The Foundation" />
+        {/* ── III. THE INFRASTRUCTURE ── */}
+        <Chapter roman="III" title="The Infrastructure" />
 
         <P>
-          You cannot build a digital economy on an unreliable grid. You cannot run
-          a supply chain without power. You cannot digitize agriculture without
-          connectivity. Before the apps, before the platforms — you need infrastructure.
+          Once a society has secured its resources, it builds. Roads, grids,
+          ports, pipes — the physical layer that converts raw material into
+          civilizational capacity. Infrastructure is the difference between
+          a settlement and a city, between subsistence and surplus.
         </P>
 
         <P delay={0.05}>
-          Zahab Energy is the answer to that first principle. Off-grid solar systems,
-          decentralized community grids, IoT-connected agro processing — the unsexy,
-          load-bearing work that makes everything else possible. I believe deeply that
-          the communities who have been most underserved by centralized grids will
-          become, through distributed energy, among the most resilient.
+          You cannot run a supply chain without power. You cannot digitize agriculture
+          without connectivity. You cannot build a digital economy on an unreliable grid.
+          Zahab Energy is the answer to that first principle — off-grid solar systems,
+          decentralized community grids, IoT-connected agro processing. The unsexy,
+          load-bearing work that makes everything else possible.
         </P>
 
         <PullQuote>
-          Leapfrogging is real. The communities that never had landlines now run
-          mobile money. The ones without centralized grids will run on distributed power.
-          We are building for that future, now.
+          The communities that never had landlines now run mobile money.
+          The ones without centralized grids will run on distributed power.
+          Leapfrogging is not a metaphor. It is the strategy.
         </PullQuote>
 
         {project("zahab-energy") && (
@@ -556,62 +558,30 @@ export default function ProjectsSection() {
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("zahab-energy")!)}
             onDelete={() => deleteProject("zahab-energy")}
-
             dragProps={dragProps(projectIdx("zahab-energy"))}
           />
         )}
 
         <Divider />
 
-        {/* ── IV. THE MARKET ── */}
-        <Chapter roman="IV" title="The Economy" />
+        {/* ── IV. CONSUMER CULTURE ── */}
+        <Chapter roman="IV" title="Consumer Culture" />
 
         <P>
-          Commerce is civilization's oldest technology. Long before the internet,
-          trade routes built cities, spread ideas, and connected cultures. The
-          question has never been whether people will trade — it is whether the
-          systems they trade through serve them, or extract from them.
+          Infrastructure creates surplus. Surplus creates markets. Markets create
+          consumers. And consumers, given the right tools, become creators, builders,
+          and community leaders. The story of every rising middle class is the story
+          of people gaining enough stability to care about more than survival — and
+          then wanting to express it.
         </P>
 
         <P delay={0.05}>
-          The B2B layer is where most of the real economic activity happens — and
-          where software has consistently failed emerging markets. Supply chains
-          that rely on WhatsApp threads. Procurement that runs on handshakes and
-          spreadsheets. AI-optimized logistics that stops at the last mile because
-          the last mile is hard. We are building the orchestration layer that makes
-          complex B2B trade legible, automated, and fair.
-        </P>
-
-        {project("b2b-marketplace") && (
-          <ManifestoCard
-            project={project("b2b-marketplace")!}
-            isEditMode={isEditMode}
-            onEdit={() => setEditingProject(project("b2b-marketplace")!)}
-            onDelete={() => deleteProject("b2b-marketplace")}
-
-            dragProps={dragProps(projectIdx("b2b-marketplace"))}
-          />
-        )}
-
-        <Divider />
-
-        {/* ── V. THE PEOPLE ── */}
-        <Chapter roman="V" title="The Social Layer" />
-
-        <P>
-          Economics without culture is just extraction. The most durable economies
-          are embedded in community — in trust, in identity, in belonging. The next
-          generation of creators, entrepreneurs, and builders does not want to
-          choose between building a brand and building a business. They want both.
-          They want a platform that understands them.
-        </P>
-
-        <P delay={0.05}>
-          WhatsLocal is the social layer of this ecosystem. Hyperlocal by design — because
-          the most important commerce happens between people who share a neighborhood,
-          a market, a culture. It is not trying to be everything for everyone. It is
-          trying to be exactly right for the communities it serves, with the tools
-          creators and businesses actually need to grow.
+          WhatsLocal is built for that moment. Hyperlocal by design — because the
+          most important commerce happens between people who share a neighborhood,
+          a market, a culture. It is not trying to be everything for everyone.
+          It is the platform that lets the next generation of creators and entrepreneurs
+          build a brand and a business at the same time, in the communities where
+          they already live.
         </P>
 
         {project("whatslocal") && (
@@ -619,36 +589,35 @@ export default function ProjectsSection() {
             project={project("whatslocal")!}
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("whatslocal")!)}
-            onDelete={() => deleteProject("socos")}
-
-            dragProps={dragProps(projectIdx("socos"))}
+            onDelete={() => deleteProject("whatslocal")}
+            dragProps={dragProps(projectIdx("whatslocal"))}
           />
         )}
 
         <Divider />
 
-        {/* ── VI. THE VOICE ── */}
-        <Chapter roman="VI" title="The Governance" />
+        {/* ── V. DISCOURSE & GOVERNANCE ── */}
+        <Chapter roman="V" title="Discourse & Governance" />
 
         <P>
-          The hardest problem in any system is not technical. It is political.
-          Who decides? Who is heard? Whose priorities shape the infrastructure
-          that shapes everyone's lives? These questions do not have easy answers —
-          but they have better and worse processes. And right now, the processes
-          are broken.
+          Wealth without rules is chaos. Markets without governance are extraction.
+          Every mature civilization eventually arrives at the same challenge: how
+          do we make collective decisions? Whose voice counts? How do we build
+          institutions that serve people rather than entrench power?
         </P>
 
         <P delay={0.05}>
-          Agora is the long bet. AI-powered civic engagement, structured discourse,
-          regional governance tools — not to replace human judgment, but to make
-          collective decision-making more legible, more inclusive, and harder to
-          corrupt. Democracy is a technology. Like any technology, it can be updated.
+          These are not new questions. What is new is the technology available to
+          answer them. AI-powered civic engagement, structured discourse, regional
+          governance tools — not to replace human judgment, but to make collective
+          decision-making more legible, more inclusive, and harder to corrupt.
+          Democracy is a technology. Like any technology, it can be updated.
         </P>
 
         <PullQuote>
-          If the physical infrastructure is the grid and the social layer is the
-          network, then governance is the protocol — the rules by which all of it
-          runs. We intend to build a better protocol.
+          If infrastructure is the grid and commerce is the current, then
+          governance is the circuit breaker — the system that keeps it all
+          from burning down.
         </PullQuote>
 
         {project("agora") && (
@@ -657,28 +626,69 @@ export default function ProjectsSection() {
             isEditMode={isEditMode}
             onEdit={() => setEditingProject(project("agora")!)}
             onDelete={() => deleteProject("agora")}
-
             dragProps={dragProps(projectIdx("agora"))}
           />
         )}
 
         <Divider />
 
-        {/* ── VII. THE DREAM ── */}
-        <Chapter roman="VII" title="The Dream" />
+        {/* ── VI. CULTURE & IDEALS ── */}
+        <Chapter roman="VI" title="Culture & Ideals" />
 
         <P>
-          The dream is not a product. It is not even a company. It is a condition —
-          a world where the infrastructure for a good life is not gated by geography,
-          or inheritance, or which grid you happen to be connected to.
+          At the apex of every civilization is not its GDP, or its infrastructure,
+          or even its institutions. It is its culture — the stories it tells about
+          itself, the beauty it chooses to preserve, the ideals it decides are
+          worth passing on. Culture is the memory of a people. It is also their
+          aspiration.
         </P>
 
         <P delay={0.05}>
-          Every piece of this ecosystem — the energy systems, the marketplaces,
-          the social platforms, the civic tools — is a node in a larger network.
-          They are designed to work together, to reinforce each other, to make the
-          whole greater than the sum of its parts. That is what it means to build
-          a system, rather than a product.
+          East Africa is one of the most extraordinary places on earth — in landscape,
+          in history, in the depth of its human story. Tourism, done right, is not
+          extraction. It is a cultural bridge. When someone stands at the edge of the
+          Serengeti, they are not just a consumer. They are a witness. Tanzania
+          Tourscape was built around that idea: that the way we invite the world
+          into a place shapes what that place becomes.
+        </P>
+
+        <PullQuote>
+          Africa is not a problem to be solved. It is the most extraordinary
+          opportunity in human history — and it deserves technology built for it,
+          not repurposed from somewhere else.
+        </PullQuote>
+
+        {project("wild-earth-safaris") && (
+          <ManifestoCard
+            project={project("wild-earth-safaris")!}
+            isEditMode={isEditMode}
+            onEdit={() => setEditingProject(project("wild-earth-safaris")!)}
+            onDelete={() => deleteProject("wild-earth-safaris")}
+            dragProps={dragProps(projectIdx("wild-earth-safaris"))}
+          />
+        )}
+
+        <Divider />
+
+        {/* ── VII. CIVILIZATION ARCHITECTURE ── */}
+        <Chapter roman="VII" title="Civilization Architecture" />
+
+        <P>
+          This is not a portfolio. It is a blueprint. Each piece — the resource
+          networks, the energy infrastructure, the consumer platforms, the governance
+          tools, the cultural institutions — is a layer in a stack that has been
+          assembled deliberately, with a single thesis underneath it all: that the
+          conditions for a good life can be engineered, not just inherited.
+        </P>
+
+        <P delay={0.05}>
+          Civilization architecture means designing systems at the scale of societies,
+          not just users. It means asking not just "does this work?" but "what kind
+          of world does this build?" Every node in this ecosystem is an answer to
+          that question. They are designed to reinforce each other — the grid powers
+          the market, the market funds the platform, the platform generates the
+          discourse, the discourse shapes the culture, and the culture decides
+          what gets built next.
         </P>
 
         <motion.div
@@ -689,10 +699,9 @@ export default function ProjectsSection() {
           className="my-16 p-8 md:p-10 rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-transparent text-center"
         >
           <p className="text-2xl md:text-3xl font-bold text-white leading-snug mb-4">
-            Building Technology.<br />
-            Creating Value.<br />
-            <span className="text-blue-400">Shaping Culture.</span><br />
-            <span className="text-purple-400">Driving Impact.</span>
+            Resources. Infrastructure. Culture.<br />
+            <span className="text-blue-400">Governance. Ideals.</span><br />
+            <span className="text-purple-400">Civilization.</span>
           </p>
           <p className="text-slate-500 text-sm mt-6 max-w-md mx-auto leading-relaxed">
             This is the work. It is long. It is hard. It is worth doing.
