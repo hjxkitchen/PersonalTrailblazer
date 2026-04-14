@@ -571,6 +571,12 @@ export default function ProjectsSection() {
           they already live.
         </P>
 
+        <PullQuote>
+          Commerce, responsibility, and regeneration go hand in hand. When trade is
+          local, it is also accountable — money that moves within a community builds
+          that community. Local is not a buzzword. It is a network revolution.
+        </PullQuote>
+
         {project("whatslocal") && (
           <ManifestoCard
             project={project("whatslocal")!}
@@ -677,6 +683,13 @@ export default function ProjectsSection() {
           discourse, the discourse shapes the culture, and the culture decides
           what gets built next.
         </P>
+
+        <PullQuote>
+          We are at the point where our future is entirely a function of our creativity —
+          our ability to architect solutions that are infinitely dense, yet elegant.
+          Figuring out that art is the whole project. These layers are not separate bets.
+          Together, they are the answer.
+        </PullQuote>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
