@@ -90,7 +90,7 @@ export default function Portfolio() {
       {/* ── Spatial: ultra-slim header ── */}
       {isSpatial ? (
         <header
-          className={`flex-shrink-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 ${
+          className={`flex-shrink-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/60 ${
             isEditMode ? "mt-8" : ""
           }`}
         >
@@ -105,91 +105,135 @@ export default function Portfolio() {
             <TabBar view={view} setView={setView} />
             <button
               onClick={handleGitHubClick}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors text-xs font-medium ml-1 ${
-                showGitHub
-                  ? "bg-slate-600 text-white hover:bg-slate-500"
-                  : "bg-slate-700 hover:bg-slate-600 text-slate-300"
+              className={`p-2 rounded-lg transition-colors ${
+                showGitHub ? "bg-slate-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
               }`}
             >
-              <Github size={12} />
+              <Github size={14} />
             </button>
             <button
               onClick={handleEditClick}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors text-xs font-medium ml-1 ${
-                isEditMode
-                  ? "bg-blue-500 text-white hover:bg-blue-400"
-                  : "bg-slate-700 hover:bg-slate-600 text-slate-300"
+              className={`p-2 rounded-lg transition-colors ${
+                isEditMode ? "bg-blue-500 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
               }`}
             >
-              <Pencil size={12} />
-              {isEditMode ? "Exit Edit" : "Edit"}
+              <Pencil size={14} />
             </button>
           </div>
         </header>
       ) : (
         /* ── Full header for Main / Portfolio views ── */
-        <header className={`bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 ${isEditMode ? "mt-8" : ""}`}>
-          <div className="container mx-auto px-4 py-6">
-            <div className="flex flex-col items-center md:flex-row md:justify-between md:items-center gap-4">
-              {/* Identity */}
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6">
-                <div className="w-32 h-32 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-blue-400 flex-shrink-0">
-                  <img src="/img.jpg" alt="John Xen" className="w-full h-full object-cover" />
-                </div>
-                <div className="text-center md:text-left">
-                  <h1 className="text-2xl md:text-3xl font-bold text-white">John Xen</h1>
-                  <h2 className="text-lg md:text-xl text-blue-400 font-semibold mb-1">
-                    Building systems for a connected, resilient, and responsible world.
-                  </h2>
-                  <p className="text-sm md:text-base text-slate-300">
-                    Building Technology. Creating Value. Shaping Culture. Driving Impact.
-                  </p>
-                  <div className="flex justify-center md:justify-start gap-6 mt-4">
-                    <a href="https://www.youtube.com/@johnxen6385" target="_blank" rel="noopener noreferrer"
-                      className="text-white hover:text-red-500 text-xl transition-colors">
-                      <i className="fab fa-youtube" />
-                    </a>
-                    <a href="https://x.com/xen2025" target="_blank" rel="noopener noreferrer"
-                      className="text-white hover:text-blue-400 text-xl transition-colors">
-                      <i className="fab fa-x" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/john-xen-75a150209" target="_blank" rel="noopener noreferrer"
-                      className="text-white hover:text-blue-500 text-xl transition-colors">
-                      <i className="fab fa-linkedin" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+        <header className={`bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/60 ${isEditMode ? "mt-8" : ""}`}>
 
-              {/* Controls */}
-              <div className="flex flex-col md:flex-row gap-3 items-center">
-                <a href="https://spaceagevision.com">
-                  <button className="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-pink-600 hover:to-purple-500 text-white px-6 py-2 md:px-8 md:py-3 rounded-xl shadow-lg transition-all duration-200 text-sm md:text-base font-semibold tracking-wide hover:scale-105">
-                    Space Age Mission !!
-                  </button>
+          {/* ── Mobile header (< md) ── */}
+          <div className="md:hidden">
+            {/* Top row: avatar + name + action icons */}
+            <div className="flex items-center gap-3 px-4 py-3">
+              <img
+                src="/img.jpg"
+                alt="John Xen"
+                className="w-10 h-10 rounded-full border-2 border-blue-400/70 object-cover flex-shrink-0 shadow-lg shadow-blue-500/20"
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-white font-bold text-base leading-tight">John Xen</p>
+                <p className="text-blue-400 text-[11px] font-medium truncate leading-tight mt-0.5">
+                  Technology · Culture · Infrastructure
+                </p>
+              </div>
+              {/* Social icons compact */}
+              <div className="flex items-center gap-1">
+                <a href="https://www.youtube.com/@johnxen6385" target="_blank" rel="noopener noreferrer"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-red-400 transition-colors">
+                  <i className="fab fa-youtube text-sm" />
                 </a>
-                <TabBar view={view} setView={setView} />
-                <button
-                  onClick={handleGitHubClick}
-                  className={`flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-lg transition-colors text-sm font-medium ${
-                    showGitHub
-                      ? "bg-slate-600 text-white hover:bg-slate-500"
-                      : "bg-slate-700 hover:bg-slate-600 text-slate-300"
-                  }`}
-                >
+                <a href="https://x.com/xen2025" target="_blank" rel="noopener noreferrer"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-white transition-colors">
+                  <i className="fab fa-x text-sm" />
+                </a>
+                <a href="https://www.linkedin.com/in/john-xen-75a150209" target="_blank" rel="noopener noreferrer"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-blue-400 transition-colors">
+                  <i className="fab fa-linkedin text-sm" />
+                </a>
+                <button onClick={handleGitHubClick}
+                  className={`w-8 h-8 flex items-center justify-center rounded-lg transition-colors ${
+                    showGitHub ? "text-white bg-slate-600" : "text-slate-400 hover:text-white"
+                  }`}>
                   <Github size={14} />
                 </button>
-                <button
-                  onClick={handleEditClick}
-                  className={`flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-lg transition-colors text-sm font-medium ${
-                    isEditMode
-                      ? "bg-blue-500 text-white hover:bg-blue-400"
-                      : "bg-slate-700 hover:bg-slate-600 text-slate-300"
-                  }`}
-                >
+                <button onClick={handleEditClick}
+                  className={`w-8 h-8 flex items-center justify-center rounded-lg transition-colors ${
+                    isEditMode ? "text-white bg-blue-500" : "text-slate-400 hover:text-white"
+                  }`}>
                   <Pencil size={14} />
-                  {isEditMode ? "Exit Edit" : "Edit"}
                 </button>
+              </div>
+            </div>
+
+            {/* Bottom row: tabs + mission button */}
+            <div className="flex items-center gap-2 px-4 pb-3">
+              <TabBar view={view} setView={setView} />
+              <a href="https://spaceagevision.com" className="ml-auto flex-shrink-0">
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold tracking-wide shadow-md shadow-purple-500/20"
+                >
+                  Space Age ✦
+                </motion.button>
+              </a>
+            </div>
+          </div>
+
+          {/* ── Desktop header (>= md) ── */}
+          <div className="hidden md:block">
+            <div className="container mx-auto px-6 py-5">
+              <div className="flex items-center justify-between gap-6">
+                {/* Identity */}
+                <div className="flex items-center gap-5">
+                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-400/80 flex-shrink-0 shadow-lg shadow-blue-500/20">
+                    <img src="/img.jpg" alt="John Xen" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h1 className="text-xl font-bold text-white leading-tight">John Xen</h1>
+                    <p className="text-blue-400 text-sm font-medium mt-0.5">
+                      Building systems for a connected, resilient world.
+                    </p>
+                    <div className="flex gap-4 mt-2">
+                      <a href="https://www.youtube.com/@johnxen6385" target="_blank" rel="noopener noreferrer"
+                        className="text-slate-400 hover:text-red-400 transition-colors"><i className="fab fa-youtube" /></a>
+                      <a href="https://x.com/xen2025" target="_blank" rel="noopener noreferrer"
+                        className="text-slate-400 hover:text-white transition-colors"><i className="fab fa-x" /></a>
+                      <a href="https://www.linkedin.com/in/john-xen-75a150209" target="_blank" rel="noopener noreferrer"
+                        className="text-slate-400 hover:text-blue-400 transition-colors"><i className="fab fa-linkedin" /></a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Controls */}
+                <div className="flex items-center gap-3">
+                  <a href="https://spaceagevision.com">
+                    <motion.button
+                      whileHover={{ scale: 1.04 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-pink-600 hover:to-purple-500 text-white px-5 py-2 rounded-xl shadow-lg shadow-purple-500/20 transition-all text-sm font-semibold tracking-wide"
+                    >
+                      Space Age Mission ✦
+                    </motion.button>
+                  </a>
+                  <TabBar view={view} setView={setView} />
+                  <button onClick={handleGitHubClick}
+                    className={`p-2.5 rounded-lg transition-colors ${
+                      showGitHub ? "bg-slate-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700"
+                    }`}>
+                    <Github size={15} />
+                  </button>
+                  <button onClick={handleEditClick}
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors text-sm font-medium ${
+                      isEditMode ? "bg-blue-500 text-white hover:bg-blue-400" : "bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700"
+                    }`}>
+                    <Pencil size={13} />
+                    <span>{isEditMode ? "Exit" : "Edit"}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
