@@ -23,6 +23,8 @@ import {
   ImageIcon,
   List,
   LayoutGrid,
+  ChevronLeft,
+  ChevronRight,
   ChevronUp,
   ChevronDown,
   ChevronsUpDown,
@@ -421,18 +423,29 @@ const FEATURED_PROJECTS = [
 ] as const;
 
 function FeaturedProjects() {
-  const [openProject, setOpenProject] = useState<(typeof FEATURED_PROJECTS)[number] | null>(null);
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const openProject = openIdx !== null ? FEATURED_PROJECTS[openIdx] : null;
+  const { showGitHub } = usePortfolio();
+
+  const navigate = (dir: 1 | -1) => {
+    setLoaded(false);
+    setOpenIdx(i => i === null ? 0 : (i + dir + FEATURED_PROJECTS.length) % FEATURED_PROJECTS.length);
+  };
 
   useEffect(() => {
-    if (!openProject) setLoaded(false);
+    if (openProject === null) setLoaded(false);
   }, [openProject]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpenProject(null); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenIdx(null);
+      if (openIdx !== null && e.key === "ArrowLeft") navigate(-1);
+      if (openIdx !== null && e.key === "ArrowRight") navigate(1);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [openIdx]);
 
   return (
     <>
@@ -455,7 +468,7 @@ function FeaturedProjects() {
           {FEATURED_PROJECTS.map((proj, i) => (
             <motion.button
               key={proj.id}
-              onClick={() => setOpenProject(proj)}
+              onClick={() => { setLoaded(false); setOpenIdx(i); }}
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.45, delay: i * 0.09, type: "spring", bounce: 0.28 }}
@@ -479,16 +492,18 @@ function FeaturedProjects() {
               {/* Icon + label */}
               <div className="flex items-center justify-between mb-3">
                 <span className="text-3xl">{proj.icon}</span>
-                <a
-                  href={proj.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="p-1.5 rounded-lg text-slate-500 hover:text-white transition-colors"
-                  title="View on GitHub"
-                >
-                  <Github size={14} />
-                </a>
+                {showGitHub && (
+                  <a
+                    href={proj.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-1.5 rounded-lg text-slate-500 hover:text-white transition-colors"
+                    title="View on GitHub"
+                  >
+                    <Github size={14} />
+                  </a>
+                )}
               </div>
 
               <span className={`text-[10px] font-bold uppercase tracking-widest ${proj.accent} mb-1.5`}>
@@ -527,7 +542,7 @@ function FeaturedProjects() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[200] flex items-center justify-center"
-            onClick={() => setOpenProject(null)}
+            onClick={() => setOpenIdx(null)}
           >
             <div className="absolute inset-0 bg-[#03040f]">
               <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -542,8 +557,26 @@ function FeaturedProjects() {
               />
             </div>
 
+            {/* Prev button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); navigate(-1); }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 border border-slate-700/60 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800 transition-all backdrop-blur-sm"
+              title="Previous (←)"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            {/* Next button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); navigate(1); }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 border border-slate-700/60 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800 transition-all backdrop-blur-sm"
+              title="Next (→)"
+            >
+              <ChevronRight size={20} />
+            </button>
+
             <motion.div
-              key="proj-theater-frame"
+              key={`proj-theater-frame-${openIdx}`}
               initial={{ opacity: 0, scale: 0.88, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 20 }}
@@ -561,6 +594,9 @@ function FeaturedProjects() {
                     {openProject.label}
                   </span>
                 </div>
+                <span className="text-[10px] text-slate-600 font-mono tabular-nums">
+                  {(openIdx ?? 0) + 1} / {FEATURED_PROJECTS.length}
+                </span>
                 <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
                   <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: openProject.accentHex }} />
                   Live
@@ -569,7 +605,7 @@ function FeaturedProjects() {
                   className="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" title="Open in new tab">
                   <ExternalLink size={14} />
                 </a>
-                <button onClick={() => setOpenProject(null)} className="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" title="Close (Esc)">
+                <button onClick={() => setOpenIdx(null)} className="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" title="Close (Esc)">
                   <X size={16} />
                 </button>
               </div>
@@ -605,14 +641,20 @@ const STARS = Array.from({ length: 220 }, (_, i) => ({
   delay: (i % 12) * 0.4,
 }));
 
-function TheaterModal({ app, onClose }: { app: FeaturedApp; onClose: () => void }) {
+function TheaterModal({ app, onClose, onPrev, onNext }: { app: FeaturedApp; onClose: () => void; onPrev: () => void; onNext: () => void }) {
   const [loaded, setLoaded] = useState(false);
 
+  useEffect(() => { setLoaded(false); }, [app]);
+
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [onClose, onPrev, onNext]);
 
   return (
     <AnimatePresence>
@@ -669,9 +711,27 @@ function TheaterModal({ app, onClose }: { app: FeaturedApp; onClose: () => void 
           />
         </div>
 
+        {/* Prev button */}
+        <button
+          onClick={(e) => { e.stopPropagation(); onPrev(); }}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 border border-slate-700/60 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800 transition-all backdrop-blur-sm"
+          title="Previous (←)"
+        >
+          <ChevronLeft size={20} />
+        </button>
+
+        {/* Next button */}
+        <button
+          onClick={(e) => { e.stopPropagation(); onNext(); }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-slate-900/80 border border-slate-700/60 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800 transition-all backdrop-blur-sm"
+          title="Next (→)"
+        >
+          <ChevronRight size={20} />
+        </button>
+
         {/* Frame container */}
         <motion.div
-          key="theater-frame"
+          key={`theater-frame-${app.id}`}
           initial={{ opacity: 0, scale: 0.88, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 20 }}
@@ -751,17 +811,23 @@ function TheaterModal({ app, onClose }: { app: FeaturedApp; onClose: () => void 
 }
 
 function FeaturedApps() {
-  const [theater, setTheater] = useState<FeaturedApp | null>(null);
+  const [theaterIdx, setTheaterIdx] = useState<number | null>(null);
+  const theater = theaterIdx !== null ? FEATURED_APPS[theaterIdx] : null;
   const [hoverApp, setHoverApp] = useState<FeaturedApp | null>(null);
   const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const navigateTheater = (dir: 1 | -1) => {
+    setTheaterIdx(i => i === null ? 0 : (i + dir + FEATURED_APPS.length) % FEATURED_APPS.length);
+  };
 
   const onHoverStart = (app: FeaturedApp) => {
     if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
     setHoverApp(app);
     // After 2.4s of holding hover → darkness complete → open theater
     hoverTimeout.current = setTimeout(() => {
+      const idx = FEATURED_APPS.findIndex(a => a.id === app.id);
       setHoverApp(null);
-      setTheater(app);
+      setTheaterIdx(idx);
     }, 2400);
   };
 
@@ -773,7 +839,8 @@ function FeaturedApps() {
   const openImmediate = (app: FeaturedApp) => {
     if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
     setHoverApp(null);
-    setTheater(app);
+    const idx = FEATURED_APPS.findIndex(a => a.id === app.id);
+    setTheaterIdx(idx);
   };
 
   return (
@@ -909,7 +976,7 @@ function FeaturedApps() {
       </AnimatePresence>
 
       {/* Full theater modal */}
-      {theater && <TheaterModal app={theater} onClose={() => setTheater(null)} />}
+      {theater && <TheaterModal app={theater} onClose={() => setTheaterIdx(null)} onPrev={() => navigateTheater(-1)} onNext={() => navigateTheater(1)} />}
     </>
   );
 }
