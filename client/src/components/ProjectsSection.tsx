@@ -514,16 +514,18 @@ export default function ProjectsSection() {
         <Chapter roman="III" title="The Infrastructure" />
 
         <P>
-          Once a society has secured its resources, it builds. Roads, grids,
-          ports, pipes — the physical layer that converts raw material into
-          civilizational capacity. Infrastructure is the difference between
-          a settlement and a city, between subsistence and surplus.
+          Once a society controls its resources, the next question is physical.
+          How do you move them? How do you store, process, and convert raw material
+          into capacity that compounds? The answer has always been the same: you build.
         </P>
 
         <P delay={0.05}>
-          You cannot run a supply chain without power. You cannot digitize agriculture
-          without connectivity. You cannot build a digital economy on an unreliable grid.
-          Before the apps, before the platforms — you need infrastructure.
+          You cannot build a digital economy on an unreliable grid. You cannot run
+          a supply chain without power. You cannot digitize agriculture without
+          connectivity. Before the apps, before the platforms — you need infrastructure.
+        </P>
+
+        <P delay={0.1}>
           Zahab Energy is the answer to that first principle. Off-grid solar systems,
           decentralized community grids, IoT-connected agro processing — the unsexy,
           load-bearing work that makes everything else possible. I believe deeply that
