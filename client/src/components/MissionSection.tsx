@@ -408,7 +408,7 @@ const FEATURED_PROJECTS = [
     name: "Clear Status",
     label: "Status Monitoring",
     tagline: "Clean, real-time status page for services and infrastructure",
-    url: "https://github.com/ZahabTZ/clear-status",
+    url: "https://clear-status-app.netlify.app",
     github: "https://github.com/ZahabTZ/clear-status",
     gradient: "from-sky-500/20 via-indigo-500/10 to-blue-500/20",
     border: "border-sky-500/30 hover:border-sky-400/60",

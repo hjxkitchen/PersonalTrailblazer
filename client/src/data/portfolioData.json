@@ -1510,7 +1510,7 @@
       "id": "clear-status",
       "name": "Clear Status",
       "description": "Clean, real-time status page for services and infrastructure.",
-      "url": "https://github.com/ZahabTZ/clear-status",
+      "url": "https://clear-status-app.netlify.app",
       "github": "https://github.com/ZahabTZ/clear-status",
       "category": "AI & Agents",
       "visible": true,
