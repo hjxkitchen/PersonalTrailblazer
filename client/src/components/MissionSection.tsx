@@ -264,6 +264,7 @@ const FEATURED_APPS = [
     dot: "bg-amber-400",
     icon: "🌍",
     accent: "text-amber-400",
+    accentHex: "#f59e0b",
   },
   {
     id: "orchestrator",
@@ -277,6 +278,7 @@ const FEATURED_APPS = [
     dot: "bg-cyan-400",
     icon: "⚙️",
     accent: "text-cyan-400",
+    accentHex: "#22d3ee",
   },
   {
     id: "zahabenergy",
@@ -290,6 +292,7 @@ const FEATURED_APPS = [
     dot: "bg-yellow-400",
     icon: "⚡",
     accent: "text-yellow-400",
+    accentHex: "#facc15",
   },
   {
     id: "whatslocal",
@@ -303,6 +306,7 @@ const FEATURED_APPS = [
     dot: "bg-green-400",
     icon: "🛒",
     accent: "text-green-400",
+    accentHex: "#4ade80",
   },
   {
     id: "spaceagevision",
@@ -316,85 +320,248 @@ const FEATURED_APPS = [
     dot: "bg-purple-400",
     icon: "🌐",
     accent: "text-purple-400",
+    accentHex: "#c084fc",
   },
 ] as const;
 
-function FeaturedApps() {
+type FeaturedApp = (typeof FEATURED_APPS)[number];
+
+// Deterministic star field — generated once
+const STARS = Array.from({ length: 220 }, (_, i) => ({
+  x: ((i * 137.508 + 11) % 100),
+  y: ((i * 97.3 + 7) % 100),
+  r: 0.4 + (i % 5) * 0.28,
+  opacity: 0.25 + (i % 7) * 0.1,
+  dur: 2.5 + (i % 8) * 0.6,
+  delay: (i % 12) * 0.4,
+}));
+
+function TheaterModal({ app, onClose }: { app: FeaturedApp; onClose: () => void }) {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
   return (
-    <div className="mb-16">
+    <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-8"
+        key="theater-backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.35 }}
+        className="fixed inset-0 z-[200] flex items-center justify-center"
+        onClick={onClose}
       >
-        <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-widest mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-          Live Platforms
-        </span>
-        <h2 className="text-2xl md:text-3xl font-bold text-white">Open Apps</h2>
-      </motion.div>
+        {/* Space background */}
+        <div className="absolute inset-0 bg-[#03040f]">
+          {/* Star field */}
+          <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            {STARS.map((s, i) => (
+              <circle
+                key={i}
+                cx={`${s.x}%`}
+                cy={`${s.y}%`}
+                r={s.r}
+                fill="white"
+                opacity={s.opacity}
+              >
+                <animate
+                  attributeName="opacity"
+                  values={`${s.opacity};${Math.min(1, s.opacity + 0.5)};${s.opacity}`}
+                  dur={`${s.dur}s`}
+                  begin={`${s.delay}s`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            ))}
+          </svg>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {FEATURED_APPS.map((app, i) => (
-          <motion.a
-            key={app.id}
-            href={app.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.5, delay: i * 0.07, type: "spring", bounce: 0.3 }}
-            whileHover={{ y: -6, scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className={`
-              relative group flex flex-col p-5 rounded-2xl border bg-slate-900/60 backdrop-blur-sm
-              bg-gradient-to-br ${app.gradient}
-              ${app.border}
-              shadow-lg hover:shadow-2xl ${app.glow}
-              transition-all duration-300 cursor-pointer overflow-hidden
-            `}
+          {/* Nebula glows at edges */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `
+                radial-gradient(ellipse 60% 40% at 0% 0%, ${app.accentHex}22 0%, transparent 60%),
+                radial-gradient(ellipse 50% 35% at 100% 100%, ${app.accentHex}18 0%, transparent 55%),
+                radial-gradient(ellipse 40% 30% at 100% 0%, #7c3aed22 0%, transparent 50%),
+                radial-gradient(ellipse 45% 35% at 0% 100%, #1e40af22 0%, transparent 50%)
+              `
+            }}
+          />
+
+          {/* Vignette — darkens center slightly to let iframe pop */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse 80% 75% at 50% 50%, transparent 40%, #03040f88 100%)"
+            }}
+          />
+        </div>
+
+        {/* Frame container */}
+        <motion.div
+          key="theater-frame"
+          initial={{ opacity: 0, scale: 0.88, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.92, y: 20 }}
+          transition={{ type: "spring", bounce: 0.22, duration: 0.55 }}
+          className="relative z-10 flex flex-col"
+          style={{ width: "82vw", height: "82vh", maxWidth: 1280 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Title bar */}
+          <div
+            className="flex items-center gap-3 px-4 py-2.5 rounded-t-2xl border-b"
+            style={{
+              background: "#0a0b1a",
+              borderColor: `${app.accentHex}33`,
+            }}
           >
-            {/* Animated shimmer */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+            <span className="text-xl">{app.icon}</span>
+            <div className="flex-1 min-w-0">
+              <span className="text-white font-semibold text-sm">{app.name}</span>
+              <span className="ml-2 text-[10px] uppercase tracking-widest font-bold" style={{ color: app.accentHex }}>
+                {app.label}
+              </span>
             </div>
 
-            {/* Live indicator */}
-            <div className="absolute top-3 right-3 flex items-center gap-1">
-              <span className={`w-1.5 h-1.5 rounded-full ${app.dot} animate-pulse`} />
-              <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">Live</span>
-            </div>
-
-            {/* Icon */}
-            <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300 origin-left">
-              {app.icon}
-            </div>
-
-            {/* Category label */}
-            <span className={`text-[10px] font-bold uppercase tracking-widest ${app.accent} mb-1.5`}>
-              {app.label}
+            {/* Pulse dot */}
+            <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: app.accentHex }} />
+              Live
             </span>
 
-            {/* Name */}
-            <h3 className="text-base font-bold text-white mb-1.5 leading-tight group-hover:text-white transition-colors">
-              {app.name}
-            </h3>
+            {/* Open in new tab */}
+            <a
+              href={app.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors"
+              title="Open in new tab"
+            >
+              <ExternalLink size={14} />
+            </a>
 
-            {/* Tagline */}
-            <p className="text-xs text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors line-clamp-2">
-              {app.tagline}
-            </p>
+            {/* Close */}
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors"
+              title="Close (Esc)"
+            >
+              <X size={16} />
+            </button>
+          </div>
 
-            {/* Open arrow */}
-            <div className={`mt-4 flex items-center gap-1 text-xs font-semibold ${app.accent} opacity-60 group-hover:opacity-100 transition-all duration-200 group-hover:gap-2`}>
-              <ExternalLink size={11} />
-              <span>Open</span>
-            </div>
-          </motion.a>
-        ))}
+          {/* iFrame */}
+          <div className="relative flex-1 overflow-hidden rounded-b-2xl border border-t-0"
+            style={{ borderColor: `${app.accentHex}33` }}>
+            {!loaded && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#07081a] gap-4">
+                <div className="text-4xl animate-bounce">{app.icon}</div>
+                <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
+                  style={{ borderColor: `${app.accentHex}88`, borderTopColor: "transparent" }} />
+                <p className="text-xs text-slate-500">Loading {app.name}…</p>
+              </div>
+            )}
+            <iframe
+              src={app.url}
+              title={app.name}
+              className="w-full h-full border-0"
+              style={{ background: "#07081a" }}
+              onLoad={() => setLoaded(true)}
+              allow="fullscreen"
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function FeaturedApps() {
+  const [theater, setTheater] = useState<FeaturedApp | null>(null);
+
+  return (
+    <>
+      <div className="mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-8"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-widest mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            Live Platforms
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold text-white">Open Apps</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {FEATURED_APPS.map((app, i) => (
+            <motion.button
+              key={app.id}
+              onClick={() => setTheater(app)}
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, delay: i * 0.07, type: "spring", bounce: 0.3 }}
+              whileHover={{ y: -6, scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className={`
+                relative group flex flex-col p-5 rounded-2xl border bg-slate-900/60 backdrop-blur-sm text-left
+                bg-gradient-to-br ${app.gradient}
+                ${app.border}
+                shadow-lg hover:shadow-2xl ${app.glow}
+                transition-all duration-300 cursor-pointer overflow-hidden
+              `}
+            >
+              {/* Animated shimmer */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              </div>
+
+              {/* Live indicator */}
+              <div className="absolute top-3 right-3 flex items-center gap-1">
+                <span className={`w-1.5 h-1.5 rounded-full ${app.dot} animate-pulse`} />
+                <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">Live</span>
+              </div>
+
+              {/* Icon */}
+              <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300 origin-left">
+                {app.icon}
+              </div>
+
+              {/* Category label */}
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${app.accent} mb-1.5`}>
+                {app.label}
+              </span>
+
+              {/* Name */}
+              <h3 className="text-base font-bold text-white mb-1.5 leading-tight">
+                {app.name}
+              </h3>
+
+              {/* Tagline */}
+              <p className="text-xs text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors line-clamp-2">
+                {app.tagline}
+              </p>
+
+              {/* Open cue */}
+              <div className={`mt-4 flex items-center gap-1 text-xs font-semibold ${app.accent} opacity-60 group-hover:opacity-100 transition-all duration-200 group-hover:gap-2`}>
+                <ExternalLink size={11} />
+                <span>Open</span>
+              </div>
+            </motion.button>
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* Theater modal */}
+      {theater && <TheaterModal app={theater} onClose={() => setTheater(null)} />}
+    </>
   );
 }
 
