@@ -373,6 +373,21 @@ const FEATURED_PROJECTS = [
     icon: "🔮",
     techs: ["TypeScript", "React", "Supabase", "Vite"],
   },
+  {
+    id: "dna-edit-lab",
+    name: "DNA Edit Lab",
+    label: "Computational Biology",
+    tagline: "Interactive CRISPR gene editing simulation with 3D DNA helix visualization",
+    url: "https://dna-edit-lab.netlify.app",
+    github: "https://github.com/ZahabTZ/dna-edit-lab",
+    gradient: "from-rose-500/20 via-pink-500/10 to-red-500/20",
+    border: "border-rose-500/30 hover:border-rose-400/60",
+    glow: "shadow-rose-500/20",
+    accent: "text-rose-400",
+    accentHex: "#f43f5e",
+    icon: "🧪",
+    techs: ["TypeScript", "React", "Vite", "Tailwind"],
+  },
 ] as const;
 
 function FeaturedProjects() {
