@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { X, Upload, Link, Trash2, GripVertical, Image as ImageIcon, Film } from "lucide-react";
 
+export type DemoType = "live" | "stackblitz" | "e2b" | "video" | "none";
+
 export interface ExtendedProject {
   id: string;
   name: string;
@@ -14,6 +16,8 @@ export interface ExtendedProject {
   subgroup?: string;
   media?: string[];
   visible?: boolean; // undefined/true = visible; false = hidden
+  /** How this project should be demoed. Auto-detected when absent. */
+  demoType?: DemoType;
 }
 
 interface Props {
@@ -287,6 +291,24 @@ export default function ExtendedProjectEditModal({ project, categories, onSave, 
               placeholder="e.g. Core Agents, Voice AI"
               className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 text-sm"
             />
+          </div>
+
+          {/* Demo type */}
+          <div>
+            <label className="block text-xs text-slate-400 mb-1.5 uppercase tracking-wider">Demo Type</label>
+            <select
+              value={form.demoType ?? ""}
+              onChange={(e) => setForm((f) => ({ ...f, demoType: (e.target.value || undefined) as DemoType | undefined }))}
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white outline-none focus:border-blue-500 text-sm"
+            >
+              <option value="">Auto-detect</option>
+              <option value="live">Live — already deployed</option>
+              <option value="stackblitz">StackBlitz — run in browser (JS/Node)</option>
+              <option value="e2b">E2B Sandbox — Python / backend (coming soon)</option>
+              <option value="video">Video / screenshots only</option>
+              <option value="none">None</option>
+            </select>
+            <p className="text-[11px] text-slate-600 mt-1">Auto-detect picks StackBlitz for GitHub URLs, Live for everything else.</p>
           </div>
 
           {/* Technologies */}

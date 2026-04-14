@@ -326,6 +326,230 @@ const FEATURED_APPS = [
 
 type FeaturedApp = (typeof FEATURED_APPS)[number];
 
+// ─── Featured Projects (horizontal scroll) ───────────────────────────────────
+const FEATURED_PROJECTS = [
+  {
+    id: "ocean-watch",
+    name: "Ocean Watch",
+    label: "Marine Intelligence",
+    tagline: "Real-time ocean vessel tracking & maritime event analysis",
+    url: "https://ocean-watch-app.netlify.app",
+    github: "https://github.com/ZahabTZ/ocean-watch",
+    gradient: "from-blue-500/20 via-cyan-500/10 to-teal-500/20",
+    border: "border-blue-500/30 hover:border-blue-400/60",
+    glow: "shadow-blue-500/20",
+    accent: "text-blue-400",
+    accentHex: "#3b82f6",
+    icon: "🌊",
+    techs: ["TypeScript", "Vite", "React", "Python"],
+  },
+  {
+    id: "alphafold",
+    name: "AlphaFold Viewer",
+    label: "Computational Biology",
+    tagline: "Interactive 3D protein structure visualization with Mol*",
+    url: "https://alphafold-viewer-app.netlify.app",
+    github: "https://github.com/HusseinJX/alphafold",
+    gradient: "from-violet-500/20 via-purple-500/10 to-fuchsia-500/20",
+    border: "border-violet-500/30 hover:border-violet-400/60",
+    glow: "shadow-violet-500/20",
+    accent: "text-violet-400",
+    accentHex: "#8b5cf6",
+    icon: "🧬",
+    techs: ["TypeScript", "React", "Mol*", "Framer Motion"],
+  },
+  {
+    id: "prediction-pal",
+    name: "Prediction Pal",
+    label: "AI Forecasting",
+    tagline: "Intelligent prediction & CRM platform for data-driven decisions",
+    url: "https://prediction-pal-app.netlify.app",
+    github: "https://github.com/ZahabTZ/prediction-pal",
+    gradient: "from-emerald-500/20 via-green-500/10 to-teal-500/20",
+    border: "border-emerald-500/30 hover:border-emerald-400/60",
+    glow: "shadow-emerald-500/20",
+    accent: "text-emerald-400",
+    accentHex: "#10b981",
+    icon: "🔮",
+    techs: ["TypeScript", "React", "Supabase", "Vite"],
+  },
+] as const;
+
+function FeaturedProjects() {
+  const [openProject, setOpenProject] = useState<(typeof FEATURED_PROJECTS)[number] | null>(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!openProject) setLoaded(false);
+  }, [openProject]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpenProject(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  return (
+    <>
+      <div className="mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-center mb-8"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-semibold uppercase tracking-widest mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+            Featured Projects
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold text-white">Built & Deployed</h2>
+        </motion.div>
+
+        {/* Horizontal scroll row */}
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none px-1 snap-x snap-mandatory">
+          {FEATURED_PROJECTS.map((proj, i) => (
+            <motion.button
+              key={proj.id}
+              onClick={() => setOpenProject(proj)}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.45, delay: i * 0.09, type: "spring", bounce: 0.28 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              className={`
+                relative group flex-shrink-0 snap-start
+                flex flex-col p-5 rounded-2xl border text-left
+                bg-gradient-to-br ${proj.gradient} bg-slate-900/60 backdrop-blur-sm
+                ${proj.border}
+                shadow-lg hover:shadow-2xl ${proj.glow}
+                transition-all duration-300 cursor-pointer overflow-hidden
+                w-72 md:w-80
+              `}
+            >
+              {/* Shimmer */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: `linear-gradient(135deg, ${proj.accentHex}08 0%, transparent 50%, ${proj.accentHex}05 100%)` }}
+              />
+
+              {/* Icon + label */}
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-3xl">{proj.icon}</span>
+                <a
+                  href={proj.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-1.5 rounded-lg text-slate-500 hover:text-white transition-colors"
+                  title="View on GitHub"
+                >
+                  <Github size={14} />
+                </a>
+              </div>
+
+              <span className={`text-[10px] font-bold uppercase tracking-widest ${proj.accent} mb-1.5`}>
+                {proj.label}
+              </span>
+              <h3 className="text-base font-bold text-white mb-1.5 leading-tight">{proj.name}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors line-clamp-2 mb-3">
+                {proj.tagline}
+              </p>
+
+              {/* Tech tags */}
+              <div className="flex flex-wrap gap-1 mt-auto">
+                {proj.techs.map((t) => (
+                  <span key={t} className="px-2 py-0.5 rounded-full text-[10px] bg-slate-800/80 text-slate-400 border border-slate-700/60">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <div className={`mt-3 flex items-center gap-1 text-xs font-semibold ${proj.accent} opacity-60 group-hover:opacity-100 transition-all duration-200 group-hover:gap-2`}>
+                <ExternalLink size={11} />
+                <span>Click to open</span>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </div>
+
+      {/* Theater modal */}
+      <AnimatePresence>
+        {openProject && (
+          <motion.div
+            key="proj-theater-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center"
+            onClick={() => setOpenProject(null)}
+          >
+            <div className="absolute inset-0 bg-[#03040f]">
+              <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                {STARS.map((s, i) => (
+                  <circle key={i} cx={`${s.x}%`} cy={`${s.y}%`} r={s.r} fill="white" opacity={s.opacity}>
+                    <animate attributeName="opacity" values={`${s.opacity};${Math.min(1, s.opacity + 0.5)};${s.opacity}`} dur={`${s.dur}s`} begin={`${s.delay}s`} repeatCount="indefinite" />
+                  </circle>
+                ))}
+              </svg>
+              <div className="absolute inset-0 pointer-events-none"
+                style={{ background: `radial-gradient(ellipse 60% 40% at 0% 0%, ${openProject.accentHex}22 0%, transparent 60%), radial-gradient(ellipse 50% 35% at 100% 100%, ${openProject.accentHex}18 0%, transparent 55%)` }}
+              />
+            </div>
+
+            <motion.div
+              key="proj-theater-frame"
+              initial={{ opacity: 0, scale: 0.88, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ type: "spring", bounce: 0.22, duration: 0.55 }}
+              className="relative z-10 flex flex-col"
+              style={{ width: "82vw", height: "82vh", maxWidth: 1280 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-3 px-4 py-2.5 rounded-t-2xl border-b"
+                style={{ background: "#0a0b1a", borderColor: `${openProject.accentHex}33` }}>
+                <span className="text-xl">{openProject.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <span className="text-white font-semibold text-sm">{openProject.name}</span>
+                  <span className="ml-2 text-[10px] uppercase tracking-widest font-bold" style={{ color: openProject.accentHex }}>
+                    {openProject.label}
+                  </span>
+                </div>
+                <span className="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
+                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: openProject.accentHex }} />
+                  Live
+                </span>
+                <a href={openProject.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" title="Open in new tab">
+                  <ExternalLink size={14} />
+                </a>
+                <button onClick={() => setOpenProject(null)} className="p-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" title="Close (Esc)">
+                  <X size={16} />
+                </button>
+              </div>
+
+              <div className="relative flex-1 overflow-hidden rounded-b-2xl border border-t-0"
+                style={{ borderColor: `${openProject.accentHex}33` }}>
+                {!loaded && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#07081a] gap-4">
+                    <div className="text-4xl animate-bounce">{openProject.icon}</div>
+                    <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
+                      style={{ borderColor: `${openProject.accentHex}88`, borderTopColor: "transparent" }} />
+                    <p className="text-xs text-slate-500">Loading {openProject.name}…</p>
+                  </div>
+                )}
+                <iframe src={openProject.url} title={openProject.name} className="w-full h-full border-0"
+                  style={{ background: "#07081a" }} onLoad={() => setLoaded(true)} allow="fullscreen" />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 // Deterministic star field — generated once
 const STARS = Array.from({ length: 220 }, (_, i) => ({
   x: ((i * 137.508 + 11) % 100),
@@ -1036,6 +1260,11 @@ export default function MissionSection() {
           {/* ── Featured Apps ── */}
           {!searchQuery && (
             <FeaturedApps />
+          )}
+
+          {/* ── Featured Projects (horizontal scroll) ── */}
+          {!searchQuery && (
+            <FeaturedProjects />
           )}
 
           {/* Edit toolbar */}
