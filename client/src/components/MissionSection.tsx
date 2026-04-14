@@ -483,6 +483,29 @@ function TheaterModal({ app, onClose }: { app: FeaturedApp; onClose: () => void 
 
 function FeaturedApps() {
   const [theater, setTheater] = useState<FeaturedApp | null>(null);
+  const [hoverApp, setHoverApp] = useState<FeaturedApp | null>(null);
+  const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const onHoverStart = (app: FeaturedApp) => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    setHoverApp(app);
+    // After 2.4s of holding hover → darkness complete → open theater
+    hoverTimeout.current = setTimeout(() => {
+      setHoverApp(null);
+      setTheater(app);
+    }, 2400);
+  };
+
+  const onHoverEnd = () => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    setHoverApp(null);
+  };
+
+  const openImmediate = (app: FeaturedApp) => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    setHoverApp(null);
+    setTheater(app);
+  };
 
   return (
     <>
@@ -500,66 +523,123 @@ function FeaturedApps() {
           <h2 className="text-2xl md:text-3xl font-bold text-white">Open Apps</h2>
         </motion.div>
 
+        {/* Cards — hovered card floats above overlay via z-index */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {FEATURED_APPS.map((app, i) => (
-            <motion.button
-              key={app.id}
-              onClick={() => setTheater(app)}
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, delay: i * 0.07, type: "spring", bounce: 0.3 }}
-              whileHover={{ y: -6, scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className={`
-                relative group flex flex-col p-5 rounded-2xl border bg-slate-900/60 backdrop-blur-sm text-left
-                bg-gradient-to-br ${app.gradient}
-                ${app.border}
-                shadow-lg hover:shadow-2xl ${app.glow}
-                transition-all duration-300 cursor-pointer overflow-hidden
-              `}
-            >
-              {/* Animated shimmer */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-              </div>
+          {FEATURED_APPS.map((app, i) => {
+            const isHovered = hoverApp?.id === app.id;
+            return (
+              <motion.button
+                key={app.id}
+                onMouseEnter={() => onHoverStart(app)}
+                onMouseLeave={onHoverEnd}
+                onClick={() => openImmediate(app)}
+                initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.5, delay: i * 0.07, type: "spring", bounce: 0.3 }}
+                whileHover={{ y: -6, scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className={`
+                  relative group flex flex-col p-5 rounded-2xl border bg-slate-900/60 backdrop-blur-sm text-left
+                  bg-gradient-to-br ${app.gradient}
+                  ${app.border}
+                  shadow-lg hover:shadow-2xl ${app.glow}
+                  transition-all duration-300 cursor-pointer overflow-hidden
+                  ${isHovered ? "z-[201]" : "z-0"}
+                `}
+                style={{ position: "relative" }}
+              >
+                {/* Animated shimmer */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                </div>
 
-              {/* Live indicator */}
-              <div className="absolute top-3 right-3 flex items-center gap-1">
-                <span className={`w-1.5 h-1.5 rounded-full ${app.dot} animate-pulse`} />
-                <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">Live</span>
-              </div>
+                {/* Live indicator */}
+                <div className="absolute top-3 right-3 flex items-center gap-1">
+                  <span className={`w-1.5 h-1.5 rounded-full ${app.dot} animate-pulse`} />
+                  <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">Live</span>
+                </div>
 
-              {/* Icon */}
-              <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300 origin-left">
-                {app.icon}
-              </div>
+                {/* Loading progress ring — fills as hover darkens */}
+                {isHovered && (
+                  <div className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden">
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 2.4, ease: "linear" }}
+                      className="absolute bottom-0 left-0 right-0 h-[2px]"
+                      style={{ backgroundColor: app.accentHex, transformOrigin: "left" }}
+                    />
+                  </div>
+                )}
 
-              {/* Category label */}
-              <span className={`text-[10px] font-bold uppercase tracking-widest ${app.accent} mb-1.5`}>
-                {app.label}
-              </span>
+                {/* Icon */}
+                <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300 origin-left">
+                  {app.icon}
+                </div>
 
-              {/* Name */}
-              <h3 className="text-base font-bold text-white mb-1.5 leading-tight">
-                {app.name}
-              </h3>
+                {/* Category label */}
+                <span className={`text-[10px] font-bold uppercase tracking-widest ${app.accent} mb-1.5`}>
+                  {app.label}
+                </span>
 
-              {/* Tagline */}
-              <p className="text-xs text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors line-clamp-2">
-                {app.tagline}
-              </p>
+                {/* Name */}
+                <h3 className="text-base font-bold text-white mb-1.5 leading-tight">
+                  {app.name}
+                </h3>
 
-              {/* Open cue */}
-              <div className={`mt-4 flex items-center gap-1 text-xs font-semibold ${app.accent} opacity-60 group-hover:opacity-100 transition-all duration-200 group-hover:gap-2`}>
-                <ExternalLink size={11} />
-                <span>Open</span>
-              </div>
-            </motion.button>
-          ))}
+                {/* Tagline */}
+                <p className="text-xs text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors line-clamp-2">
+                  {app.tagline}
+                </p>
+
+                {/* Open cue */}
+                <div className={`mt-4 flex items-center gap-1 text-xs font-semibold ${app.accent} opacity-60 group-hover:opacity-100 transition-all duration-200 group-hover:gap-2`}>
+                  <ExternalLink size={11} />
+                  <span>{isHovered ? "Opening…" : "Hold to open"}</span>
+                </div>
+              </motion.button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Theater modal */}
+      {/* Slow-darkening hover overlay — transitions to theater */}
+      <AnimatePresence>
+        {hoverApp && (
+          <motion.div
+            key="hover-darkness"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.6, ease: "easeOut" } }}
+            transition={{ duration: 2.4, ease: "linear" }}
+            className="fixed inset-0 z-[200] pointer-events-none"
+          >
+            <div className="absolute inset-0 bg-[#03040f]">
+              {/* Stars */}
+              <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                {STARS.map((s, i) => (
+                  <circle key={i} cx={`${s.x}%`} cy={`${s.y}%`} r={s.r} fill="white" opacity={s.opacity}>
+                    <animate attributeName="opacity"
+                      values={`${s.opacity};${Math.min(1, s.opacity + 0.5)};${s.opacity}`}
+                      dur={`${s.dur}s`} begin={`${s.delay}s`} repeatCount="indefinite" />
+                  </circle>
+                ))}
+              </svg>
+              {/* Nebula glow in hovered app's colour */}
+              <div className="absolute inset-0 pointer-events-none" style={{
+                background: `
+                  radial-gradient(ellipse 55% 40% at 0% 0%, ${hoverApp.accentHex}28 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 35% at 100% 100%, ${hoverApp.accentHex}1e 0%, transparent 55%),
+                  radial-gradient(ellipse 40% 30% at 100% 0%, #7c3aed22 0%, transparent 50%),
+                  radial-gradient(ellipse 45% 35% at 0% 100%, #1e40af22 0%, transparent 50%)
+                `
+              }} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Full theater modal */}
       {theater && <TheaterModal app={theater} onClose={() => setTheater(null)} />}
     </>
   );

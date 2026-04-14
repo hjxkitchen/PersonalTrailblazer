@@ -83,12 +83,14 @@ function ManifestoCard({
   isEditMode,
   onEdit,
   onDelete,
+  noExpand = false,
   dragProps,
 }: {
   project: MainProject;
   isEditMode: boolean;
   onEdit: () => void;
   onDelete: () => void;
+  noExpand?: boolean;
   dragProps?: {
     draggable: boolean;
     onDragStart: () => void;
@@ -97,7 +99,14 @@ function ManifestoCard({
   };
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
+
+  const canExpand = !noExpand && !isEditMode;
+  const hasLive = !!project.link;
+
+  // Expanded content height — bigger when showing iframe
+  const expandedHeight = hasLive ? "72vh" : "260px";
 
   return (
     <motion.div
@@ -119,33 +128,56 @@ function ManifestoCard({
         {/* Top accent bar */}
         <div className="h-[2px] w-full bg-gradient-to-r from-blue-500/60 via-purple-500/40 to-transparent" />
 
-        {/* Expandable thumbnail */}
+        {/* Expandable area — iframe or thumbnail */}
         <motion.div
-          animate={{ maxHeight: expanded ? 280 : 0, opacity: expanded ? 1 : 0 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          animate={{ height: expanded ? expandedHeight : 0, opacity: expanded ? 1 : 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           style={{ overflow: "hidden" }}
         >
-          <div className="relative h-64 bg-slate-950">
-            {!imgError ? (
-              <img
-                src={getThumbnailPath(project.title)}
-                alt={project.title}
-                className="w-full h-full object-cover"
-                onError={() => setImgError(true)}
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10">
-                <div className="text-slate-700 text-4xl font-black opacity-20">{project.title[0]}</div>
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
-          </div>
+          {hasLive ? (
+            /* ── Live iframe ── */
+            <div className="relative w-full bg-slate-950" style={{ height: expandedHeight }}>
+              {!iframeLoaded && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-slate-950">
+                  <div className="w-6 h-6 rounded-full border-2 border-t-transparent border-blue-500/60 animate-spin" />
+                  <p className="text-xs text-slate-500">Loading {project.title}…</p>
+                </div>
+              )}
+              {expanded && (
+                <iframe
+                  src={`https://${project.link}`}
+                  title={project.title}
+                  className="w-full h-full border-0"
+                  style={{ height: expandedHeight }}
+                  onLoad={() => setIframeLoaded(true)}
+                  allow="fullscreen"
+                />
+              )}
+            </div>
+          ) : (
+            /* ── Thumbnail image ── */
+            <div className="relative bg-slate-950" style={{ height: "260px" }}>
+              {!imgError ? (
+                <img
+                  src={getThumbnailPath(project.title)}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10">
+                  <div className="text-4xl font-black text-slate-800">{project.title[0]}</div>
+                </div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+            </div>
+          )}
         </motion.div>
 
-        {/* Card body — always visible, clickable to expand */}
+        {/* Card body */}
         <div
-          className={`p-6 ${!isEditMode ? "cursor-pointer" : ""}`}
-          onClick={() => !isEditMode && setExpanded((v) => !v)}
+          className={`p-6 ${canExpand ? "cursor-pointer" : ""}`}
+          onClick={() => canExpand && setExpanded((v) => !v)}
         >
           {/* Edit controls */}
           {isEditMode && (
@@ -175,7 +207,7 @@ function ManifestoCard({
               <span className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border ${getStatusColor(project.status)}`}>
                 {project.status}
               </span>
-              {!isEditMode && (
+              {canExpand && (
                 <motion.span
                   animate={{ rotate: expanded ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
@@ -199,19 +231,26 @@ function ManifestoCard({
             ))}
           </div>
 
-          {/* Link */}
-          {project.link && (
-            <a
-              href={`https://${project.link}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 font-medium transition-colors"
-            >
-              <ExternalLink size={11} />
-              {project.link}
-            </a>
-          )}
+          {/* Footer row */}
+          <div className="flex items-center justify-between gap-2">
+            {project.link && (
+              <a
+                href={`https://${project.link}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 font-medium transition-colors"
+              >
+                <ExternalLink size={11} />
+                {project.link}
+              </a>
+            )}
+            {canExpand && (
+              <span className="text-[11px] text-slate-600 ml-auto">
+                {expanded ? (hasLive ? "Click to close" : "Click to collapse") : (hasLive ? "Click to preview" : "Click to expand")}
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>
@@ -444,6 +483,7 @@ export default function ProjectsSection() {
           <ManifestoCard
             project={project("mechatronics")!}
             isEditMode={isEditMode}
+            noExpand
             onEdit={() => setEditingProject(project("mechatronics")!)}
             onDelete={() => deleteProject("mechatronics")}
             dragProps={dragProps(projectIdx("mechatronics"))}
