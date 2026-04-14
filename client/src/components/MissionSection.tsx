@@ -250,6 +250,154 @@ function CategoryEditModal({
   );
 }
 
+// ─── Featured Apps ────────────────────────────────────────────────────────────
+const FEATURED_APPS = [
+  {
+    id: "tourscape",
+    name: "TanzaniaTourscape",
+    label: "Tourism & Culture",
+    tagline: "Explore East Africa's finest destinations",
+    url: "https://tanzania-tourscape.netlify.app",
+    gradient: "from-amber-500/20 via-orange-500/10 to-red-500/20",
+    glow: "shadow-amber-500/20",
+    border: "border-amber-500/30 hover:border-amber-400/60",
+    dot: "bg-amber-400",
+    icon: "🌍",
+    accent: "text-amber-400",
+  },
+  {
+    id: "orchestrator",
+    name: "OperationalOrchestrator",
+    label: "Resources & Supply Chain",
+    tagline: "End-to-end operational intelligence",
+    url: "https://operationalorchestrator.netlify.app",
+    gradient: "from-cyan-500/20 via-teal-500/10 to-emerald-500/20",
+    glow: "shadow-cyan-500/20",
+    border: "border-cyan-500/30 hover:border-cyan-400/60",
+    dot: "bg-cyan-400",
+    icon: "⚙️",
+    accent: "text-cyan-400",
+  },
+  {
+    id: "zahabenergy",
+    name: "ZahabEnergy",
+    label: "Infrastructure",
+    tagline: "Powering the continent's energy future",
+    url: "https://zahabenergy.com",
+    gradient: "from-yellow-500/20 via-amber-500/10 to-orange-500/20",
+    glow: "shadow-yellow-500/20",
+    border: "border-yellow-500/30 hover:border-yellow-400/60",
+    dot: "bg-yellow-400",
+    icon: "⚡",
+    accent: "text-yellow-400",
+  },
+  {
+    id: "whatslocal",
+    name: "WhatsLocal",
+    label: "Commerce",
+    tagline: "Connecting communities through local trade",
+    url: "https://whatslocal.ai",
+    gradient: "from-green-500/20 via-emerald-500/10 to-teal-500/20",
+    glow: "shadow-green-500/20",
+    border: "border-green-500/30 hover:border-green-400/60",
+    dot: "bg-green-400",
+    icon: "🛒",
+    accent: "text-green-400",
+  },
+  {
+    id: "spaceagevision",
+    name: "SpaceAgeVision",
+    label: "Discourse & Governance",
+    tagline: "Shaping the conversation of tomorrow",
+    url: "https://spaceagevision.world",
+    gradient: "from-purple-500/20 via-violet-500/10 to-indigo-500/20",
+    glow: "shadow-purple-500/20",
+    border: "border-purple-500/30 hover:border-purple-400/60",
+    dot: "bg-purple-400",
+    icon: "🌐",
+    accent: "text-purple-400",
+  },
+] as const;
+
+function FeaturedApps() {
+  return (
+    <div className="mb-16">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-8"
+      >
+        <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-widest mb-3">
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+          Live Platforms
+        </span>
+        <h2 className="text-2xl md:text-3xl font-bold text-white">Open Apps</h2>
+      </motion.div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {FEATURED_APPS.map((app, i) => (
+          <motion.a
+            key={app.id}
+            href={app.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.5, delay: i * 0.07, type: "spring", bounce: 0.3 }}
+            whileHover={{ y: -6, scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className={`
+              relative group flex flex-col p-5 rounded-2xl border bg-slate-900/60 backdrop-blur-sm
+              bg-gradient-to-br ${app.gradient}
+              ${app.border}
+              shadow-lg hover:shadow-2xl ${app.glow}
+              transition-all duration-300 cursor-pointer overflow-hidden
+            `}
+          >
+            {/* Animated shimmer */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+            </div>
+
+            {/* Live indicator */}
+            <div className="absolute top-3 right-3 flex items-center gap-1">
+              <span className={`w-1.5 h-1.5 rounded-full ${app.dot} animate-pulse`} />
+              <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">Live</span>
+            </div>
+
+            {/* Icon */}
+            <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300 origin-left">
+              {app.icon}
+            </div>
+
+            {/* Category label */}
+            <span className={`text-[10px] font-bold uppercase tracking-widest ${app.accent} mb-1.5`}>
+              {app.label}
+            </span>
+
+            {/* Name */}
+            <h3 className="text-base font-bold text-white mb-1.5 leading-tight group-hover:text-white transition-colors">
+              {app.name}
+            </h3>
+
+            {/* Tagline */}
+            <p className="text-xs text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors line-clamp-2">
+              {app.tagline}
+            </p>
+
+            {/* Open arrow */}
+            <div className={`mt-4 flex items-center gap-1 text-xs font-semibold ${app.accent} opacity-60 group-hover:opacity-100 transition-all duration-200 group-hover:gap-2`}>
+              <ExternalLink size={11} />
+              <span>Open</span>
+            </div>
+          </motion.a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function MissionSection() {
   const { isEditMode, showGitHub } = usePortfolio();
@@ -636,6 +784,11 @@ export default function MissionSection() {
               An ecosystem of tools, games, and infrastructure built to unify commerce, technology, and culture.
             </motion.p>
           </div>
+
+          {/* ── Featured Apps ── */}
+          {!searchQuery && (
+            <FeaturedApps />
+          )}
 
           {/* Edit toolbar */}
           {isEditMode && (
@@ -1032,7 +1185,7 @@ export default function MissionSection() {
 
                           {/* GitHub */}
                           <div className="px-3 py-2 min-w-0 overflow-hidden">
-                            {githubDisplay ? (
+                            {githubDisplay && showGitHub ? (
                               <a
                                 href={project.github}
                                 target="_blank"

@@ -22,7 +22,7 @@ interface PortfolioState {
 
 export const usePortfolio = create<PortfolioState>((set) => ({
   currentMilestone: null,
-  view: "extended",
+  view: "main",
   showTraditionalPortfolio: true,
   isEditMode: false,
   showGitHub: false,
