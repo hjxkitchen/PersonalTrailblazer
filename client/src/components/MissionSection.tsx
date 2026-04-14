@@ -376,6 +376,36 @@ const FEATURED_PROJECTS = [
     techs: ["TypeScript", "React", "Supabase", "Vite"],
   },
   {
+    id: "prodegr",
+    name: "Prodegr",
+    label: "Product Engineering",
+    tagline: "Product Engineer Desk — roadmap, tickets, account logs, and team workspace in one tool",
+    url: "https://prodegr-app.netlify.app",
+    github: "https://github.com/ZahabTZ/prodegr",
+    gradient: "from-teal-500/20 via-cyan-500/10 to-emerald-500/20",
+    border: "border-teal-500/30 hover:border-teal-400/60",
+    glow: "shadow-teal-500/20",
+    accent: "text-teal-400",
+    accentHex: "#14b8a6",
+    icon: "🛠️",
+    techs: ["TypeScript", "React", "Vite", "Tailwind"],
+  },
+  {
+    id: "ideaboard",
+    name: "IdeaBoard",
+    label: "Community Platform",
+    tagline: "Vote for what humanity needs — AI-powered idea board with weekly tournaments and maker feedback hub",
+    url: "https://ideaboard-app.netlify.app",
+    github: "https://github.com/ZahabTZ/ideaboard",
+    gradient: "from-violet-500/20 via-purple-500/10 to-indigo-500/20",
+    border: "border-violet-500/30 hover:border-violet-400/60",
+    glow: "shadow-violet-500/20",
+    accent: "text-violet-400",
+    accentHex: "#8b5cf6",
+    icon: "💡",
+    techs: ["Next.js", "TypeScript", "Convex", "OpenAI"],
+  },
+  {
     id: "dna-edit-lab",
     name: "DNA Edit Lab",
     label: "Computational Biology",
@@ -419,6 +449,112 @@ const FEATURED_PROJECTS = [
     accentHex: "#0ea5e9",
     icon: "📡",
     techs: ["TypeScript", "React", "Vite", "Tailwind"],
+  },
+  {
+    id: "sky-walk-world",
+    name: "Sky Walk World",
+    label: "3D Multiplayer",
+    tagline: "Real-time multiplayer 3D world built with BabylonJS and WebRTC spatial voice",
+    url: "https://skywalkworld.netlify.app",
+    github: "https://github.com/ZahabTZ/sky-walk-world",
+    gradient: "from-cyan-500/20 via-sky-500/10 to-blue-500/20",
+    border: "border-cyan-500/30 hover:border-cyan-400/60",
+    glow: "shadow-cyan-500/20",
+    accent: "text-cyan-400",
+    accentHex: "#06b6d4",
+    icon: "🌐",
+    techs: ["TypeScript", "BabylonJS", "React", "WebRTC"],
+  },
+  {
+    id: "wall3d",
+    name: "Wall3D",
+    label: "3D Visualization",
+    tagline: "Interactive 3D wall visualization and simulation with WebGL",
+    url: "https://wall3d.netlify.app",
+    github: "https://github.com/HusseinJX/wall3d",
+    gradient: "from-orange-500/20 via-amber-500/10 to-yellow-500/20",
+    border: "border-orange-500/30 hover:border-orange-400/60",
+    glow: "shadow-orange-500/20",
+    accent: "text-orange-400",
+    accentHex: "#f97316",
+    icon: "🧱",
+    techs: ["JavaScript", "React", "Vite", "Three.js"],
+  },
+  {
+    id: "mediapipe-starselect",
+    name: "StarSelect",
+    label: "Computer Vision",
+    tagline: "Hand gesture-controlled star selection using MediaPipe Tasks Vision",
+    url: "https://starselect.netlify.app",
+    github: "https://github.com/HusseinJX/mediapipe_starselect",
+    gradient: "from-yellow-500/20 via-amber-500/10 to-orange-500/20",
+    border: "border-yellow-500/30 hover:border-yellow-400/60",
+    glow: "shadow-yellow-500/20",
+    accent: "text-yellow-400",
+    accentHex: "#eab308",
+    icon: "✋",
+    techs: ["JavaScript", "MediaPipe", "Vite", "WebGL"],
+  },
+
+  {
+    id: "3dsveltegame",
+    name: "3D Svelte Game",
+    label: "3D Game",
+    tagline: "Browser-based 3D ball game built with Svelte and Three.js",
+    url: "https://3dballgame.netlify.app",
+    github: "https://github.com/HusseinJX/3dsveltegame",
+    gradient: "from-indigo-500/20 via-violet-500/10 to-purple-500/20",
+    border: "border-indigo-500/30 hover:border-indigo-400/60",
+    glow: "shadow-indigo-500/20",
+    accent: "text-indigo-400",
+    accentHex: "#6366f1",
+    icon: "🎮",
+    techs: ["Svelte", "Three.js", "Rollup", "JavaScript"],
+  },
+  {
+    id: "prompt-composer",
+    name: "Prompt Composer",
+    label: "AI Tooling",
+    tagline: "Visual tool for composing and structuring complex AI prompts",
+    url: "https://prompt-composer-app.netlify.app",
+    github: "https://github.com/HusseinJX/promptcomposer",
+    gradient: "from-fuchsia-500/20 via-pink-500/10 to-rose-500/20",
+    border: "border-fuchsia-500/30 hover:border-fuchsia-400/60",
+    glow: "shadow-fuchsia-500/20",
+    accent: "text-fuchsia-400",
+    accentHex: "#d946ef",
+    icon: "✍️",
+    techs: ["TypeScript", "React", "Vite", "Tailwind"],
+  },
+  {
+    id: "shelf-scan-catalog",
+    name: "ShelfScan Catalog",
+    label: "Visual Inventory",
+    tagline: "Annotate shelf photos with product markers and build a visual product catalog",
+    url: "https://shelfscan.netlify.app",
+    github: "https://github.com/HusseinJX/ShelfScanCatalog",
+    gradient: "from-lime-500/20 via-green-500/10 to-emerald-500/20",
+    border: "border-lime-500/30 hover:border-lime-400/60",
+    glow: "shadow-lime-500/20",
+    accent: "text-lime-400",
+    accentHex: "#84cc16",
+    icon: "🏪",
+    techs: ["TypeScript", "React", "Convex", "Vite"],
+  },
+  {
+    id: "sovereign",
+    name: "Sovereign",
+    label: "Civic Tech",
+    tagline: "AI-powered civic governance — voice proposals, on-chain voting, and smart contract milestone tracking",
+    url: "https://sovereign-nexus.netlify.app",
+    github: "https://github.com/hjxkitchen/Sovereign",
+    gradient: "from-slate-500/20 via-zinc-500/10 to-stone-500/20",
+    border: "border-slate-500/30 hover:border-slate-400/60",
+    glow: "shadow-slate-500/20",
+    accent: "text-slate-400",
+    accentHex: "#94a3b8",
+    icon: "🏛️",
+    techs: ["Next.js", "TypeScript", "Solana", "ElevenLabs"],
   },
 ] as const;
 
@@ -669,28 +805,6 @@ function TheaterModal({ app, onClose, onPrev, onNext }: { app: FeaturedApp; onCl
       >
         {/* Space background */}
         <div className="absolute inset-0 bg-[#03040f]">
-          {/* Star field */}
-          <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            {STARS.map((s, i) => (
-              <circle
-                key={i}
-                cx={`${s.x}%`}
-                cy={`${s.y}%`}
-                r={s.r}
-                fill="white"
-                opacity={s.opacity}
-              >
-                <animate
-                  attributeName="opacity"
-                  values={`${s.opacity};${Math.min(1, s.opacity + 0.5)};${s.opacity}`}
-                  dur={`${s.dur}s`}
-                  begin={`${s.delay}s`}
-                  repeatCount="indefinite"
-                />
-              </circle>
-            ))}
-          </svg>
-
           {/* Nebula glows at edges */}
           <div className="absolute inset-0 pointer-events-none"
             style={{

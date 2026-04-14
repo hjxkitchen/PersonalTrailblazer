@@ -637,19 +637,38 @@ export default function ProjectsSection() {
         </P>
 
         <P delay={0.05}>
-          East Africa is one of the most extraordinary places on earth — in landscape,
-          in history, in the depth of its human story. Tourism, done right, is not
-          extraction. It is a cultural bridge. When someone stands at the edge of the
-          Serengeti, they are not just a consumer. They are a witness. Tanzania
-          Tourscape was built around that idea: that the way we invite the world
-          into a place shapes what that place becomes.
+          The earth is Wild — and we have barely begun to know it. To travel is not
+          a luxury. It is the original act of becoming human. When we move through
+          unfamiliar landscapes, sit at strangers' fires, eat food we cannot name,
+          and find that laughter sounds the same in every language — something
+          fundamental shifts. We stop being tourists and start being witnesses to
+          the extraordinary fact that we are one species on one planet, hurtling
+          together toward the same horizon.
+        </P>
+
+        <P delay={0.1}>
+          That is the cultural bridge this work is building. Not between regions,
+          but between people. A global culture is not the erasure of local ones —
+          it is what emerges when enough people have stood in enough places and
+          returned home transformed. Travel is the technology that makes that
+          possible. Meeting each other is the protocol. Awe is the output.
         </P>
 
         <PullQuote>
-          Africa is not a problem to be solved. It is the most extraordinary
-          opportunity in human history — and it deserves technology built for it,
-          not repurposed from somewhere else.
+          When AI absorbs the routine, we will finally have time to be astonished.
+          A world explored in wonder is a world worth protecting — and protecting
+          a world this beautiful is exactly the kind of species we need to be
+          before we reach for the next one.
         </PullQuote>
+
+        <P delay={0.05}>
+          This is why the frontier matters. Space is not an escape from Earth —
+          it is the shared goal that forces us to become worthy of it. To get there,
+          we need to know each other. To know each other, we need to move. Wild
+          Earth exists to make that movement possible: to put more humans in more
+          places, in more states of awe, so that the civilization we eventually
+          carry to the stars is one we actually built together.
+        </P>
 
         {project("wild-earth-safaris") && (
           <ManifestoCard
