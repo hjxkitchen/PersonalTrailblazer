@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 const N = 800;
 const FOV = 300;
-const BASE_SPEED = 0.18;
+const BASE_SPEED = 0.06;
 const BOOST_SPEED = BASE_SPEED * 20;
 const BOOST_DURATION = 1800; // ms
 const LERP_VP = 0.05; // vanishing-point lerp per frame
