@@ -523,15 +523,18 @@ export default function ProjectsSection() {
         <P delay={0.05}>
           You cannot run a supply chain without power. You cannot digitize agriculture
           without connectivity. You cannot build a digital economy on an unreliable grid.
-          Zahab Energy is the answer to that first principle — off-grid solar systems,
-          decentralized community grids, IoT-connected agro processing. The unsexy,
-          load-bearing work that makes everything else possible.
+          Before the apps, before the platforms — you need infrastructure.
+          Zahab Energy is the answer to that first principle. Off-grid solar systems,
+          decentralized community grids, IoT-connected agro processing — the unsexy,
+          load-bearing work that makes everything else possible. I believe deeply that
+          the communities who have been most underserved by centralized grids will
+          become, through distributed energy, among the most resilient.
         </P>
 
         <PullQuote>
-          The communities that never had landlines now run mobile money.
-          The ones without centralized grids will run on distributed power.
-          Leapfrogging is not a metaphor. It is the strategy.
+          Leapfrogging is real. The communities that never had landlines now run
+          mobile money. The ones without centralized grids will run on distributed power.
+          We are building for that future, now.
         </PullQuote>
 
         {project("zahab-energy") && (
