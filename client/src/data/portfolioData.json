@@ -1505,6 +1505,16 @@
       "github": "",
       "category": "Local & Travel",
       "visible": true
+    },
+    {
+      "id": "clear-status",
+      "name": "Clear Status",
+      "description": "Clean, real-time status page for services and infrastructure.",
+      "url": "https://github.com/ZahabTZ/clear-status",
+      "github": "https://github.com/ZahabTZ/clear-status",
+      "category": "AI & Agents",
+      "visible": true,
+      "source": "lovable"
     }
   ]
 }
